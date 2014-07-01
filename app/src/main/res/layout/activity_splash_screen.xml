@@ -1,0 +1,42 @@
+<!--
+  ~ activity_splash_screen.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       01/07/2014
+  ~ Date last modified: 01/07/2014
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_blue_light"
+                tools:context="org.rmit.hung.thingsdo.view.SplashScreen">
+
+	<TextView
+		android:id="@+id/text_view_splash_app_name"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:text="@string/app_name"
+		android:textColor="@android:color/white"
+		android:textSize="@dimen/text_size_splash_app_name"/>
+
+	<TextView
+		android:id="@+id/text_view_splash_studio"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true"
+		android:text="@string/text_splash_studio"
+		android:textColor="@android:color/white"
+		android:textSize="@dimen/text_size_splash_studio"/>
+
+</RelativeLayout>

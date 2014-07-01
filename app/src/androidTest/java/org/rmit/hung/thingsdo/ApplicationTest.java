@@ -13,7 +13,7 @@
  * Date last modified: 01/07/2014
  */
 
-package org.rmit.hung.myapplication;
+package org.rmit.hung.thingsdo;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

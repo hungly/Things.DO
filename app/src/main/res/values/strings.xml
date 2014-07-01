@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <!--
   ~ strings.xml
   ~ Task Management Application
@@ -11,8 +12,16 @@
   ~
   ~ Date created:       01/07/2014
   ~ Date last modified: 01/07/2014
-  -->
-
+-->
 <resources>
+
 	<string name="app_name">Things.DO</string>
+	<string name="text_splash_app_name">Thing.DO</string>
+	<string name="text_splash_studio">What? Studio</string>
+	<string name="button_text_add_task">+</string>
+	<string name="button_text_expandable">v</string>
+	<string name="text_hint_category">category</string>
+	<string name="action_settings">Settings</string>
+	<string name="action_exit">Exit</string>
+
 </resources>

@@ -1,0 +1,26 @@
+<!--
+  ~ dimens.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       01/07/2014
+  ~ Date last modified: 01/07/2014
+  -->
+
+<resources>
+	<!-- Default screen margins, per the Android Design guidelines. -->
+	<dimen name="activity_horizontal_margin">16dp</dimen>
+	<dimen name="activity_vertical_margin">16dp</dimen>
+	<dimen name="text_size_splash_app_name">45sp</dimen>
+	<dimen name="text_size_splash_studio">20sp</dimen>
+	<dimen name="text_size_category">30sp</dimen>
+	<dimen name="button_size_category">50dp</dimen>
+	<dimen name="padding_category_horizontal">5dp</dimen>
+	<dimen name="padding_category_vertical">3dp</dimen>
+</resources>

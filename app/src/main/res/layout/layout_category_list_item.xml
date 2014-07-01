@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ layout_category_list_item.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       01/07/2014
+  ~ Date last modified: 01/07/2014
+  -->
+
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<RelativeLayout
+		android:id="@+id/layout_category_tittle"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<Button
+			android:id="@+id/button_expandable"
+			android:layout_width="@dimen/button_size_category"
+			android:layout_height="@dimen/button_size_category"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:width="@dimen/button_size_category"
+			android:height="@dimen/button_size_category"
+			android:text="@string/button_text_expandable"/>
+
+		<TextView
+			android:id="@+id/text_category"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/button_add_task"
+			android:layout_toRightOf="@+id/button_expandable"
+			android:hint="@string/text_hint_category"
+			android:paddingLeft="@dimen/padding_category_horizontal"
+			android:paddingTop="@dimen/padding_category_vertical"
+			android:singleLine="true"
+			android:textSize="@dimen/text_size_category"
+			/>
+
+		<Button
+			android:id="@+id/button_add_task"
+			android:layout_width="@dimen/button_size_category"
+			android:layout_height="@dimen/button_size_category"
+			android:layout_alignParentRight="true"
+			android:text="@string/button_text_add_task"/>
+
+	</RelativeLayout>
+
+	<ListView
+		android:id="@+id/list_task"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/layout_category_tittle">
+
+	</ListView>
+
+</RelativeLayout>
