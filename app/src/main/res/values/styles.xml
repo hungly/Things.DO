@@ -1,0 +1,23 @@
+<!--
+  ~ styles.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       01/07/2014
+  ~ Date last modified: 01/07/2014
+  -->
+
+<resources>
+
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+		<!-- Customize your theme here. -->
+	</style>
+
+</resources>

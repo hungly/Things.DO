@@ -1,0 +1,9 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="notice" value="&amp;#36;file.fileName&#10;Task Management Application&#10;1, COSC2543 - Mobile Application Development&#10;RMIT International University Vietnam&#10;&#10;Copyright 2014 Ly Quoc Hung (s3426511)&#10;&#10;Refer to the NOTICE file in the root of the source tree for&#10;acknowledgements of third party works used in this software.&#10;&#10;Date created:       &amp;#36;today.format(&quot;dd/MM/yyyy&quot;)&#10;Date last modified: &amp;#36;file.lastModified.format(&quot;dd/MM/yyyy&quot;)" />
+    <option name="keyword" value="Copyright" />
+    <option name="allowReplaceKeyword" value="" />
+    <option name="myName" value="RMIT - MAD (COSC2543) - Assignment 1" />
+    <option name="myLocal" value="true" />
+  </copyright>
+</component>
