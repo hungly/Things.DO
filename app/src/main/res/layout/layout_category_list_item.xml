@@ -14,14 +14,31 @@
   ~ Date last modified: 01/07/2014
   -->
 
-<CheckedTextView
-	android:id="@+id/text_category_list_item_name"
+<RelativeLayout
+	android:id="@+id/layout_category_list_item"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="?android:attr/listPreferredItemHeight"
-	android:checked="false"
-	android:gravity="center_vertical"
-	android:hint="@string/text_hint_category"
-	android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-	android:singleLine="true"
-	android:textSize="@dimen/text_size_category"/>
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content">
+
+
+	<CheckedTextView
+		android:id="@+id/text_category_list_item_name"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="?android:attr/listPreferredItemHeight"
+		android:gravity="center_vertical"
+		android:hint="@string/text_hint_category"
+		android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+		android:singleLine="true"
+		android:textSize="@dimen/text_size_category"/>
+
+	<Button
+		android:id="@+id/button_category_list_item_add_task"
+		android:layout_width="@dimen/button_size_category"
+		android:layout_height="@dimen/button_size_category"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:focusable="false"
+		android:text="@string/button_text_add_task"/>
+
+</RelativeLayout>

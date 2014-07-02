@@ -87,6 +87,7 @@ public class MainScreen extends Activity {
 		ExpandableListView taskList = (ExpandableListView) findViewById(R.id.list_category);
 
 		taskList.setAdapter(tasks);
+		taskList.setItemsCanFocus(true);
 	}
 
 	@Override

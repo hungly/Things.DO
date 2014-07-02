@@ -25,6 +25,8 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.controller.AddTaskButtonListener;
+import org.rmit.hung.thingsdo.controller.RemoveTaskButtonListener;
 
 import java.util.ArrayList;
 
@@ -174,14 +176,22 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_category_list_item, null);
+
+			CategoryViewHolder tempCategoryViewHolder = new CategoryViewHolder();
+
+			tempCategoryViewHolder.textCategory = (CheckedTextView) convertView.findViewById(R.id.text_category_list_item_name);
+			tempCategoryViewHolder.buttonAddTask = (Button) convertView.findViewById(R.id.button_category_list_item_add_task);
+
+			convertView.setTag(tempCategoryViewHolder);
 		}
 
+		CategoryViewHolder categoryViewHolder = (CategoryViewHolder) convertView.getTag();
 		CategoryListItem categoryListItem = (CategoryListItem) getGroup(groupPosition);
 
-		CheckedTextView textCategory = (CheckedTextView) convertView.findViewById(R.id.text_category_list_item_name);
+		categoryViewHolder.textCategory.setText(categoryListItem.getCategory());
+		categoryViewHolder.textCategory.setChecked(isExpanded);
 
-		textCategory.setText(categoryListItem.getCategory());
-		textCategory.setChecked(isExpanded);
+		categoryViewHolder.buttonAddTask.setOnClickListener(new AddTaskButtonListener(categoryListItem));
 
 		return convertView;
 	}
@@ -216,10 +226,20 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_task_list_item, null);
+
+			TaskViewHolder tempTaskViewHolder = new TaskViewHolder();
+
+			tempTaskViewHolder.textView = (TextView) convertView.findViewById(R.id.text_task_list_item_name);
+			tempTaskViewHolder.buttonRemoveTask = (Button) convertView.findViewById(R.id
+					                                                                        .button_task_list_item_remove_task);
+
+			convertView.setTag(tempTaskViewHolder);
 		}
 
-		TextView textTask = (TextView) convertView.findViewById(R.id.text_task_list_item_name);
-		textTask.setText(taskItem);
+		TaskViewHolder taskViewHolder = (TaskViewHolder) convertView.getTag();
+
+		taskViewHolder.textView.setText(taskItem);
+		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;
 	}
@@ -239,8 +259,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		return false;
 	}
 
-	private static class ViewHolder {
-		public TextView textCategory;
-		public Button   buttonAddTask;
+	private static class CategoryViewHolder {
+		public CheckedTextView textCategory;
+		public Button          buttonAddTask;
+	}
+
+	private static class TaskViewHolder {
+		public TextView textView;
+		public Button   buttonRemoveTask;
 	}
 }

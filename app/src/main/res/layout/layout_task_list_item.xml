@@ -26,7 +26,7 @@
 		android:layout_height="?android:attr/listPreferredItemHeightSmall"
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/button_task_list_item_add_task"
+		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"
 		android:gravity="center_vertical"
 		android:hint="@string/text_hint_task"
 		android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
@@ -34,7 +34,7 @@
 		android:textSize="@dimen/text_size_task"/>
 
 	<Button
-		android:id="@+id/button_task_list_item_add_task"
+		android:id="@+id/button_task_list_item_remove_task"
 		android:layout_width="@dimen/button_size_task"
 		android:layout_height="@dimen/button_size_task"
 		android:layout_alignParentRight="true"
