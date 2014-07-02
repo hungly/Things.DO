@@ -21,10 +21,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.ExpandableListView;
+import android.widget.RelativeLayout;
 
 import org.rmit.hung.myapplication.R;
-import org.rmit.hung.thingsdo.model.CategoryAdapter;
+import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.TaskListAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Main "Things.DO" screen.
@@ -47,13 +52,41 @@ public class MainScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
 
-		final String[] categories = {"Personal", "Work", "Study", "Misc"};
+		final ArrayList<String> personalTasks = new ArrayList<String>();
+		personalTasks.add("Task 1");
+		personalTasks.add("Task 2");
+		personalTasks.add("Task 3");
+		personalTasks.add("Task 4");
+		personalTasks.add("Task 5");
 
-		final CategoryAdapter categoryAdapter = new CategoryAdapter(MainScreen.this, categories);
+		final ArrayList<String> workTasks = new ArrayList<String>();
+		workTasks.add("Task 1");
 
-		ListView list = (ListView) findViewById(R.id.list_category);
+		final ArrayList<String> studyTasks = new ArrayList<String>();
+		studyTasks.add("Task 1");
+		studyTasks.add("Task 2");
+		studyTasks.add("Task 3");
+		studyTasks.add("Task 4");
+		studyTasks.add("Task 5");
+		studyTasks.add("Task 6");
+		studyTasks.add("Task 7");
+		studyTasks.add("Task 8");
+		studyTasks.add("Task 9");
+		studyTasks.add("Task 10");
 
-		list.setAdapter(categoryAdapter);
+		final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
+		categoryListItems.add(new CategoryListItem("Personal", personalTasks));
+		categoryListItems.add(new CategoryListItem("Work", workTasks));
+		categoryListItems.add(new CategoryListItem("Study", studyTasks));
+
+		Log.v("Test", "Category: " + categoryListItems.get(0).getCategory() + ", " +
+		              "task: " + categoryListItems.get(0).getTask().get(0));
+
+		TaskListAdapter tasks = new TaskListAdapter(MainScreen.this, categoryListItems);
+
+		ExpandableListView taskList = (ExpandableListView) findViewById(R.id.list_category);
+
+		taskList.setAdapter(tasks);
 	}
 
 	@Override

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ layout_task_list_item.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       02/07/2014
+  ~ Date last modified: 02/07/2014
+  -->
+
+<RelativeLayout
+	android:id="@+id/layout_task_list_item"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<TextView
+		android:id="@+id/text_task_list_item_name"
+		android:layout_width="match_parent"
+		android:layout_height="?android:attr/listPreferredItemHeightSmall"
+		android:layout_alignParentLeft="true"
+		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@+id/button_task_list_item_add_task"
+		android:gravity="center_vertical"
+		android:hint="@string/text_hint_task"
+		android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+		android:singleLine="true"
+		android:textSize="@dimen/text_size_task"/>
+
+	<Button
+		android:id="@+id/button_task_list_item_add_task"
+		android:layout_width="@dimen/button_size_task"
+		android:layout_height="@dimen/button_size_task"
+		android:layout_alignParentRight="true"
+		android:layout_centerVertical="true"
+		android:text="@string/button_text_remove_task"/>
+
+</RelativeLayout>

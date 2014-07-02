@@ -13,15 +13,16 @@
   ~ Date last modified: 01/07/2014
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="org.rmit.hung.thingsdo.view.MainScreen">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="org.rmit.hung.thingsdo.view.MainScreen">
 
-	<ListView
+	<ExpandableListView
 		android:id="@+id/list_category"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</LinearLayout>

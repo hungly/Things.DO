@@ -19,8 +19,11 @@
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="text_size_splash_app_name">45sp</dimen>
 	<dimen name="text_size_splash_studio">20sp</dimen>
-	<dimen name="text_size_category">30sp</dimen>
-	<dimen name="button_size_category">50dp</dimen>
+	<dimen name="text_size_category">35sp</dimen>
+	<dimen name="text_size_task">20sp</dimen>
+	<dimen name="button_size_task">40dp</dimen>
+	<dimen name="padding_category_list_item_left">35dp</dimen>
+	<dimen name="padding_task_list_item_left">40dp</dimen>
 	<dimen name="padding_category_horizontal">5dp</dimen>
-	<dimen name="padding_category_vertical">3dp</dimen>
+	<dimen name="padding_category_vertical">5dp</dimen>
 </resources>
