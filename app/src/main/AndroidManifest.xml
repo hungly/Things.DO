@@ -45,7 +45,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.rmit.hung.thingsdo.view.AddTaskScreen"
+            android:name="org.rmit.hung.thingsdo.view.EditTaskScreen"
             android:label="@string/title_activity_add_task_screen" >
         </activity>
     </application>

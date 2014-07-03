@@ -22,13 +22,13 @@ import java.util.List;
  * @version %I%
  */
 public class CategoryListItem {
-	private String       category;
-	private List<String> task;
+	private String     category;
+	private List<Task> task;
 
 	public CategoryListItem() {
 	}
 
-	public CategoryListItem(String category, List<String> task) {
+	public CategoryListItem(String category, List<Task> task) {
 		this.category = category;
 		this.task = task;
 	}
@@ -41,11 +41,11 @@ public class CategoryListItem {
 		this.category = category;
 	}
 
-	public List<String> getTask() {
+	public List<Task> getTask() {
 		return task;
 	}
 
-	public void setTask(List<String> task) {
+	public void setTask(List<Task> task) {
 		this.task = task;
 	}
 }

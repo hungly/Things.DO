@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.Task;
 
 /**
  * Created by Hung on 02/07/14.
@@ -45,9 +46,15 @@ public class AddTaskButtonListener implements View.OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		Log.v("Things.DO", "Add button for \"" + categoryListItem.getCategory() + "\" clicked");
+		Bundle taskBundle = new Bundle();
 
-		addTask.putExtra("Category", categoryListItem.getCategory());
+		taskBundle.putInt("Task ID", -1);
+		taskBundle.putString("Google ID", "0");
+		taskBundle.putString("Parent", categoryListItem.getCategory());
+
+		addTask.putExtras(taskBundle);
+
+		Log.v("Things.DO", "Add button for \"" + categoryListItem.getCategory() + "\" clicked");
 
 		Log.v("Activity", "Going to start result activity for \"" + activity.getClass().getSimpleName() + "\"");
 

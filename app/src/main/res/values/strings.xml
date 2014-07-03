@@ -18,8 +18,11 @@
     <string name="app_name">Things.DO</string>
     <string name="text_splash_app_name">Thing.DO</string>
     <string name="text_splash_studio">What? Studio</string>
+	<string name="text_splash_collaborator">Collaborators</string>
     <string name="button_text_add_task">+</string>
     <string name="button_text_remove_task">X</string>
+	<string name="button_text_due_date">O</string>
+	<string name="button_text_priority">P</string>
     <string name="button_add_category">Add new category</string>
     <string name="text_hint_category">category</string>
     <string name="text_hint_task">task</string>

@@ -28,6 +28,7 @@ import android.widget.TextView;
 import org.rmit.hung.myapplication.R;
 import org.rmit.hung.thingsdo.controller.AddTaskButtonListener;
 import org.rmit.hung.thingsdo.controller.RemoveTaskButtonListener;
+import org.rmit.hung.thingsdo.controller.TaskItemClickListener;
 
 import java.util.ArrayList;
 
@@ -225,7 +226,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-		final String taskItem = (String) getChild(groupPosition, childPosition);
+		final String taskItem = ((Task) getChild(groupPosition, childPosition)).getTittle();
 
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_task_list_item, null);
@@ -242,7 +243,8 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		TaskViewHolder taskViewHolder = (TaskViewHolder) convertView.getTag();
 
 		taskViewHolder.textView.setText(taskItem);
-		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(TaskListAdapter.this, categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.textView.setOnClickListener(new TaskItemClickListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(activity, TaskListAdapter.this, categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;
 	}

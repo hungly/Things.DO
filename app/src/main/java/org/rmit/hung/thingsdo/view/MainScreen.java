@@ -25,7 +25,10 @@ import android.view.MenuItem;
 import android.widget.ExpandableListView;
 
 import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.model.TaskListAdapter;
 
 import java.util.ArrayList;
@@ -45,40 +48,40 @@ import java.util.ArrayList;
 public class MainScreen extends Activity {
 	private final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
 	private TaskListAdapter tasks;
+	private DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("Activity", "Main screen created");
-		Intent addTask = new Intent(MainScreen.this, AddTaskScreen.class);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
 
-		final ArrayList<String> personalTasks = new ArrayList<String>();
-		personalTasks.add("Task 1");
-		personalTasks.add("Task 2");
-		personalTasks.add("Task 3");
-		personalTasks.add("Task 4");
-		personalTasks.add("Task 5");
+		Intent addTask = new Intent(MainScreen.this, EditTaskScreen.class);
 
-		final ArrayList<String> workTasks = new ArrayList<String>();
-		workTasks.add("Task 1");
+		db = new DatabaseHandler(MainScreen.this);
 
-		final ArrayList<String> studyTasks = new ArrayList<String>();
-		studyTasks.add("Task 1");
-		studyTasks.add("Task 2");
-		studyTasks.add("Task 3");
-		studyTasks.add("Task 4");
-		studyTasks.add("Task 5");
-		studyTasks.add("Task 6");
-		studyTasks.add("Task 7");
-		studyTasks.add("Task 8");
-		studyTasks.add("Task 9");
-		studyTasks.add("Task 10");
+		Log.v("Things.DO", "Reading database");
 
-		categoryListItems.add(new CategoryListItem("Personal", personalTasks));
-		categoryListItems.add(new CategoryListItem("Work", workTasks));
-		categoryListItems.add(new CategoryListItem("Study", studyTasks));
+		// insert dummy data
+		if (db.getCategoriesCount() == 0) {
+			Log.v("Things.DO", "Category list is empty, adding default items");
+
+			db.addCategory(new Category("Study"));
+			db.addCategory(new Category("Personal"));
+			db.addCategory(new Category("Work"));
+		} else
+			Log.v("Things.DO", "Loading category from database");
+
+		Log.v("Database", "Total task: " + db.getTasksCount());
+
+		// get data
+		ArrayList<Category> categories = db.getAllCategories();
+
+		for (Category c : categories) {
+			ArrayList<Task> tasks = db.getTasksByCategory(c);
+			categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+		}
 
 		tasks = new TaskListAdapter(MainScreen.this, addTask, categoryListItems);
 
@@ -208,17 +211,59 @@ public class MainScreen extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 
 		if (resultCode == RESULT_OK) {
-			final String textCategory = data.getStringExtra("Category");
-			String textTaskTittle = data.getStringExtra("Tittle");
+			final int taskID = data.getIntExtra("Task ID", -1);
+			final String googleID = data.getStringExtra("Google ID");
+			final String textTaskTittle = data.getStringExtra("Tittle");
+			final String textCategory = data.getStringExtra("Parent");
+			final String textTaskNotes = data.getStringExtra("Notes");
 
-			for (CategoryListItem c : categoryListItems) {
-				if (c.getCategory().equals(textCategory)) {
-					c.getTask().add(textTaskTittle);
-					break;
+			Task task = null;
+
+			if (requestCode == 0) {
+				Log.v("Things.DO", "Create new task");
+
+				task = new Task(googleID, textTaskTittle, textCategory, textTaskNotes);
+
+				db.addTask(task);
+
+				task=db.getTask(textTaskTittle);
+
+				Log.v("Database", "Total task: " + db.getTasksCount());
+			}
+			if (requestCode == 1) {
+				Log.v("Things.DO", "Edit a task");
+
+				task = db.getTask(taskID);
+
+				task.setGoogleID(googleID);
+				task.setTittle(textTaskTittle);
+				task.setParrent(textCategory);
+				task.setNotes(textTaskNotes);
+
+				db.updateTask(task);
+
+				// remove old task item from list view
+				for (CategoryListItem c : categoryListItems){
+					int position = data.getIntExtra("Old Task Position", -1);
+					if (c.getCategory().equals(data.getStringExtra("Old Category")) && position != -1){
+						c.getTask().remove(position);
+						break;
+					}
 				}
 			}
 
+			// add task to list view
+			for (CategoryListItem c : categoryListItems) {
+				if (c.getCategory().equals(textCategory)) {
+					c.getTask().add(task);
+					break;
+				}
+			}
 			tasks.notifyDataSetChanged();
 		}
+	}
+
+	public void removeTaskFromDatabase(Task task){
+		db.deleteTask(task);
 	}
 }

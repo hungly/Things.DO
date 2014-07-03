@@ -1,5 +1,5 @@
 <!--
-  ~ add_task_screen_menu.xmlu.xml
+  ~ edit_task_screen_menu.xmlu.xml
   ~ Task Management Application
   ~ 1, COSC2543 - Mobile Application Development
   ~ RMIT International University Vietnam
@@ -15,7 +15,7 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.rmit.hung.thingsdo.view.AddTaskScreen" >
+    tools:context="org.rmit.hung.thingsdo.view.EditTaskScreen" >
 
 	<item
 		android:id="@+id/action_settings"

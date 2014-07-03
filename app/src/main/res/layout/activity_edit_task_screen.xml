@@ -1,0 +1,94 @@
+<!--
+  ~ activity_edit_task_screen.xmll
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       03/07/2014
+  ~ Date last modified: 03/07/2014
+  -->
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<EditText
+			android:id="@+id/text_task_tittle"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_toLeftOf="@+id/button_task_priority"
+			android:hint="@string/text_hint_add_task_tittle"
+			android:singleLine="true"/>
+
+		<Button
+			android:id="@+id/button_task_priority"
+			android:layout_width="@dimen/button_size_task"
+			android:layout_height="@dimen/button_size_task"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/button_task_due_date"
+			android:text="@string/button_text_priority"/>
+
+		<Button
+			android:id="@+id/button_task_due_date"
+			android:layout_width="@dimen/button_size_task"
+			android:layout_height="@dimen/button_size_task"
+			android:layout_centerVertical="true"
+			android:layout_toLeftOf="@+id/button_save_task"
+			android:text="@string/button_text_due_date"/>
+
+		<Button
+			android:id="@+id/button_save_task"
+			android:layout_width="@dimen/button_size_task"
+			android:layout_height="@dimen/button_size_task"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:text="@string/button_text_add_task"/>
+
+	</RelativeLayout>
+
+	<EditText
+		android:id="@+id/text_task_notes"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:hint="@string/text_hint_add_task_note"/>
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:paddingLeft="@dimen/padding_collaborator_list"
+			android:text="@string/text_splash_collaborator"
+			android:textSize="@dimen/text_size_collaborator"/>
+
+		<Button
+			android:id="@+id/button_task_add_collaborator"
+			android:layout_width="@dimen/button_size_task"
+			android:layout_height="@dimen/button_size_task"
+			android:layout_alignParentRight="true"
+			android:layout_centerVertical="true"
+			android:text="@string/button_text_add_task"/>
+
+	</RelativeLayout>
+
+	<ListView
+		android:id="@+id/list_collaborators"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"/>
+
+</LinearLayout>

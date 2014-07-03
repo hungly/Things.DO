@@ -27,34 +27,55 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.model.Task;
 
-public class AddTaskScreen extends Activity {
+public class EditTaskScreen extends Activity {
 	private EditText taskTittle;
-	private Button   addTaskConfirm;
+	private EditText taskNote;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("Activity", "Add task screen started");
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_add_task_screen);
+		setContentView(R.layout.activity_edit_task_screen);
 
-		taskTittle = (EditText) findViewById(R.id.text_add_task_tittle);
-		addTaskConfirm = (Button) findViewById(R.id.button_add_new_task);
+		final Button addTaskConfirm = (Button) findViewById(R.id.button_save_task);
+
+		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
+		taskNote = (EditText) findViewById(R.id.text_task_notes);
+
+		final Intent values = getIntent();
+		final Bundle taskBundle = values.getExtras();
+
+		final int taskID = taskBundle.getInt("Task ID");
+
+		if (taskID != -1){
+			taskTittle.setText(taskBundle.getString("Tittle"));
+			taskNote.setText(taskBundle.getString("Notes"));
+		}
 
 		addTaskConfirm.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				final String textTaskTittle = taskTittle.getText().toString();
+				final String textTaskNotes = taskNote.getText().toString();
 
 				Log.v("Things.DO", "Confirm add task \"" + textTaskTittle + "\"");
-				Intent category = getIntent();
-				Intent resultAddTask = new Intent(AddTaskScreen.this, MainScreen.class);
+				Intent resultTask = new Intent(EditTaskScreen.this, MainScreen.class);
 
-				resultAddTask.putExtra("Category", category.getStringExtra("Category"));
-				resultAddTask.putExtra("Tittle", textTaskTittle);
+				resultTask.putExtra("Task ID", taskBundle.getInt("Task ID"));
+				resultTask.putExtra("Google ID", taskBundle.getString("Google ID"));
+				resultTask.putExtra("Tittle", textTaskTittle);
+				resultTask.putExtra("Parent", taskBundle.getString("Parent"));
+				resultTask.putExtra("Notes", textTaskNotes);
 
-				setResult(RESULT_OK, resultAddTask);
+				if(taskBundle.getString("Old Category") != null){
+					resultTask.putExtra("Old Category", taskBundle.getString("Old Category"));
+					resultTask.putExtra("Old Task Position", taskBundle.getInt("Old Task Position"));
+				}
+
+				setResult(RESULT_OK, resultTask);
 
 				finish();
 			}
@@ -123,7 +144,7 @@ public class AddTaskScreen extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.add_task_screen_menu, menu);
+		getMenuInflater().inflate(R.menu.edit_task_screen_menu, menu);
 		return true;
 	}
 
@@ -148,7 +169,7 @@ public class AddTaskScreen extends Activity {
 		if (id == R.id.action_exit) {
 			Log.v("Things.DO", "\"Exit\" selected, end application now");
 
-			AddTaskScreen.this.finish();
+			EditTaskScreen.this.finish();
 
 			return true;
 		}
@@ -157,5 +178,7 @@ public class AddTaskScreen extends Activity {
 	}
 
 	public void clearAllInput() {
+		taskTittle.setText("");
+		taskNote.setText("");
 	}
 }
