@@ -16,14 +16,13 @@
 package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.RelativeLayout;
 
 import org.rmit.hung.myapplication.R;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
@@ -44,10 +43,13 @@ import java.util.ArrayList;
  *          -   http://idroidsoftwareinc.blogspot.com/2013/09/android-splash-screen-example-tutorial.html
  */
 public class MainScreen extends Activity {
+	private final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
+	private TaskListAdapter tasks;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("Activity", "Main screen created");
+		Intent addTask = new Intent(MainScreen.this, AddTaskScreen.class);
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
@@ -74,15 +76,11 @@ public class MainScreen extends Activity {
 		studyTasks.add("Task 9");
 		studyTasks.add("Task 10");
 
-		final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
 		categoryListItems.add(new CategoryListItem("Personal", personalTasks));
 		categoryListItems.add(new CategoryListItem("Work", workTasks));
 		categoryListItems.add(new CategoryListItem("Study", studyTasks));
 
-		Log.v("Test", "Category: " + categoryListItems.get(0).getCategory() + ", " +
-		              "task: " + categoryListItems.get(0).getTask().get(0));
-
-		TaskListAdapter tasks = new TaskListAdapter(MainScreen.this, categoryListItems);
+		tasks = new TaskListAdapter(MainScreen.this, addTask, categoryListItems);
 
 		ExpandableListView taskList = (ExpandableListView) findViewById(R.id.list_category);
 
@@ -152,7 +150,7 @@ public class MainScreen extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.things_do_menu, menu);
+		getMenuInflater().inflate(R.menu.things_do_main_screen_menu, menu);
 		return true;
 	}
 
@@ -178,5 +176,49 @@ public class MainScreen extends Activity {
 		}
 
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Called when an activity you launched exits, giving you the requestCode
+	 * you started it with, the resultCode it returned, and any additional
+	 * data from it.  The <var>resultCode</var> will be
+	 * {@link #RESULT_CANCELED} if the activity explicitly returned that,
+	 * didn't return any result, or crashed during its operation.
+	 * <p/>
+	 * <p>You will receive this call immediately before onResume() when your
+	 * activity is re-starting.
+	 *
+	 * @param requestCode
+	 * 		The integer request code originally supplied to
+	 * 		startActivityForResult(), allowing you to identify who this
+	 * 		result came from.
+	 * @param resultCode
+	 * 		The integer result code returned by the child activity
+	 * 		through its setResult().
+	 * @param data
+	 * 		An Intent, which can return result data to the caller
+	 * 		(various data can be attached to Intent "extras").
+	 *
+	 * @see #startActivityForResult
+	 * @see #createPendingResult
+	 * @see #setResult(int)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK) {
+			final String textCategory = data.getStringExtra("Category");
+			String textTaskTittle = data.getStringExtra("Tittle");
+
+			for (CategoryListItem c : categoryListItems) {
+				if (c.getCategory().equals(textCategory)) {
+					c.getTask().add(textTaskTittle);
+					break;
+				}
+			}
+
+			tasks.notifyDataSetChanged();
+		}
 	}
 }

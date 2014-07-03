@@ -19,16 +19,18 @@ import android.util.Log;
 import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.TaskListAdapter;
 
 /**
  * Created by Hung on 02/07/14.
  */
 public class RemoveTaskButtonListener implements View.OnClickListener {
-
+	private final TaskListAdapter  adapter;
 	private final CategoryListItem categoryListItem;
 	private final int              taskPosition;
 
-	public RemoveTaskButtonListener(CategoryListItem categoryListItem, int taskPosition) {
+	public RemoveTaskButtonListener(TaskListAdapter adapter, CategoryListItem categoryListItem, int taskPosition) {
+		this.adapter = adapter;
 		this.categoryListItem = categoryListItem;
 		this.taskPosition = taskPosition;
 	}
@@ -42,5 +44,9 @@ public class RemoveTaskButtonListener implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		Log.v("Things.DO", "Remove button for \"" + categoryListItem.getTask().get(taskPosition) + "\" clicked");
+
+		categoryListItem.getTask().remove(taskPosition);
+
+		adapter.notifyDataSetChanged();
 	}
 }

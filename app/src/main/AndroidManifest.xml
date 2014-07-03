@@ -13,37 +13,41 @@
   ~ Date created:       01/07/2014
   ~ Date last modified: 01/07/2014
 -->
-<manifest package="org.rmit.hung.myapplication"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.rmit.hung.myapplication" >
 
-	<application
-		android:allowBackup="true"
-		android:icon="@drawable/ic_launcher"
-		android:label="@string/app_name"
-		android:theme="@style/AppTheme">
-		<activity
-			android:name="org.rmit.hung.thingsdo.view.MainScreen"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/app_name"
-			android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="org.rmit.hung.thingsdo.view.MainScreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.rmit.hung.thingsdo.view.SplashScreen"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/app_name"
-			android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.rmit.hung.thingsdo.view.SplashScreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-	</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.rmit.hung.thingsdo.view.AddTaskScreen"
+            android:label="@string/title_activity_add_task_screen" >
+        </activity>
+    </application>
 
 </manifest>

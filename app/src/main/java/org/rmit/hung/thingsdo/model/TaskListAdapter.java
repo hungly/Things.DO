@@ -16,6 +16,7 @@
 package org.rmit.hung.thingsdo.model;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,12 +40,14 @@ import java.util.ArrayList;
  */
 public class TaskListAdapter extends BaseExpandableListAdapter {
 	private final ArrayList<CategoryListItem> categoryListItemArrayList;
+	private final Activity                    activity;
+	private final Intent                      addTask;
 	private       LayoutInflater              inflater;
-	private       Activity                    activity;
 
-	public TaskListAdapter(Activity activity, ArrayList<CategoryListItem> categoryListItemArrayList) {
+	public TaskListAdapter(Activity activity, Intent addTask, ArrayList<CategoryListItem> categoryListItemArrayList) {
 		this.categoryListItemArrayList = categoryListItemArrayList;
 		this.activity = activity;
+		this.addTask = addTask;
 		this.inflater = activity.getLayoutInflater();
 	}
 
@@ -191,7 +194,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		categoryViewHolder.textCategory.setText(categoryListItem.getCategory());
 		categoryViewHolder.textCategory.setChecked(isExpanded);
 
-		categoryViewHolder.buttonAddTask.setOnClickListener(new AddTaskButtonListener(categoryListItem));
+		categoryViewHolder.buttonAddTask.setOnClickListener(new AddTaskButtonListener(activity, addTask, categoryListItem));
 
 		return convertView;
 	}
@@ -239,7 +242,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		TaskViewHolder taskViewHolder = (TaskViewHolder) convertView.getTag();
 
 		taskViewHolder.textView.setText(taskItem);
-		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(TaskListAdapter.this, categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;
 	}
