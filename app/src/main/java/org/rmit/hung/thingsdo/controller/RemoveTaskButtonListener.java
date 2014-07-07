@@ -20,7 +20,6 @@ import android.util.Log;
 import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
-import org.rmit.hung.thingsdo.model.TaskListAdapter;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**

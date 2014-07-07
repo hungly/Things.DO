@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
-import org.rmit.hung.thingsdo.model.Task;
 
 /**
  * Created by Hung on 02/07/14.

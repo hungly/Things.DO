@@ -22,9 +22,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 
 import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
@@ -89,6 +91,9 @@ public class MainScreen extends Activity {
 
 		taskList.setAdapter(tasks);
 		taskList.setItemsCanFocus(true);
+
+		final Button buttonNewCategory = (Button) findViewById(R.id.button_add_category);
+		buttonNewCategory.setOnClickListener(new AddCategoryButtonListener(MainScreen.this));
 	}
 
 	@Override
