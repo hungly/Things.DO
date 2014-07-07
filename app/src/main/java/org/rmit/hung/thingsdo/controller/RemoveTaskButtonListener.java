@@ -28,14 +28,12 @@ import org.rmit.hung.thingsdo.view.MainScreen;
  */
 public class RemoveTaskButtonListener implements View.OnClickListener {
 	private final Activity         activity;
-	private final TaskListAdapter  adapter;
 	private final CategoryListItem categoryListItem;
 	private final int              taskPosition;
 
-	public RemoveTaskButtonListener(Activity activity, TaskListAdapter adapter, CategoryListItem categoryListItem,
+	public RemoveTaskButtonListener(Activity activity, CategoryListItem categoryListItem,
 	                                int taskPosition) {
 		this.activity = activity;
-		this.adapter = adapter;
 		this.categoryListItem = categoryListItem;
 		this.taskPosition = taskPosition;
 	}
@@ -50,12 +48,6 @@ public class RemoveTaskButtonListener implements View.OnClickListener {
 	public void onClick(View v) {
 		Log.v("Things.DO", "Remove button for task \"" + categoryListItem.getTask().get(taskPosition).getTittle() + "\" clicked");
 
-		Log.v("Things.DO", "Remove task \"" + categoryListItem.getTask().get(taskPosition).getTittle() + "\" from database");
-		((MainScreen) activity).removeTaskFromDatabase(categoryListItem.getTask().get(taskPosition));
-
-		Log.v("Things.DO", "Remove task \"" + categoryListItem.getTask().get(taskPosition).getTittle() + "\" from list view");
-		categoryListItem.getTask().remove(taskPosition);
-
-		adapter.notifyDataSetChanged();
+		((MainScreen) activity).removeTask(categoryListItem, taskPosition);
 	}
 }

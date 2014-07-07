@@ -226,7 +226,7 @@ public class MainScreen extends Activity {
 
 				db.addTask(task);
 
-				task=db.getTask(textTaskTittle);
+				task = db.getTask(textTaskTittle);
 
 				Log.v("Database", "Total task: " + db.getTasksCount());
 			}
@@ -243,9 +243,9 @@ public class MainScreen extends Activity {
 				db.updateTask(task);
 
 				// remove old task item from list view
-				for (CategoryListItem c : categoryListItems){
+				for (CategoryListItem c : categoryListItems) {
 					int position = data.getIntExtra("Old Task Position", -1);
-					if (c.getCategory().equals(data.getStringExtra("Old Category")) && position != -1){
+					if (c.getCategory().equals(data.getStringExtra("Old Category")) && position != -1) {
 						c.getTask().remove(position);
 						break;
 					}
@@ -263,7 +263,30 @@ public class MainScreen extends Activity {
 		}
 	}
 
-	public void removeTaskFromDatabase(Task task){
-		db.deleteTask(task);
+	public void removeTask(CategoryListItem categoryListItem, int taskPosition) {
+		Log.v("Things.DO", "Task: \"" + categoryListItem.getTask().get(taskPosition).getTittle() + "\"");
+		Log.v("Things.DO", "Category: \"" + categoryListItem.getCategory() + "\"");
+
+		Log.v("Things.DO", "Remove task from database");
+		db.deleteTask(categoryListItem.getTask().get(taskPosition));
+
+		Log.v("Things.DO", "Remove task from list view");
+		categoryListItem.getTask().remove(taskPosition);
+
+		Log.v("Things.DO", "Remove finished, refresh list view");
+		tasks.notifyDataSetChanged();
+	}
+
+	public void addCategory(String categoryName) {
+		Log.v("Things.DO", "Category: \"" + categoryName + "\"");
+
+		Log.v("Things.DO", "Add category to database");
+		db.addCategory(new Category(categoryName));
+
+		Log.v("Things.DO", "Add category to database");
+		categoryListItems.add(new CategoryListItem(categoryName, new ArrayList<Task>()));
+
+		Log.v("Things.DO", "Add finished, refresh list view");
+		tasks.notifyDataSetChanged();
 	}
 }

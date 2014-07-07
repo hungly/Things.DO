@@ -27,7 +27,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import org.rmit.hung.myapplication.R;
-import org.rmit.hung.thingsdo.model.Task;
 
 public class EditTaskScreen extends Activity {
 	private EditText taskTittle;
@@ -50,7 +49,7 @@ public class EditTaskScreen extends Activity {
 
 		final int taskID = taskBundle.getInt("Task ID");
 
-		if (taskID != -1){
+		if (taskID != -1) {
 			taskTittle.setText(taskBundle.getString("Tittle"));
 			taskNote.setText(taskBundle.getString("Notes"));
 		}
@@ -70,7 +69,7 @@ public class EditTaskScreen extends Activity {
 				resultTask.putExtra("Parent", taskBundle.getString("Parent"));
 				resultTask.putExtra("Notes", textTaskNotes);
 
-				if(taskBundle.getString("Old Category") != null){
+				if (taskBundle.getString("Old Category") != null) {
 					resultTask.putExtra("Old Category", taskBundle.getString("Old Category"));
 					resultTask.putExtra("Old Task Position", taskBundle.getInt("Old Task Position"));
 				}

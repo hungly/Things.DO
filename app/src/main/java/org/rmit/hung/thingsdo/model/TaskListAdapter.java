@@ -244,7 +244,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 
 		taskViewHolder.textView.setText(taskItem);
 		taskViewHolder.textView.setOnClickListener(new TaskItemClickListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
-		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(activity, TaskListAdapter.this, categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(activity, categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;
 	}
