@@ -48,6 +48,14 @@
             android:name="org.rmit.hung.thingsdo.view.EditTaskScreen"
             android:label="@string/title_activity_add_task_screen" >
         </activity>
+        <activity
+            android:name="org.rmit.hung.thingsdo.view.SettingsScreen"
+            android:label="@string/title_activity_settings_screen" >
+        </activity>
+        <activity
+            android:name="org.rmit.hung.thingsdo.view.CategoryManagerScreen"
+            android:label="@string/title_activity_category_manager_screen" >
+        </activity>
     </application>
 
 </manifest>

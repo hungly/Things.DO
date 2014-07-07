@@ -77,14 +77,6 @@ public class MainScreen extends Activity {
 
 		Log.v("Database", "Total task: " + db.getTasksCount());
 
-		// get data
-		ArrayList<Category> categories = db.getAllCategories();
-
-		for (Category c : categories) {
-			ArrayList<Task> tasks = db.getTasksByCategory(c);
-			categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
-		}
-
 		tasks = new TaskListAdapter(MainScreen.this, addTask, categoryListItems);
 
 		ExpandableListView taskList = (ExpandableListView) findViewById(R.id.list_category);
@@ -113,6 +105,18 @@ public class MainScreen extends Activity {
 	@Override
 	protected void onResume() {
 		Log.v("Activity", "Main screen resumed");
+
+		// get data
+		ArrayList<Category> categories = db.getAllCategories();
+
+		categoryListItems.clear();
+
+		for (Category c : categories) {
+			ArrayList<Task> tasks = db.getTasksByCategory(c);
+			categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+		}
+
+		tasks.notifyDataSetChanged();
 
 		super.onResume();
 	}
@@ -172,6 +176,10 @@ public class MainScreen extends Activity {
 
 		if (id == R.id.action_settings) {
 			Log.v("Things.DO", "\"Setting\" selected, start settings screen");
+
+			Intent menuScreen = new Intent(MainScreen.this, SettingsScreen.class);
+
+			startActivity(menuScreen);
 
 			return true;
 		}

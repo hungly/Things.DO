@@ -24,6 +24,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.view.CategoryManagerScreen;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
@@ -61,7 +62,12 @@ public class AddCategoryButtonListener implements View.OnClickListener {
 					public void onClick(DialogInterface dialog, int id) {
 						Log.v("Test", textNewCategoryName.getText().toString());
 
-						((MainScreen) activity).addCategory(textNewCategoryName.getText().toString());
+						if (activity instanceof MainScreen)
+							((MainScreen) activity).addCategory(textNewCategoryName.getText().toString());
+						if (activity instanceof CategoryManagerScreen) {
+							((CategoryManagerScreen) activity).addCategory(textNewCategoryName.getText().toString());
+
+						}
 					}
 				})
 				.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

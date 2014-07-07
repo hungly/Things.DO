@@ -1,0 +1,35 @@
+<!--
+  ~ activity_category_manager_screen.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       07/07/2014
+  ~ Date last modified: 07/07/2014
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="org.rmit.hung.thingsdo.view.CategoryManagerScreen">
+
+	<ListView
+		android:id="@+id/list_category"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_above="@+id/button_category_manager_add_category"/>
+
+	<Button
+		android:id="@+id/button_category_manager_add_category"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:text="@string/button_add_category"/>
+
+</RelativeLayout>
