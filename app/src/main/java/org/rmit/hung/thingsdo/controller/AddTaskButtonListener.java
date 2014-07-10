@@ -49,7 +49,9 @@ public class AddTaskButtonListener implements View.OnClickListener {
 
 		taskBundle.putInt("Task ID", -1);
 		taskBundle.putString("Google ID", "0");
-		taskBundle.putString("Parent", categoryListItem.getCategory());
+		taskBundle.putString("Category", categoryListItem.getCategory());
+		taskBundle.putString("Due Date", "None");
+		taskBundle.putString("Parent", "Medium");
 
 		addTask.putExtras(taskBundle);
 

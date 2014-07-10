@@ -69,11 +69,32 @@
 		android:layout_height="wrap_content">
 
 		<TextView
+			android:id="@+id/text_due_date_prefix"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentLeft="true"
+			android:layout_alignParentTop="true"
+			android:paddingLeft="@dimen/padding_collaborator_list"
+			android:text="@string/text_edit_task_due_date"
+			android:textSize="@dimen/text_size_due_date"/>
+
+		<TextView
+			android:id="@+id/text_due_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentRight="true"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@+id/text_due_date_prefix"
+			android:hint="@string/text_hint_task_due_date"
+			android:paddingLeft="@dimen/padding_due_date"
+			android:textSize="@dimen/text_size_due_date"/>
+
+		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_centerVertical="true"
+			android:layout_alignBottom="@+id/button_task_add_collaborator"
 			android:paddingLeft="@dimen/padding_collaborator_list"
-			android:text="@string/text_splash_collaborator"
+			android:text="@string/text_edit_task_collaborator"
 			android:textSize="@dimen/text_size_collaborator"/>
 
 		<Button
@@ -81,7 +102,7 @@
 			android:layout_width="@dimen/button_size_task"
 			android:layout_height="@dimen/button_size_task"
 			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
+			android:layout_below="@+id/text_due_date_prefix"
 			android:text="@string/button_text_add_task"/>
 
 	</RelativeLayout>

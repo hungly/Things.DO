@@ -56,10 +56,15 @@ public class TaskItemClickListener implements View.OnClickListener {
 		taskBundle.putInt("Task ID", selectedTask.getID());
 		taskBundle.putString("Google ID", selectedTask.getGoogleID());
 		taskBundle.putString("Tittle", selectedTask.getTittle());
-		taskBundle.putString("Parent", selectedTask.getParrent());
+		taskBundle.putString("Update Date", selectedTask.getUpdateDate());
+		taskBundle.putString("Parent", selectedTask.getParent());
 		taskBundle.putString("Notes", selectedTask.getNotes());
+		taskBundle.putString("Status", selectedTask.getStatus());
+		taskBundle.putString("Due Date", selectedTask.getDueDate());
+		taskBundle.putString("Completed Date", selectedTask.getCompletedDate());
+		taskBundle.putString("Category", selectedTask.getCategory());
 
-		taskBundle.putString("Old Category", selectedTask.getParrent());
+		taskBundle.putString("Old Category", selectedTask.getParent());
 		taskBundle.putInt("Old Task Position", taskPosition);
 
 		editTask.putExtras(taskBundle);

@@ -29,7 +29,6 @@ import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListAdapter;
-import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.Task;
 
 import java.util.ArrayList;
@@ -155,12 +154,12 @@ public class CategoryManagerScreen extends Activity {
 		categoryListAdapter.notifyDataSetChanged();
 	}
 
-	public void removeCategory(ArrayList<Category> categories, int position){
+	public void removeCategory(ArrayList<Category> categories, int position) {
 		Log.v("Things.DO", "Category: \"" + categories.get(position).getCategory() + "\"");
 
 		Log.v("Things.DO", "Remove task belong to this category from database");
 		ArrayList<Task> tasks = db.getTasksByCategory(categories.get(position));
-		for (Task t: tasks) {
+		for (Task t : tasks) {
 			db.deleteTask(t);
 		}
 		db.deleteCategory(categories.get(position));

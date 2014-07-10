@@ -22,6 +22,7 @@
 	<dimen name="text_size_category">35sp</dimen>
 	<dimen name="text_size_task">20sp</dimen>
 	<dimen name="text_size_collaborator">25sp</dimen>
+	<dimen name="text_size_due_date">25sp</dimen>
 	<dimen name="button_size_category">50dp</dimen>
 	<dimen name="button_size_task">40dp</dimen>
 	<dimen name="padding_category_list_item_left">35dp</dimen>
@@ -29,4 +30,5 @@
 	<dimen name="padding_category_horizontal">5dp</dimen>
 	<dimen name="padding_category_vertical">5dp</dimen>
 	<dimen name="padding_collaborator_list">10dp</dimen>
+	<dimen name="padding_due_date">5dp</dimen>
 </resources>

@@ -22,28 +22,82 @@ public class Task {
 	private int    _id;
 	private String _googleID;
 	private String _tittle;
+	private String _updateDate;
 	private String _parent;
 	private String _notes;
+	private String _status;
+	private String _dueDate;
+	private String _completedDate;
+	private String _category;
 
-	public Task(String _googleID, String _tittle, String _parent, String _notes) {
+	public Task(int _id, String _googleID, String _tittle, String _updateDate, String _parent, String _notes, String _dueDate, String _completedDate, String _category) {
+		this._id = _id;
 		this._googleID = _googleID;
 		this._tittle = _tittle;
+		this._updateDate = _updateDate;
 		this._parent = _parent;
 		this._notes = _notes;
+		this._dueDate = _dueDate;
+		this._completedDate = _completedDate;
+		this._category = _category;
 	}
 
-	public Task(int _id, String _googleID, String _tittle, String _parent, String _notes) {
+	public Task(int _id, String _googleID, String _tittle, String _updateDate, String _parent, String _notes, String _status, String _dueDate, String _completedDate, String _category) {
 
 		this._id = _id;
 		this._googleID = _googleID;
 		this._tittle = _tittle;
+		this._updateDate = _updateDate;
 		this._parent = _parent;
 		this._notes = _notes;
+		this._status = _status;
+		this._dueDate = _dueDate;
+		this._completedDate = _completedDate;
+		this._category = _category;
 	}
 
-
 	public Task() {
+		this._status = "needsAction";
+	}
 
+	public String getCategory() {
+		return _category;
+	}
+
+	public void setCategory(String _category) {
+		this._category = _category;
+	}
+
+	public String getStatus() {
+		return _status;
+	}
+
+	public void setStatus(String _status) {
+		this._status = _status;
+	}
+
+	public String getDueDate() {
+		return _dueDate;
+	}
+
+	public void setDueDate(String _dueDate) {
+		this._dueDate = _dueDate;
+	}
+
+	public String getCompletedDate() {
+		return _completedDate;
+	}
+
+	public void setCompletedDate(String _completedDate) {
+		this._completedDate = _completedDate;
+	}
+
+	public String getUpdateDate() {
+		return _updateDate;
+	}
+
+	public void setUpdateDate(String _updateDate) {
+		this._updateDate = _updateDate;
 	}
 
 	public String getNotes() {
@@ -78,11 +132,11 @@ public class Task {
 		this._tittle = _tittle;
 	}
 
-	public String getParrent() {
+	public String getParent() {
 		return _parent;
 	}
 
-	public void setParrent(String _parrent) {
-		this._parent = _parrent;
+	public void setParent(String _parent) {
+		this._parent = _parent;
 	}
 }

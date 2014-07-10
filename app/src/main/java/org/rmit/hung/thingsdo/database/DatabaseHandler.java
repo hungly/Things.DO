@@ -32,7 +32,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 	// database version
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 4;
 
 	// database name
 	private static final String DATABASE_NAME = "Task";
@@ -46,11 +46,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String CAT_KEY_CATEGORY = "category";
 
 	// "Tasks" table column names
-	private static final String TASK_KEY_ID        = "id";
-	private static final String TASK_KEY_GOOGLE_ID = "google_id";
-	private static final String TASK_KEY_TITTLE    = "tittle";
-	private static final String TASK_KEY_PARENT    = "parent";
-	private static final String TASK_KEY_NOTES     = "notes";
+	private static final String TASK_KEY_ID             = "id";
+	private static final String TASK_KEY_GOOGLE_ID      = "google_id";
+	private static final String TASK_KEY_TITTLE         = "tittle";
+	private static final String TASK_KEY_UPDATE_DATE    = "updateDate";
+	private static final String TASK_KEY_PARENT         = "parent";
+	private static final String TASK_KEY_NOTES          = "notes";
+	private static final String TASK_KEY_STATUS         = "status";
+	private static final String TASK_KEY_DUE_DATE       = "dueDate";
+	private static final String TASK_KEY_COMPLETED_DATE = "completedDate";
+	private static final String TASK_KEY_CATEGORY       = "category";
 
 	/**
 	 * Create a helper object to create, open, and/or manage a database.
@@ -82,14 +87,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	/** Adding new task */
 	public void addTask(Task task) {
-		Log.v("Database", "Adding task \"" + task.getTittle() + "\" to \"" + task.getParrent() + "\"");
+		Log.v("Database", "Adding task \"" + task.getTittle() + "\" to \"" + task.getCategory() + "\"");
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+
 		values.put(TASK_KEY_GOOGLE_ID, task.getGoogleID());
 		values.put(TASK_KEY_TITTLE, task.getTittle());
-		values.put(TASK_KEY_PARENT, task.getParrent());
+		values.put(TASK_KEY_UPDATE_DATE, task.getUpdateDate());
+		values.put(TASK_KEY_PARENT, task.getParent());
 		values.put(TASK_KEY_NOTES, task.getNotes());
+		values.put(TASK_KEY_STATUS, task.getStatus());
+		values.put(TASK_KEY_DUE_DATE, task.getDueDate());
+		values.put(TASK_KEY_COMPLETED_DATE, task.getCompletedDate());
+		values.put(TASK_KEY_CATEGORY, task.getCategory());
 
 		db.insert(TABLE_TASKS, null, values);
 
@@ -128,8 +139,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		assert c != null;
 		Task task = new Task(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))),
-		                     c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)), c.getString(c.getColumnIndex(TASK_KEY_TITTLE)), c.getString(c.getColumnIndex(TASK_KEY_PARENT)), c.getString(c.getColumnIndex(TASK_KEY_NOTES))
-		);
+		                     c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_TITTLE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_PARENT)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_NOTES)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_STATUS)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
 
 		db.close();
 
@@ -149,8 +167,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		assert c != null;
 		Task task = new Task(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))),
-		                     c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)), c.getString(c.getColumnIndex(TASK_KEY_TITTLE)), c.getString(c.getColumnIndex(TASK_KEY_PARENT)), c.getString(c.getColumnIndex(TASK_KEY_NOTES))
-		);
+		                     c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_TITTLE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_PARENT)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_NOTES)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_STATUS)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
 
 		db.close();
 
@@ -196,8 +221,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setID(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))));
 				task.setGoogleID(c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)));
 				task.setTittle(c.getString(c.getColumnIndex(TASK_KEY_TITTLE)));
-				task.setParrent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
+				task.setUpdateDate(c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)));
+				task.setParent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
 				task.setNotes(c.getString(c.getColumnIndex(TASK_KEY_NOTES)));
+				task.setStatus(c.getString(c.getColumnIndex(TASK_KEY_STATUS)));
+				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
+				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
+				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -211,7 +241,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public ArrayList<Task> getTasksByCategory(Category category) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor c = db.query(TABLE_TASKS, null,TASK_KEY_PARENT + "=?", new String[] {category.getCategory()}, null, null, null);
+		Cursor c = db.query(TABLE_TASKS, null, TASK_KEY_CATEGORY + "=?", new String[]{category.getCategory()}, null, null, null);
 
 		ArrayList<Task> tasks = new ArrayList<Task>();
 
@@ -222,8 +252,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setID(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))));
 				task.setGoogleID(c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)));
 				task.setTittle(c.getString(c.getColumnIndex(TASK_KEY_TITTLE)));
-				task.setParrent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
+				task.setUpdateDate(c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)));
+				task.setParent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
 				task.setNotes(c.getString(c.getColumnIndex(TASK_KEY_NOTES)));
+				task.setStatus(c.getString(c.getColumnIndex(TASK_KEY_STATUS)));
+				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
+				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
+				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -285,11 +320,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		ContentValues values = new ContentValues();
 
-		values.put(TASK_KEY_ID, task.getID());
 		values.put(TASK_KEY_GOOGLE_ID, task.getGoogleID());
 		values.put(TASK_KEY_TITTLE, task.getTittle());
-		values.put(TASK_KEY_PARENT, task.getParrent());
+		values.put(TASK_KEY_UPDATE_DATE, task.getUpdateDate());
+		values.put(TASK_KEY_PARENT, task.getParent());
 		values.put(TASK_KEY_NOTES, task.getNotes());
+		values.put(TASK_KEY_STATUS, task.getStatus());
+		values.put(TASK_KEY_DUE_DATE, task.getDueDate());
+		values.put(TASK_KEY_COMPLETED_DATE, task.getCompletedDate());
 
 		final int returnCode = db.update(TABLE_TASKS, values, TASK_KEY_ID + "=?", new String[]{String.valueOf(task.getID())});
 
@@ -328,11 +366,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// create query
-		final String CREATE_CAT_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + "(" + CAT_KEY_ID + " INTEGER PRIMARY " +
-		                                "KEY, " + CAT_KEY_CATEGORY + " TEXT)";
-		final String CREATE_TASK_TABLE = "CREATE TABLE " + TABLE_TASKS + "(" + TASK_KEY_ID + " INTEGER PRIMARY KEY, " +
-		                                 TASK_KEY_GOOGLE_ID + " TEXT, " + TASK_KEY_TITTLE + " TEXT, " +
-		                                 TASK_KEY_PARENT + " TEXT, " + TASK_KEY_NOTES + " TEXT)";
+		final String CREATE_CAT_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + "(" + CAT_KEY_ID +
+		                                " INTEGER PRIMARY KEY, " + CAT_KEY_CATEGORY + " TEXT)";
+
+		final String CREATE_TASK_TABLE = "CREATE TABLE " + TABLE_TASKS + "(" +
+		                                 TASK_KEY_ID + " INTEGER PRIMARY KEY, " +
+		                                 TASK_KEY_GOOGLE_ID + " TEXT, " +
+		                                 TASK_KEY_TITTLE + " TEXT, " +
+		                                 TASK_KEY_UPDATE_DATE + " TEXT, " +
+		                                 TASK_KEY_PARENT + " TEXT, " +
+		                                 TASK_KEY_NOTES + " TEXT, " +
+		                                 TASK_KEY_STATUS + " TEXT, " +
+		                                 TASK_KEY_DUE_DATE + " TEXT, " +
+		                                 TASK_KEY_COMPLETED_DATE + " TEXT, " +
+		                                 TASK_KEY_CATEGORY + " TEXT)";
 
 		db.execSQL(CREATE_CAT_TABLE);
 		db.execSQL(CREATE_TASK_TABLE);

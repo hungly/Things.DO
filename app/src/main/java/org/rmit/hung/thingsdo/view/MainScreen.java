@@ -227,15 +227,20 @@ public class MainScreen extends Activity {
 			final int taskID = data.getIntExtra("Task ID", -1);
 			final String googleID = data.getStringExtra("Google ID");
 			final String textTaskTittle = data.getStringExtra("Tittle");
-			final String textCategory = data.getStringExtra("Parent");
+			final String textUpdateDate = data.getStringExtra("Update Date");
+			final String textParent = data.getStringExtra("Parent");
 			final String textTaskNotes = data.getStringExtra("Notes");
+			final String textStatus = data.getStringExtra("Status");
+			final String textDueDate = data.getStringExtra("Due Date");
+			final String textCompletedDate = data.getStringExtra("Completed Date");
+			final String textCategory = data.getStringExtra("Category");
 
 			Task task = null;
 
 			if (requestCode == 0) {
 				Log.v("Things.DO", "Create new task");
 
-				task = new Task(googleID, textTaskTittle, textCategory, textTaskNotes);
+				task = new Task(taskID, googleID, textTaskTittle, textUpdateDate, textParent, textTaskNotes, textStatus, textDueDate, textCompletedDate, textCategory);
 
 				db.addTask(task);
 
@@ -243,15 +248,23 @@ public class MainScreen extends Activity {
 
 				Log.v("Database", "Total task: " + db.getTasksCount());
 			}
+
 			if (requestCode == 1) {
 				Log.v("Things.DO", "Edit a task");
+
+				Log.v("Test", "Completed date: " + textCompletedDate);
 
 				task = db.getTask(taskID);
 
 				task.setGoogleID(googleID);
 				task.setTittle(textTaskTittle);
-				task.setParrent(textCategory);
+				task.setUpdateDate(textUpdateDate);
+				task.setParent(textParent);
 				task.setNotes(textTaskNotes);
+				task.setStatus(textStatus);
+				task.setDueDate(textDueDate);
+				task.setCompletedDate(textCompletedDate);
+				task.setCategory(textCategory);
 
 				db.updateTask(task);
 
@@ -267,7 +280,7 @@ public class MainScreen extends Activity {
 
 			// add task to list view
 			for (CategoryListItem c : categoryListItems) {
-				if (c.getCategory().equals(textCategory)) {
+				if (c.getCategory().equals(textParent)) {
 					c.getTask().add(task);
 					break;
 				}
