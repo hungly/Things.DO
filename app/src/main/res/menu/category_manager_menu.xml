@@ -1,5 +1,5 @@
 <!--
-  ~ edit_task_screen_menu.xmlu.xml
+  ~ category_manager_menu.xml
   ~ Task Management Application
   ~ 1, COSC2543 - Mobile Application Development
   ~ RMIT International University Vietnam
@@ -9,23 +9,18 @@
   ~ Refer to the NOTICE file in the root of the source tree for
   ~ acknowledgements of third party works used in this software.
   ~
-  ~ Date created:       03/07/2014
-  ~ Date last modified: 03/07/2014
+  ~ Date created:       15/07/2014
+  ~ Date last modified: 15/07/2014
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context="org.rmit.hung.thingsdo.view.EditTaskScreen">
-
-	<item
-		android:id="@+id/action_clear"
-		android:orderInCategory="100"
-		android:showAsAction="never"
-		android:title="@string/action_clear"/>
+      tools:context="org.rmit.hung.thingsdo.view.MainScreen">
 
 	<item
 		android:id="@+id/action_exit"
 		android:orderInCategory="100"
 		android:showAsAction="never"
 		android:title="@string/action_exit"/>
+
 </menu>

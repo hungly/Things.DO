@@ -18,10 +18,28 @@
       tools:context="org.rmit.hung.thingsdo.view.MainScreen">
 
 	<item
+		android:id="@+id/action_categories_manager"
+		android:orderInCategory="100"
+		android:showAsAction="never"
+		android:title="@string/action_category_manager"/>
+
+	<item
 		android:id="@+id/action_settings"
 		android:orderInCategory="100"
 		android:showAsAction="never"
 		android:title="@string/action_settings"/>
+
+	<item
+		android:id="@+id/action_sync"
+		android:orderInCategory="100"
+		android:showAsAction="never"
+		android:title="@string/action_sync"/>
+
+	<item
+		android:id="@+id/action_log_out"
+		android:orderInCategory="100"
+		android:showAsAction="never"
+		android:title="@string/action_log_out"/>
 
 	<item
 		android:id="@+id/action_exit"

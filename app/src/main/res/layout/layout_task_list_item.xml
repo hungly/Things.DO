@@ -37,8 +37,8 @@
 		android:id="@+id/button_task_list_item_edit_task"
 		android:layout_width="@dimen/button_size_task"
 		android:layout_height="@dimen/button_size_task"
-		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"
 		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"
 		android:text="@string/button_text_edit_task"/>
 
 	<Button

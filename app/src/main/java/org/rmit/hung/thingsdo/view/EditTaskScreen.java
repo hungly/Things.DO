@@ -294,11 +294,6 @@ public class EditTaskScreen extends Activity {
 		int id = item.getItemId();
 		Log.v("Things.DO", "Menu item selected");
 
-		if (id == R.id.action_settings) {
-			Log.v("Things.DO", "\"Setting\" selected, start settings screen");
-
-			return true;
-		}
 		if (id == R.id.action_clear) {
 			Log.v("Things.DO", "\"Clear\" selected, clear all input text boxes");
 

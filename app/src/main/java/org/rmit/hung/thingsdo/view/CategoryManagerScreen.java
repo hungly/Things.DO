@@ -121,7 +121,7 @@ public class CategoryManagerScreen extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.things_do_main_screen_menu, menu);
+		getMenuInflater().inflate(R.menu.category_manager_menu, menu);
 		return true;
 	}
 
@@ -131,8 +131,8 @@ public class CategoryManagerScreen extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			Log.v("Things.DO", "\"Exit\" selected, end application now");
+		if (id == R.id.action_exit) {
+			Log.v("Things.DO", "\"Exit\" selected, end activity now");
 
 			CategoryManagerScreen.this.finish();
 

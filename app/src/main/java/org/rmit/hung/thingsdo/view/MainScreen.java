@@ -174,12 +174,31 @@ public class MainScreen extends Activity {
 		int id = item.getItemId();
 		Log.v("Things.DO", "Menu item selected");
 
+		if (id == R.id.action_categories_manager) {
+			Log.v("Things.DO", "\"Category Manager\" selected, start category manager screen");
+
+			Intent categoryManager = new Intent(MainScreen.this, CategoryManagerScreen.class);
+
+			startActivity(categoryManager);
+
+			return true;
+		}
 		if (id == R.id.action_settings) {
-			Log.v("Things.DO", "\"Setting\" selected, start settings screen");
+			Log.v("Things.DO", "\"Settings\" selected, start settings screen");
 
 			Intent menuScreen = new Intent(MainScreen.this, SettingsScreen.class);
 
 			startActivity(menuScreen);
+
+			return true;
+		}
+		if (id == R.id.action_sync) {
+			Log.v("Things.DO", "\"Sync\" selected, start sync task process");
+
+			return true;
+		}
+		if (id == R.id.action_log_out) {
+			Log.v("Things.DO", "\"Log out\" selected, logging out");
 
 			return true;
 		}

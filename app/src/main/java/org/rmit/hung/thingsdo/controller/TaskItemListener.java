@@ -18,7 +18,6 @@ package org.rmit.hung.thingsdo.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -109,7 +108,7 @@ public class TaskItemListener implements View.OnTouchListener {
 			final DateFormat dateFormat = new SimpleDateFormat(activity.getString(R.string.date_format));
 			final Task task = categoryListItem.getTask().get(taskPosition);
 
-			Log.v("Things.DO","Swipe right for task");
+			Log.v("Things.DO", "Swipe right for task");
 
 			if (task.getStatus().equals("needsAction")) {
 				task.setStatus("completed");
@@ -126,7 +125,7 @@ public class TaskItemListener implements View.OnTouchListener {
 			final DateFormat dateFormat = new SimpleDateFormat(activity.getString(R.string.date_format));
 			final Task task = categoryListItem.getTask().get(taskPosition);
 
-			Log.v("Things.DO","Swipe left for task");
+			Log.v("Things.DO", "Swipe left for task");
 
 			if (task.getStatus().equals("completed")) {
 				task.setStatus("needsAction");
