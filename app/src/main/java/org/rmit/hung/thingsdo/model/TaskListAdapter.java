@@ -17,6 +17,7 @@ package org.rmit.hung.thingsdo.model;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import org.rmit.hung.myapplication.R;
 import org.rmit.hung.thingsdo.controller.AddTaskButtonListener;
 import org.rmit.hung.thingsdo.controller.RemoveTaskButtonListener;
 import org.rmit.hung.thingsdo.controller.TaskItemClickListener;
+import org.rmit.hung.thingsdo.controller.TaskItemListener;
 
 import java.util.ArrayList;
 
@@ -234,6 +236,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 			TaskViewHolder tempTaskViewHolder = new TaskViewHolder();
 
 			tempTaskViewHolder.textView = (TextView) convertView.findViewById(R.id.text_task_list_item_name);
+			tempTaskViewHolder.buttonEditTask = (Button) convertView.findViewById(R.id.button_task_list_item_edit_task);
 			tempTaskViewHolder.buttonRemoveTask = (Button) convertView.findViewById(R.id
 					                                                                        .button_task_list_item_remove_task);
 
@@ -242,8 +245,18 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 
 		TaskViewHolder taskViewHolder = (TaskViewHolder) convertView.getTag();
 
+		taskViewHolder.textView.clearComposingText();
+		taskViewHolder.textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
+		taskViewHolder.textView.setPaintFlags(Paint.HINTING_ON);
+
+		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getStatus().equals("completed")) {
+			taskViewHolder.textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+		}
+
 		taskViewHolder.textView.setText(taskItem);
-		taskViewHolder.textView.setOnClickListener(new TaskItemClickListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.textView.setOnTouchListener(new TaskItemListener(activity, addTask,
+		                                                                categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.buttonEditTask.setOnClickListener(new TaskItemClickListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
 		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(activity, categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;
@@ -271,6 +284,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 
 	private static class TaskViewHolder {
 		public TextView textView;
+		public Button   buttonEditTask;
 		public Button   buttonRemoveTask;
 	}
 }

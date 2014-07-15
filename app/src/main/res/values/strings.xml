@@ -29,6 +29,7 @@
 	<string name="text_priority_question">Please your task priority</string>
 	<string name="button_text_add_task">+</string>
 	<string name="button_text_remove_task">X</string>
+	<string name="button_text_edit_task">E</string>
 	<string name="button_text_due_date">O</string>
 	<string name="button_text_priority">P</string>
 	<string name="button_add_category">Add new category</string>
@@ -46,6 +47,6 @@
 	<string name="title_activity_category_manager_screen">Category Manager</string>
 	<string name="date_format">yyyy-MM-dd HH:mm:ss.sss</string>
 	<string name="date_format_input">yyyy/M/d HH:mm:ss.sss</string>
-	<string name="date_format_display">dd/MM/yyyy</string>
+	<string name="date_format_display">dd MMMM, yyyy</string>
 
 </resources>

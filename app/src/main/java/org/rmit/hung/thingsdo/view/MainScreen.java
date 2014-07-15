@@ -315,4 +315,12 @@ public class MainScreen extends Activity {
 		Log.v("Things.DO", "Add finished, refresh list view");
 		tasks.notifyDataSetChanged();
 	}
+
+	public void updateTask(CategoryListItem categoryListItem, Task task) {
+		Log.v("Things.DO", "Task: \"" + task.getTittle() + "\"");
+		Log.v("Things.DO", "Category: \"" + categoryListItem.getCategory() + "\"");
+
+		db.updateTask(task);
+		tasks.notifyDataSetChanged();
+	}
 }

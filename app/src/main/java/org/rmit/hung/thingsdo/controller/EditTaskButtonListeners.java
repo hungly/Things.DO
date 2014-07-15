@@ -137,6 +137,22 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 
 						Log.v("Things.DO", "Date chosen: " + dateFormat.format(pickedDate));
 						taskBundle.putString("Due Date", dateFormat.format(pickedDate));
+
+						String dueDate = taskBundle.getString("Due Date");
+
+						if (!dueDate.equals("None")) {
+							Date date = Calendar.getInstance().getTime();
+
+							try {
+								date = (new SimpleDateFormat(editTaskScreen.getString(R.string.date_format))).parse(dueDate);
+							} catch (ParseException e) {
+								e.printStackTrace();
+							}
+
+							dueDate = (new SimpleDateFormat(editTaskScreen.getString(R.string.date_format_display))).format(date);
+						}
+
+						editTaskScreen.getTextDueDate().setText(dueDate);
 					}
 				}, mYear, mMonth, mDay);
 

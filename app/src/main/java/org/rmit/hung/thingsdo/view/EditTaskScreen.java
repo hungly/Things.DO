@@ -16,31 +16,33 @@
 package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import org.rmit.hung.myapplication.R;
 import org.rmit.hung.thingsdo.controller.EditTaskButtonListeners;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class EditTaskScreen extends Activity {
+	private EditText taskTittle;
+	private EditText taskNote;
+	private TextView textDueDate;
+
+	public TextView getTextDueDate() {
+		return textDueDate;
+	}
+
 	public EditText getTaskTittle() {
 		return taskTittle;
 	}
@@ -48,9 +50,6 @@ public class EditTaskScreen extends Activity {
 	public EditText getTaskNote() {
 		return taskNote;
 	}
-
-	private EditText taskTittle;
-	private EditText taskNote;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class EditTaskScreen extends Activity {
 		final Button setDueDate = (Button) findViewById(R.id.button_task_due_date);
 		final Button addCollaborators = (Button) findViewById(R.id.button_task_add_collaborator);
 
-		final TextView textDueDate = (TextView) findViewById(R.id.text_due_date);
+		textDueDate = (TextView) findViewById(R.id.text_due_date);
 
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
@@ -84,7 +83,15 @@ public class EditTaskScreen extends Activity {
 		String dueDate = taskBundle.getString("Due Date");
 
 		if (!dueDate.equals("None")) {
-			dueDate= dueDate.substring(0, 10);
+			Date date = Calendar.getInstance().getTime();
+
+			try {
+				date = (new SimpleDateFormat(getString(R.string.date_format))).parse(dueDate);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
+			dueDate = (new SimpleDateFormat(getString(R.string.date_format_display))).format(date);
 		}
 
 		textDueDate.setText(dueDate);
