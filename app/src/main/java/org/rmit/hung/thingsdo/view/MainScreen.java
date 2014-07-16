@@ -16,7 +16,9 @@
 package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
@@ -49,8 +51,12 @@ import java.util.ArrayList;
  */
 public class MainScreen extends Activity {
 	private final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
-	private TaskListAdapter tasks;
-	private DatabaseHandler db;
+	private TaskListAdapter          tasks;
+	private DatabaseHandler          db;
+	private SharedPreferences        preferences;
+	private SharedPreferences.Editor editor;
+	private String                   groupBy;
+	private String                   sortOrder;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +67,13 @@ public class MainScreen extends Activity {
 
 		Intent addTask = new Intent(MainScreen.this, EditTaskScreen.class);
 
+		preferences = getSharedPreferences("org.rmit.hung.thingsdo_preferences", Context.MODE_PRIVATE);
+
 		db = new DatabaseHandler(MainScreen.this);
 
 		Log.v("Things.DO", "Reading database");
 
-		// insert dummy data
+		// insert default category or load from database
 		if (db.getCategoriesCount() == 0) {
 			Log.v("Things.DO", "Category list is empty, adding default items");
 
@@ -106,6 +114,39 @@ public class MainScreen extends Activity {
 	protected void onResume() {
 		Log.v("Activity", "Main screen resumed");
 
+		groupBy = preferences.getString("group_by", "N/A");
+		sortOrder = preferences.getString("sort_order", "ASC");
+
+		if (groupBy.equals("N/A")) {
+			// no group by preference yet
+			Log.v("Things.DO", "No preference available for group by option, set to default");
+
+			editor = preferences.edit();
+
+			editor.putString("group_by", "category");
+
+			editor.apply();
+		}
+
+		// try to get preference again
+		groupBy = preferences.getString("group_by", "N/A");
+
+		if (groupBy.equals("category")) {
+			Log.v("Things.DO", "Group task by category order " + sortOrder);
+		}
+		if (groupBy.equals("priority")) {
+			Log.v("Things.DO", "Group task by priority order " + sortOrder);
+		}
+		if (groupBy.equals("due_date")) {
+			Log.v("Things.DO", "Group task by due date order " + sortOrder);
+		}
+
+		getTaskGroupBy();
+
+		super.onResume();
+	}
+
+	protected void getTaskGroupBy() {
 		// get data
 		ArrayList<Category> categories = db.getAllCategories();
 
@@ -117,8 +158,6 @@ public class MainScreen extends Activity {
 		}
 
 		tasks.notifyDataSetChanged();
-
-		super.onResume();
 	}
 
 	@Override
@@ -163,6 +202,18 @@ public class MainScreen extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.things_do_main_screen_menu, menu);
+
+		if (groupBy.equals("category") || groupBy == null || groupBy.equals("N/A"))
+			(menu.findItem(R.id.action_group_by_category)).setChecked(true);
+		if (groupBy.equals("due_date"))
+			(menu.findItem(R.id.action_group_by_priority)).setChecked(true);
+		if (groupBy.equals("priority"))
+			(menu.findItem(R.id.action_group_by_priority)).setChecked(true);
+
+		if (!sortOrder.equals("ASC")) {
+			(menu.findItem(R.id.action_group_order)).setChecked(true);
+		}
+
 		return true;
 	}
 
@@ -174,40 +225,97 @@ public class MainScreen extends Activity {
 		int id = item.getItemId();
 		Log.v("Things.DO", "Menu item selected");
 
-		if (id == R.id.action_categories_manager) {
-			Log.v("Things.DO", "\"Category Manager\" selected, start category manager screen");
+		switch (id) {
+			case R.id.action_categories_manager:
+				Log.v("Things.DO", "\"Category Manager\" selected, start category manager screen");
 
-			Intent categoryManager = new Intent(MainScreen.this, CategoryManagerScreen.class);
+				Intent categoryManager = new Intent(MainScreen.this, CategoryManagerScreen.class);
 
-			startActivity(categoryManager);
+				startActivity(categoryManager);
 
-			return true;
-		}
-		if (id == R.id.action_settings) {
-			Log.v("Things.DO", "\"Settings\" selected, start settings screen");
+				return true;
+			case R.id.action_settings:
+				Log.v("Things.DO", "\"Settings\" selected, start settings screen");
 
-			Intent menuScreen = new Intent(MainScreen.this, SettingsScreen.class);
+				Intent menuScreen = new Intent(MainScreen.this, SettingsScreen.class);
 
-			startActivity(menuScreen);
+				startActivity(menuScreen);
 
-			return true;
-		}
-		if (id == R.id.action_sync) {
-			Log.v("Things.DO", "\"Sync\" selected, start sync task process");
+				return true;
+			case R.id.action_sync:
+				Log.v("Things.DO", "\"Sync\" selected, start sync task process");
 
-			return true;
-		}
-		if (id == R.id.action_log_out) {
-			Log.v("Things.DO", "\"Log out\" selected, logging out");
+				return true;
+			case R.id.action_log_out:
+				Log.v("Things.DO", "\"Log out\" selected, logging out");
 
-			return true;
-		}
-		if (id == R.id.action_exit) {
-			Log.v("Things.DO", "\"Exit\" selected, end application now");
+				return true;
+			case R.id.action_exit:
+				Log.v("Things.DO", "\"Exit\" selected, end application now");
 
-			MainScreen.this.finish();
+				MainScreen.this.finish();
 
-			return true;
+				return true;
+			case R.id.action_group_order:
+				Log.v("Things.DO", "\"Reverse order\" selected, reverse task list order");
+
+				editor = preferences.edit();
+
+				if (preferences.getString("sort_order", "ASC").equals("ASC")) {
+					editor.putString("sort_order", "DESC");
+					item.setChecked(true);
+				} else {
+					editor.putString("sort_order", "ASC");
+					item.setChecked(false);
+				}
+
+				editor.apply();
+
+				onResume();
+
+				return true;
+			case R.id.action_group_by_category:
+				Log.v("Things.DO", "\"Group by Category\" selected, rebuild task list");
+
+				editor = preferences.edit();
+
+				editor.putString("group_by", "category");
+
+				editor.apply();
+
+				item.setChecked(true);
+
+				onResume();
+
+				return true;
+			case R.id.action_group_by_due_date:
+				Log.v("Things.DO", "\"Group by Due date\" selected, rebuild task list");
+
+				editor = preferences.edit();
+
+				editor.putString("group_by", "due_date");
+
+				editor.apply();
+
+				item.setChecked(true);
+
+				onResume();
+
+				return true;
+			case R.id.action_group_by_priority:
+				Log.v("Things.DO", "\"Group by Priority\" selected, rebuild task list");
+
+				editor = preferences.edit();
+
+				editor.putString("group_by", "priority");
+
+				editor.apply();
+
+				item.setChecked(true);
+
+				onResume();
+
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
