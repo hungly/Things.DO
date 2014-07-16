@@ -35,6 +35,7 @@
 
 	<Button
 		android:id="@+id/button_task_list_item_edit_task"
+		style="@android:style/DeviceDefault.ButtonBar"
 		android:layout_width="@dimen/button_size_task"
 		android:layout_height="@dimen/button_size_task"
 		android:layout_centerVertical="true"
@@ -43,6 +44,7 @@
 
 	<Button
 		android:id="@+id/button_task_list_item_remove_task"
+		style="@android:style/DeviceDefault.ButtonBar"
 		android:layout_width="@dimen/button_size_task"
 		android:layout_height="@dimen/button_size_task"
 		android:layout_alignParentRight="true"

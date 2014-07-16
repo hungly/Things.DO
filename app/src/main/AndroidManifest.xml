@@ -27,6 +27,7 @@
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme">
+		<receiver android:name=".model.NotificationReceiver"/>
 		<activity
 			android:name="org.rmit.hung.thingsdo.view.MainScreen"
 			android:configChanges="keyboardHidden|orientation|screenSize"

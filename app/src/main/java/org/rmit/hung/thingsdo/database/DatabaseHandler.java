@@ -301,6 +301,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return tasks;
 	}
 
+	/** Getting all tasks under priority */
+	public ArrayList<Task> getTasksByDueDate(String date, String comparison, String order) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c;
+
+		if (date.equals("None")) {
+			// no date specific
+			c = db.query(TABLE_TASKS, null, TASK_KEY_DUE_DATE + comparison + "?",
+			             new String[]{date}, null,
+			             null, TASK_KEY_PARENT + " " + order);
+		} else {
+			c = db.rawQuery("SELECT * FROM " + TABLE_TASKS + " WHERE date(" + TASK_KEY_DUE_DATE + ")" + comparison +
+			                "date('" + date + "') ORDER BY " + TASK_KEY_PARENT + " " + order,
+			                null
+			               );
+		}
+
+		ArrayList<Task> tasks = new ArrayList<Task>();
+
+		if (c.moveToFirst())
+			do {
+				Task task = new Task();
+
+				task.setID(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))));
+				task.setGoogleID(c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)));
+				task.setTittle(c.getString(c.getColumnIndex(TASK_KEY_TITTLE)));
+				task.setUpdateDate(c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)));
+				task.setParent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
+				task.setNotes(c.getString(c.getColumnIndex(TASK_KEY_NOTES)));
+				task.setStatus(c.getString(c.getColumnIndex(TASK_KEY_STATUS)));
+				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
+				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
+				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+
+				tasks.add(task);
+			} while (c.moveToNext());
+
+		db.close();
+
+		return tasks;
+	}
+
 	/** Getting categories count */
 	public int getCategoriesCount() {
 		SQLiteDatabase db = this.getReadableDatabase();

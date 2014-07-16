@@ -16,6 +16,8 @@
 package org.rmit.hung.thingsdo.controller;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.View;
 
@@ -48,6 +50,19 @@ public class RemoveCategoryButtonListener implements View.OnClickListener {
 	public void onClick(View v) {
 		Log.v("Things.DO", "Remove button for category \"" + categories.get(position).getCategory() + "\" clicked");
 
-		((CategoryManagerScreen) activity).removeCategory(categories, position);
+		new AlertDialog.Builder(activity)
+				.setTitle("Delete category")
+				.setMessage("Are you sure you want to delete this category?\nAll task under this category will also be deleted.")
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						((CategoryManagerScreen) activity).removeCategory(categories, position);
+					}
+				})
+				.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						// do nothing
+					}
+				})
+				.show();
 	}
 }

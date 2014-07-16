@@ -34,6 +34,7 @@
 
 	<Button
 		android:id="@+id/button_category_list_item_add_task"
+		style="@android:style/DeviceDefault.ButtonBar"
 		android:layout_width="@dimen/button_size_category"
 		android:layout_height="@dimen/button_size_category"
 		android:layout_alignParentRight="true"

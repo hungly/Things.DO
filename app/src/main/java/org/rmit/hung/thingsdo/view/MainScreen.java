@@ -16,11 +16,15 @@
 package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,10 +36,14 @@ import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.NotificationReceiver;
 import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.model.TaskListAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Main "Things.DO" screen.
@@ -57,6 +65,9 @@ public class MainScreen extends Activity {
 	private SharedPreferences.Editor editor;
 	private String                   groupBy;
 	private String                   sortOrder;
+	private PendingIntent            pendingIntent;
+	private AlarmManager             manager;
+	private Intent                   alarmIntent;
 
 	public String getGroupBy() {
 		return groupBy;
@@ -98,6 +109,23 @@ public class MainScreen extends Activity {
 
 		final Button buttonNewCategory = (Button) findViewById(R.id.button_add_category);
 		buttonNewCategory.setOnClickListener(new AddCategoryButtonListener(MainScreen.this));
+
+		// testing for alarm
+		alarmIntent = new Intent(MainScreen.this, NotificationReceiver.class);
+		pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, 0);
+		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+		setNotification();
+
+		new NotificationReceiver(MainScreen.this, alarmIntent);
+
+//		PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this,4,alarmIntent,0);
+//
+//		AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000,pendingIntent);
+//		Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
+//
+//		manager.cancel(pendingIntent);
 	}
 
 	@Override
@@ -147,14 +175,23 @@ public class MainScreen extends Activity {
 
 		getTaskGroupBy();
 
+		setNotification();
+
 		super.onResume();
 	}
 
 	protected void getTaskGroupBy() {
 		// get data
-
 		categoryListItems.clear();
 
+		if (groupBy.equals("category")) {
+			// group by category
+			ArrayList<Category> categories = db.getAllCategories();
+			for (Category c : categories) {
+				ArrayList<Task> tasks = db.getTasksByCategory(c, sortOrder);
+				categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+			}
+		}
 		if (groupBy.equals("priority")) {
 			// group by priority
 			String[] priorities = {"Urgent", "High", "Medium", "Low"};
@@ -162,12 +199,43 @@ public class MainScreen extends Activity {
 				ArrayList<Task> tasks = db.getTasksByPriority(p, sortOrder);
 				categoryListItems.add(new CategoryListItem(p, tasks));
 			}
-		} else {
-			// group by category
-			ArrayList<Category> categories = db.getAllCategories();
-			for (Category c : categories) {
-				ArrayList<Task> tasks = db.getTasksByCategory(c, sortOrder);
-				categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+		}
+		if (groupBy.equals("due_date")) {
+			// group by due date
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
+
+			Calendar c = Calendar.getInstance();
+
+			Date date = c.getTime();
+			String currentDate = dateFormat.format(date);
+
+			Date tomorrow = new Date(date.getYear(), date.getMonth(), date.getDate() + 1);
+			String tomorrowDate = dateFormat.format(tomorrow);
+
+			String[] dates = {"Past", "Today", "Tomorrow", "Future", "Someday"};
+
+			for (String d : dates) {
+				if (d.equals("Past")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "<", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Today")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Tomorrow")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Future")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, ">", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Someday")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate("None", "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
 			}
 		}
 
@@ -432,6 +500,20 @@ public class MainScreen extends Activity {
 			tasks.notifyDataSetChanged();
 
 //			getTaskGroupBy();
+		}
+	}
+
+	protected void setNotification() {
+		if (preferences.getBoolean("notifications_on_due", false)) {
+			Log.v("Things.DO", "Notification on task due is on");
+
+			alarmIntent.putExtra("Time", "08:00");
+
+			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
+		} else {
+			Log.v("Things.DO", "Notification on task due is off");
+
+			manager.cancel(pendingIntent);
 		}
 	}
 
