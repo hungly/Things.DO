@@ -22,6 +22,43 @@
 		android:orderInCategory="100"
 		android:showAsAction="never"
 		android:title="@string/action_category_manager"/>
+	<item
+		android:id="@+id/action_group_by"
+		android:orderInCategory="100"
+		android:showAsAction="ifRoom"
+		android:title="@string/action_group_by">
+
+		<menu>
+
+			<group android:checkableBehavior="single">
+				<item
+					android:id="@+id/action_group_by_category"
+					android:orderInCategory="200"
+					android:showAsAction="never"
+					android:title="@string/action_group_by_category"/>
+				<item
+					android:id="@+id/action_group_by_priority"
+					android:orderInCategory="200"
+					android:showAsAction="never"
+					android:title="@string/action_group_by_priority"/>
+				<item
+					android:id="@+id/action_group_by_due_date"
+					android:orderInCategory="200"
+					android:showAsAction="never"
+					android:title="@string/action_group_by_due_date"/>
+			</group>
+
+			<group android:checkableBehavior="all">
+				<item
+					android:id="@+id/action_group_order"
+					android:orderInCategory="200"
+					android:showAsAction="never"
+					android:title="@string/action_group_order"/>
+			</group>
+
+		</menu>
+
+	</item>
 
 	<item
 		android:id="@+id/action_settings"
@@ -32,7 +69,7 @@
 	<item
 		android:id="@+id/action_sync"
 		android:orderInCategory="100"
-		android:showAsAction="never"
+		android:showAsAction="ifRoom"
 		android:title="@string/action_sync"/>
 
 	<item

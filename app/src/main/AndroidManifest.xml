@@ -14,7 +14,7 @@
   ~ Date last modified: 01/07/2014
 -->
 <manifest
-	package="org.rmit.hung.myapplication"
+	package="org.rmit.hung.thingsdo"
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 	<uses-permission android:name="android.permission.READ_SMS"/>

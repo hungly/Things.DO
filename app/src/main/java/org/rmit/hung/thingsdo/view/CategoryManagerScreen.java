@@ -24,7 +24,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;

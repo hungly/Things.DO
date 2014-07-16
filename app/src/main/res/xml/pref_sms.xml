@@ -17,13 +17,13 @@
 
 	<CheckBoxPreference
 		android:defaultValue="true"
-		android:key="Send SMS"
+		android:key="sms_send"
 		android:summary="@string/pref_description_sms_sending_messages"
 		android:title="@string/pref_title_sms_sending_messages"/>
 
 	<CheckBoxPreference
 		android:defaultValue="true"
-		android:key="Read SMS"
+		android:key="sms_read"
 		android:summary="@string/pref_description_sms_reading_messages"
 		android:title="@string/pref_title_sms_reading_messages"/>
 

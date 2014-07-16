@@ -22,7 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 
 public class SettingsScreenOld extends Activity {
 

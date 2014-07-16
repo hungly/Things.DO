@@ -38,8 +38,13 @@
 	<string name="text_hint_add_task_tittle">task tittle</string>
 	<string name="text_hint_add_task_note">task note</string>
 	<string name="text_hint_task_due_date">due date</string>
-	<string name="action_settings">Settings</string>
 	<string name="action_category_manager">Category Manager</string>
+	<string name="action_group_by">Group by</string>
+	<string name="action_group_order">Reverse order</string>
+	<string name="action_group_by_category">Category</string>
+	<string name="action_group_by_priority">Priority</string>
+	<string name="action_group_by_due_date">Due date</string>
+	<string name="action_settings">Settings</string>
 	<string name="action_sync">Sync</string>
 	<string name="action_log_out">Log out</string>
 	<string name="action_clear">Clear</string>

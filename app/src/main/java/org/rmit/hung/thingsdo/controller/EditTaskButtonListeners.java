@@ -25,7 +25,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.view.EditTaskScreen;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
@@ -104,8 +104,8 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				int mMonth = c.get(Calendar.MONTH);
 				int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-				// if task is not a new task
-				if (taskBundle.getString("Due Date") != null) {
+				// if task is not a new task and has a due date
+				if (!taskBundle.getString("Due Date", "None").equals("None")) {
 					try {
 						Date oldDate = dateFormat.parse(taskBundle.getString("Due Date"));
 

@@ -23,7 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.RemoveCategoryButtonListener;
 
 import java.util.ArrayList;

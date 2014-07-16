@@ -23,7 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.view.CategoryManagerScreen;
 import org.rmit.hung.thingsdo.view.MainScreen;
 

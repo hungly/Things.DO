@@ -22,7 +22,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 
 /**
  * Splash screen for "Things.DO" application.

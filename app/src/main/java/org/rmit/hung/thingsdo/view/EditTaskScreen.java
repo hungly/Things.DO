@@ -26,7 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.EditTaskButtonListeners;
 
 import java.text.ParseException;

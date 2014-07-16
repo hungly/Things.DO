@@ -26,7 +26,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddTaskButtonListener;
 import org.rmit.hung.thingsdo.controller.RemoveTaskButtonListener;
 import org.rmit.hung.thingsdo.controller.TaskItemClickListener;

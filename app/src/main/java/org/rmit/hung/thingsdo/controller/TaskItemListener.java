@@ -23,7 +23,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import org.rmit.hung.myapplication.R;
+import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.view.MainScreen;
