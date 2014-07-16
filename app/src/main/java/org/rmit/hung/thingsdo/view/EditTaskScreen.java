@@ -24,7 +24,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.EditTaskButtonListeners;
@@ -37,10 +36,20 @@ import java.util.Date;
 public class EditTaskScreen extends Activity {
 	private EditText taskTittle;
 	private EditText taskNote;
-	private TextView textDueDate;
+	private Button   setTaskCategory;
+	private Button   setTaskPriority;
+	private Button   setDueDate;
 
-	public TextView getTextDueDate() {
-		return textDueDate;
+	public Button getSetTaskCategory() {
+		return setTaskCategory;
+	}
+
+	public Button getSetTaskPriority() {
+		return setTaskPriority;
+	}
+
+	public Button getSetDueDate() {
+		return setDueDate;
 	}
 
 	public EditText getTaskTittle() {
@@ -59,11 +68,10 @@ public class EditTaskScreen extends Activity {
 		setContentView(R.layout.activity_edit_task_screen);
 
 		final Button addTaskConfirm = (Button) findViewById(R.id.button_save_task);
-		final Button setTaskPriority = (Button) findViewById(R.id.button_task_priority);
-		final Button setDueDate = (Button) findViewById(R.id.button_task_due_date);
+		setTaskCategory = (Button) findViewById(R.id.button_task_category);
+		setTaskPriority = (Button) findViewById(R.id.button_task_priority);
+		setDueDate = (Button) findViewById(R.id.button_task_due_date);
 		final Button addCollaborators = (Button) findViewById(R.id.button_task_add_collaborator);
-
-		textDueDate = (TextView) findViewById(R.id.text_due_date);
 
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
@@ -94,7 +102,9 @@ public class EditTaskScreen extends Activity {
 			dueDate = (new SimpleDateFormat(getString(R.string.date_format_display))).format(date);
 		}
 
-		textDueDate.setText(dueDate);
+		setTaskCategory.setText(taskBundle.getString("Category", "Personal"));
+		setTaskPriority.setText(taskBundle.getString("Parent", "Medium"));
+		setDueDate.setText(dueDate);
 
 		addTaskConfirm.setOnClickListener(buttonListeners);
 
@@ -130,6 +140,8 @@ public class EditTaskScreen extends Activity {
 //				finish();
 //			}
 //		});
+
+		setTaskCategory.setOnClickListener(buttonListeners);
 
 		setDueDate.setOnClickListener(buttonListeners);
 

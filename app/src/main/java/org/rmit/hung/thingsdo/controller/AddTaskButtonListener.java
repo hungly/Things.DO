@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
  * Created by Hung on 02/07/14.
@@ -49,9 +50,15 @@ public class AddTaskButtonListener implements View.OnClickListener {
 
 		taskBundle.putInt("Task ID", -1);
 		taskBundle.putString("Google ID", "0");
-		taskBundle.putString("Category", categoryListItem.getCategory());
 		taskBundle.putString("Due Date", "None");
 		taskBundle.putString("Parent", "Medium");
+		taskBundle.putStringArray("Category List", ((MainScreen) activity).getCategoryList());
+
+		if (((MainScreen) activity).getGroupBy().equals("category")) {
+			taskBundle.putString("Category", categoryListItem.getCategory());
+		} else {
+			taskBundle.putString("Category", "Personal");
+		}
 
 		addTask.putExtras(taskBundle);
 

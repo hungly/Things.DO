@@ -23,6 +23,7 @@ import android.view.View;
 
 import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.Task;
+import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
  * Created by Hung on 03/07/14.
@@ -63,8 +64,9 @@ public class TaskItemClickListener implements View.OnClickListener {
 		taskBundle.putString("Due Date", selectedTask.getDueDate());
 		taskBundle.putString("Completed Date", selectedTask.getCompletedDate());
 		taskBundle.putString("Category", selectedTask.getCategory());
+		taskBundle.putStringArray("Category List", ((MainScreen) activity).getCategoryList());
 
-		taskBundle.putString("Old Category", selectedTask.getParent());
+		taskBundle.putString("Old Category", selectedTask.getCategory());
 		taskBundle.putInt("Old Task Position", taskPosition);
 
 		editTask.putExtras(taskBundle);

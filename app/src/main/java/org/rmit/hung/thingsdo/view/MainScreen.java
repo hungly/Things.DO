@@ -58,6 +58,10 @@ public class MainScreen extends Activity {
 	private String                   groupBy;
 	private String                   sortOrder;
 
+	public String getGroupBy() {
+		return groupBy;
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v("Activity", "Main screen created");
@@ -148,13 +152,23 @@ public class MainScreen extends Activity {
 
 	protected void getTaskGroupBy() {
 		// get data
-		ArrayList<Category> categories = db.getAllCategories();
 
 		categoryListItems.clear();
 
-		for (Category c : categories) {
-			ArrayList<Task> tasks = db.getTasksByCategory(c);
-			categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+		if (groupBy.equals("priority")) {
+			// group by priority
+			String[] priorities = {"Urgent", "High", "Medium", "Low"};
+			for (String p : priorities) {
+				ArrayList<Task> tasks = db.getTasksByPriority(p, sortOrder);
+				categoryListItems.add(new CategoryListItem(p, tasks));
+			}
+		} else {
+			// group by category
+			ArrayList<Category> categories = db.getAllCategories();
+			for (Category c : categories) {
+				ArrayList<Task> tasks = db.getTasksByCategory(c, sortOrder);
+				categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+			}
 		}
 
 		tasks.notifyDataSetChanged();
@@ -393,6 +407,9 @@ public class MainScreen extends Activity {
 				task.setCompletedDate(textCompletedDate);
 				task.setCategory(textCategory);
 
+				Log.v("Test", textCategory);
+				Log.v("Test", task.getCategory());
+
 				db.updateTask(task);
 
 				// remove old task item from list view
@@ -407,12 +424,14 @@ public class MainScreen extends Activity {
 
 			// add task to list view
 			for (CategoryListItem c : categoryListItems) {
-				if (c.getCategory().equals(textParent)) {
+				if (c.getCategory().equals(textCategory)) {
 					c.getTask().add(task);
 					break;
 				}
 			}
 			tasks.notifyDataSetChanged();
+
+//			getTaskGroupBy();
 		}
 	}
 
@@ -449,5 +468,17 @@ public class MainScreen extends Activity {
 
 		db.updateTask(task);
 		tasks.notifyDataSetChanged();
+	}
+
+	public String[] getCategoryList() {
+		ArrayList<Category> categories = db.getAllCategories();
+
+		String[] categoryList = new String[categories.size()];
+
+		for (int i = 0; i < categories.size(); i++) {
+			categoryList[i] = categories.get(i).getCategory();
+		}
+
+		return categoryList;
 	}
 }

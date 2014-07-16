@@ -158,7 +158,7 @@ public class CategoryManagerScreen extends Activity {
 		Log.v("Things.DO", "Category: \"" + categories.get(position).getCategory() + "\"");
 
 		Log.v("Things.DO", "Remove task belong to this category from database");
-		ArrayList<Task> tasks = db.getTasksByCategory(categories.get(position));
+		ArrayList<Task> tasks = db.getTasksByCategory(categories.get(position), "");
 		for (Task t : tasks) {
 			db.deleteTask(t);
 		}

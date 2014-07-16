@@ -238,10 +238,43 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 
 	/** Getting all tasks under category */
-	public ArrayList<Task> getTasksByCategory(Category category) {
+	public ArrayList<Task> getTasksByCategory(Category category, String order) {
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor c = db.query(TABLE_TASKS, null, TASK_KEY_CATEGORY + "=?", new String[]{category.getCategory()}, null, null, null);
+		Cursor c = db.query(TABLE_TASKS, null, TASK_KEY_CATEGORY + "=?", new String[]{category.getCategory()}, null,
+		                    null, "date(" + TASK_KEY_DUE_DATE + ") " + order);
+
+		ArrayList<Task> tasks = new ArrayList<Task>();
+
+		if (c.moveToFirst())
+			do {
+				Task task = new Task();
+
+				task.setID(Integer.parseInt(c.getString(c.getColumnIndex(TASK_KEY_ID))));
+				task.setGoogleID(c.getString(c.getColumnIndex(TASK_KEY_GOOGLE_ID)));
+				task.setTittle(c.getString(c.getColumnIndex(TASK_KEY_TITTLE)));
+				task.setUpdateDate(c.getString(c.getColumnIndex(TASK_KEY_UPDATE_DATE)));
+				task.setParent(c.getString(c.getColumnIndex(TASK_KEY_PARENT)));
+				task.setNotes(c.getString(c.getColumnIndex(TASK_KEY_NOTES)));
+				task.setStatus(c.getString(c.getColumnIndex(TASK_KEY_STATUS)));
+				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
+				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
+				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+
+				tasks.add(task);
+			} while (c.moveToNext());
+
+		db.close();
+
+		return tasks;
+	}
+
+	/** Getting all tasks under priority */
+	public ArrayList<Task> getTasksByPriority(String priority, String order) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c = db.query(TABLE_TASKS, null, TASK_KEY_PARENT + "=?", new String[]{priority}, null,
+		                    null, "date(" + TASK_KEY_DUE_DATE + ") " + order);
 
 		ArrayList<Task> tasks = new ArrayList<Task>();
 
@@ -328,6 +361,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(TASK_KEY_STATUS, task.getStatus());
 		values.put(TASK_KEY_DUE_DATE, task.getDueDate());
 		values.put(TASK_KEY_COMPLETED_DATE, task.getCompletedDate());
+		values.put(TASK_KEY_CATEGORY, task.getCategory());
 
 		final int returnCode = db.update(TABLE_TASKS, values, TASK_KEY_ID + "=?", new String[]{String.valueOf(task.getID())});
 

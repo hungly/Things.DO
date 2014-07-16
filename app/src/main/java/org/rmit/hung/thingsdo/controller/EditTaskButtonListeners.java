@@ -152,7 +152,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 							dueDate = (new SimpleDateFormat(editTaskScreen.getString(R.string.date_format_display))).format(date);
 						}
 
-						editTaskScreen.getTextDueDate().setText(dueDate);
+						editTaskScreen.getSetDueDate().setText(dueDate);
 					}
 				}, mYear, mMonth, mDay);
 
@@ -161,6 +161,8 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 					public void onCancel(DialogInterface dialog) {
 						Log.v("Things.DO", "Date picker cancel");
 						taskBundle.putString("Due Date", oldDueDate);
+
+						editTaskScreen.getSetDueDate().setText(oldDueDate);
 					}
 				});
 
@@ -173,16 +175,18 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 
 			case (R.id.button_task_priority):
 				// edit priority button
+				// get dialog builder
 				AlertDialog.Builder builder = new AlertDialog.Builder(editTaskScreen);
 
+				// priority options
 				final String[] choice = {"Urgent", "High", "Medium", "Low"};
 
+				// try to get task priority
 				final String oldPriority = taskBundle.getString("Parent", "Medium");
-
-				Log.v("Test", oldPriority);
 
 				int currentChoiceIndex = 0;
 
+				// set default choice
 				for (int i = 0; i < choice.length; i++) {
 					if (choice[i].equals(oldPriority)) {
 						currentChoiceIndex = i;
@@ -190,12 +194,15 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 					}
 				}
 
+				// display dialog
 				builder.setIconAttribute(android.R.attr.alertDialogIcon)
 				       .setTitle(editTaskScreen.getString(R.string.text_priority_tittle))
 				       .setSingleChoiceItems(choice, currentChoiceIndex, new DialogInterface.OnClickListener() {
 					                             public void onClick(DialogInterface dialog, int whichButton) {
 						                             Log.v("Things.DO", "Choice: " + choice[whichButton]);
 						                             taskBundle.putString("Parent", choice[whichButton]);
+
+						                             editTaskScreen.getSetTaskPriority().setText(choice[whichButton]);
 					                             }
 				                             }
 				                            )
@@ -226,6 +233,76 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 					       @Override
 					       public void onClick(DialogInterface dialog, int which) {
 						       taskBundle.putString("Parent", oldPriority);
+
+						       editTaskScreen.getSetTaskPriority().setText(oldPriority);
+					       }
+				       })
+				       .create();
+
+				builder.show();
+				break;
+			case (R.id.button_task_category):
+				// edit category
+				// get dialog builder
+				builder = new AlertDialog.Builder(editTaskScreen);
+
+				// category options
+				final String[] categories = taskBundle.getStringArray("Category List");
+
+				// try to get task priority
+				final String oldCategory = taskBundle.getString("Category", "Personal");
+
+				currentChoiceIndex = 0;
+
+				// set default choice
+				for (int i = 0; i < categories.length; i++) {
+					if (categories[i].equals(oldCategory)) {
+						currentChoiceIndex = i;
+						break;
+					}
+				}
+
+				// display dialog
+				builder.setIconAttribute(android.R.attr.alertDialogIcon)
+				       .setTitle(editTaskScreen.getString(R.string.text_priority_tittle))
+				       .setSingleChoiceItems(categories, currentChoiceIndex, new DialogInterface.OnClickListener() {
+					                             public void onClick(DialogInterface dialog, int whichButton) {
+						                             Log.v("Things.DO", "Choice: " + categories[whichButton]);
+						                             taskBundle.putString("Category", categories[whichButton]);
+
+						                             editTaskScreen.getSetTaskCategory().setText(categories[whichButton]);
+					                             }
+				                             }
+				                            )
+				       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+					       /**
+					        * This method will be invoked when a button in the dialog is clicked.
+					        *
+					        * @param dialog
+					        * 		The dialog that received the click.
+					        * @param which
+					        * 		The button that was clicked (e.g.
+					        * 		{@link android.content.DialogInterface#BUTTON1}) or the position
+					        */
+					       @Override
+					       public void onClick(DialogInterface dialog, int which) {
+					       }
+				       })
+				       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					       /**
+					        * This method will be invoked when a button in the dialog is clicked.
+					        *
+					        * @param dialog
+					        * 		The dialog that received the click.
+					        * @param which
+					        * 		The button that was clicked (e.g.
+					        * 		{@link android.content.DialogInterface#BUTTON1}) or the position
+					        */
+					       @Override
+					       public void onClick(DialogInterface dialog, int which) {
+						       taskBundle.putString("Category", oldCategory);
+
+						       editTaskScreen.getSetTaskCategory().setText(oldCategory);
 					       }
 				       })
 				       .create();

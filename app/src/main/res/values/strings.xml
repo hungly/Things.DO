@@ -30,8 +30,9 @@
 	<string name="button_text_add_task">+</string>
 	<string name="button_text_remove_task">X</string>
 	<string name="button_text_edit_task">E</string>
-	<string name="button_text_due_date">O</string>
-	<string name="button_text_priority">P</string>
+	<string name="button_text_category">Category</string>
+	<string name="button_text_due_date">Due date</string>
+	<string name="button_text_priority">Priority</string>
 	<string name="button_add_category">Add new category</string>
 	<string name="text_hint_category">category</string>
 	<string name="text_hint_task">task</string>
