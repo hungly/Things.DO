@@ -15,13 +15,17 @@
 
 package org.rmit.hung.thingsdo.model;
 
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import org.rmit.hung.thingsdo.view.MainScreen;
+import org.rmit.hung.thingsdo.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,18 +36,6 @@ import java.util.Date;
  * Created by Hung on 16/07/14.
  */
 public class NotificationReceiver extends BroadcastReceiver {
-	private MainScreen mainScreen;
-	private Intent alarmIntent;
-
-	public NotificationReceiver() {
-		super();
-	}
-
-	public NotificationReceiver(MainScreen mainScreen, Intent alarmIntent) {
-		this.mainScreen = mainScreen;
-		this.alarmIntent = alarmIntent;
-	}
-
 	/**
 	 * This method is called when the BroadcastReceiver is receiving an Intent
 	 * broadcast.  During this time you can use the other methods on
@@ -90,8 +82,11 @@ public class NotificationReceiver extends BroadcastReceiver {
 		Calendar c = Calendar.getInstance();
 
 //		String t = alarmIntent.getStringExtra("Time");
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+		String t = preferences.getString("notifications_time", "08:00");
+
 		// merge current date with time get from preference
-		String dateTime = c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONTH) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH) + " 08:00";
+		String dateTime = c.get(Calendar.YEAR) + "/" + (c.get(Calendar.MONTH) + 1) + "/" + c.get(Calendar.DAY_OF_MONTH) + " " + t;
 
 		// get the date time for notifications
 		Date time = c.getTime();
@@ -107,12 +102,49 @@ public class NotificationReceiver extends BroadcastReceiver {
 
 		Date currentTime = c.getTime();
 
-		Log.v("Test", dateTime);
-		Log.v("Test", currentTime.toString());
+//		Log.v("Test", dateTime);
+//		Log.v("Test", currentTime.toString());
 
 		// turn this back on when ready
-//		if (currentTime.compareTo(time) == 0) {
-		Toast.makeText(context, "Running", Toast.LENGTH_SHORT).show();
-//		}
+		if (currentTime.compareTo(time) == 0) {
+			Log.v("Things.DO", "It time to notify user");
+
+			int numDue = intent.getExtras().getInt("Number Due", -1);
+
+//			Log.v("Test", "Broadcast received: " + numDue);
+
+			Toast.makeText(context.getApplicationContext(), "Running", Toast.LENGTH_SHORT).show();
+
+			// DO NOT run if numDue <= -1
+			if (numDue >= 0) {
+//		        Log.v("Test", "" + intent.getStringExtra("Time"));
+
+				Log.v("Things.DO", "Notification start");
+
+				String notificationTittle = "Things.DO";
+				String notificationText = "Great! You have no task today!";
+
+				if (numDue == 1) {
+					notificationTittle = "Things.DO task was due";
+					notificationText = "You have 1 task for today";
+				}
+				if (numDue >= 2) {
+					notificationTittle = "Things.DO tasks were due";
+					notificationText = "You have " + numDue + " tasks for today";
+				}
+
+				NotificationCompat.Builder notificationBuilder =
+						new NotificationCompat.Builder(context.getApplicationContext())
+								.setSmallIcon(R.drawable.ic_launcher)
+								.setContentTitle(notificationTittle)
+								.setContentText(notificationText);
+
+				// Gets an instance of the NotificationManager service
+				NotificationManager notificationManager =
+						(NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+				// Builds the notification and issues it.
+				notificationManager.notify(1, notificationBuilder.build());
+			}
+		}
 	}
 }

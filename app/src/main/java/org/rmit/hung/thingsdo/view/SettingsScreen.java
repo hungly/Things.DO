@@ -106,6 +106,7 @@ public class SettingsScreen extends PreferenceActivity {
 				// For all other preferences, set the summary to the value's
 				// simple string representation.
 				preference.setSummary(stringValue);
+//				Log.v("Test", "New value: " + stringValue);
 			}
 			return true;
 		}
@@ -288,6 +289,7 @@ public class SettingsScreen extends PreferenceActivity {
 		// to reflect the new value, per the Android Design guidelines.
 		bindPreferenceSummaryToValue(findPreference("notifications_due_ringtone"));
 		bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+		bindPreferenceSummaryToValue(findPreference("notifications_time"));
 	}
 
 	/**

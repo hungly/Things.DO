@@ -17,14 +17,12 @@ package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -84,6 +82,11 @@ public class MainScreen extends Activity {
 
 		preferences = getSharedPreferences("org.rmit.hung.thingsdo_preferences", Context.MODE_PRIVATE);
 
+		// write notification time to preference
+//		editor= preferences.edit();
+//		editor.putString("notifications_time","09:00");
+//		editor.apply();
+
 		db = new DatabaseHandler(MainScreen.this);
 
 		Log.v("Things.DO", "Reading database");
@@ -116,8 +119,6 @@ public class MainScreen extends Activity {
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		setNotification();
-
-		new NotificationReceiver(MainScreen.this, alarmIntent);
 
 //		PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this,4,alarmIntent,0);
 //
@@ -507,9 +508,17 @@ public class MainScreen extends Activity {
 		if (preferences.getBoolean("notifications_on_due", false)) {
 			Log.v("Things.DO", "Notification on task due is on");
 
-			alarmIntent.putExtra("Time", "08:00");
+			// broadcast every 1 minute
+			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
 
-			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000, pendingIntent);
+			// get current date
+			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
+			String currentDate = dateFormat.format(Calendar.getInstance().getTime());
+
+			// put number of due task for current date
+			alarmIntent.putExtra("Number Due", db.getTasksByDueDate(currentDate, "=", "ASC").size());
+//			alarmIntent.putExtra("Time", "08:00");
+			sendBroadcast(alarmIntent);
 		} else {
 			Log.v("Things.DO", "Notification on task due is off");
 
