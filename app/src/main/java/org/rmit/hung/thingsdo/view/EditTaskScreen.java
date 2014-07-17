@@ -18,27 +18,40 @@ package org.rmit.hung.thingsdo.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.EditTaskButtonListeners;
+import org.rmit.hung.thingsdo.model.Collaborator;
+import org.rmit.hung.thingsdo.model.CollaboratorListAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 public class EditTaskScreen extends Activity {
-	private EditText taskTittle;
-	private EditText taskNote;
-	private Button   setTaskCategory;
-	private Button   setTaskPriority;
-	private Button   setDueDate;
+	private EditText                taskTittle;
+	private EditText                taskNote;
+	private Button                  setTaskCategory;
+	private Button                  setTaskPriority;
+	private Button                  setDueDate;
+	private ArrayList<Collaborator> collaborators;
+	private CollaboratorListAdapter collaboratorListAdapter;
+
+	public ArrayList<Collaborator> getCollaborators() {
+		return collaborators;
+	}
 
 	public Button getSetTaskCategory() {
 		return setTaskCategory;
@@ -72,6 +85,13 @@ public class EditTaskScreen extends Activity {
 		setTaskPriority = (Button) findViewById(R.id.button_task_priority);
 		setDueDate = (Button) findViewById(R.id.button_task_due_date);
 		final Button addCollaborators = (Button) findViewById(R.id.button_task_add_collaborator);
+
+		collaborators = new ArrayList<Collaborator>();
+		collaboratorListAdapter = new CollaboratorListAdapter(EditTaskScreen.this, collaborators);
+
+		final ListView collaboratorsList = (ListView) findViewById(R.id.list_collaborators);
+
+		collaboratorsList.setAdapter(collaboratorListAdapter);
 
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
@@ -230,6 +250,8 @@ public class EditTaskScreen extends Activity {
 //				builder.show();
 //			}
 //		});
+
+		addCollaborators.setOnClickListener(buttonListeners);
 	}
 
 	@Override
@@ -325,5 +347,71 @@ public class EditTaskScreen extends Activity {
 	public void clearAllInput() {
 		taskTittle.setText("");
 		taskNote.setText("");
+	}
+
+	/**
+	 * Called when an activity you launched exits, giving you the requestCode
+	 * you started it with, the resultCode it returned, and any additional
+	 * data from it.  The <var>resultCode</var> will be
+	 * {@link #RESULT_CANCELED} if the activity explicitly returned that,
+	 * didn't return any result, or crashed during its operation.
+	 * <p/>
+	 * <p>You will receive this call immediately before onResume() when your
+	 * activity is re-starting.
+	 *
+	 * @param requestCode
+	 * 		The integer request code originally supplied to
+	 * 		startActivityForResult(), allowing you to identify who this
+	 * 		result came from.
+	 * @param resultCode
+	 * 		The integer result code returned by the child activity
+	 * 		through its setResult().
+	 * @param data
+	 * 		An Intent, which can return result data to the caller
+	 * 		(various data can be attached to Intent "extras").
+	 *
+	 * @see #startActivityForResult
+	 * @see #createPendingResult
+	 * @see #setResult(int)
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK) {
+			if (requestCode == 2) {
+				Uri result = data.getData();
+
+				String id = result.getLastPathSegment();
+
+				Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, ContactsContract.Contacts._ID + "=?", new String[]{id}, null);
+
+				String name = "N/A";
+				if (cursor.moveToFirst()) {
+					name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+				}
+
+				Log.v("Things.DO", "Got a result: " + name + ", id: " + id);
+
+				Collaborator collaborator = new Collaborator(id, name, "", "1", "0");
+
+				collaborators.add(collaborator);
+
+				collaboratorListAdapter.notifyDataSetChanged();
+			}
+		} else {
+			Log.v("Things.DO", "Uhm!! Something just went wrong.");
+		}
+	}
+
+	public void showContactPicker() {
+		Intent contactPicker = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+		startActivityForResult(contactPicker, 2);
+	}
+
+	public void removeCollaborator(int position) {
+		collaborators.remove(position);
+
+		collaboratorListAdapter.notifyDataSetChanged();
 	}
 }

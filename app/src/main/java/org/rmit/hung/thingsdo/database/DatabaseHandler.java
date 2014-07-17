@@ -32,7 +32,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 	// database version
-	private static final int DATABASE_VERSION = 4;
+	private static final int DATABASE_VERSION = 5;
 
 	// database name
 	private static final String DATABASE_NAME = "Task";
@@ -56,6 +56,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String TASK_KEY_DUE_DATE       = "dueDate";
 	private static final String TASK_KEY_COMPLETED_DATE = "completedDate";
 	private static final String TASK_KEY_CATEGORY       = "category";
+	private static final String TASK_KEY_COLLABORATORS  = "collaborators";
 
 	/**
 	 * Create a helper object to create, open, and/or manage a database.
@@ -101,6 +102,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(TASK_KEY_DUE_DATE, task.getDueDate());
 		values.put(TASK_KEY_COMPLETED_DATE, task.getCompletedDate());
 		values.put(TASK_KEY_CATEGORY, task.getCategory());
+		values.put(TASK_KEY_COLLABORATORS, task.getCollaborators());
 
 		db.insert(TABLE_TASKS, null, values);
 
@@ -147,7 +149,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		                     c.getString(c.getColumnIndex(TASK_KEY_STATUS)),
 		                     c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)),
 		                     c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)),
-		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 		db.close();
 
@@ -175,7 +178,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		                     c.getString(c.getColumnIndex(TASK_KEY_STATUS)),
 		                     c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)),
 		                     c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)),
-		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+		                     c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)),
+		                     c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 		db.close();
 
@@ -228,6 +232,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
 				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
 				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+				task.setCollaborators(c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -260,6 +265,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
 				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
 				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+				task.setCollaborators(c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -292,6 +298,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
 				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
 				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+				task.setCollaborators(c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -335,6 +342,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				task.setDueDate(c.getString(c.getColumnIndex(TASK_KEY_DUE_DATE)));
 				task.setCompletedDate(c.getString(c.getColumnIndex(TASK_KEY_COMPLETED_DATE)));
 				task.setCategory(c.getString(c.getColumnIndex(TASK_KEY_CATEGORY)));
+				task.setCollaborators(c.getString(c.getColumnIndex(TASK_KEY_COLLABORATORS)));
 
 				tasks.add(task);
 			} while (c.moveToNext());
@@ -405,6 +413,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(TASK_KEY_DUE_DATE, task.getDueDate());
 		values.put(TASK_KEY_COMPLETED_DATE, task.getCompletedDate());
 		values.put(TASK_KEY_CATEGORY, task.getCategory());
+		values.put(TASK_KEY_COLLABORATORS, task.getCollaborators());
 
 		final int returnCode = db.update(TABLE_TASKS, values, TASK_KEY_ID + "=?", new String[]{String.valueOf(task.getID())});
 
@@ -456,12 +465,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		                                 TASK_KEY_STATUS + " TEXT, " +
 		                                 TASK_KEY_DUE_DATE + " TEXT, " +
 		                                 TASK_KEY_COMPLETED_DATE + " TEXT, " +
-		                                 TASK_KEY_CATEGORY + " TEXT)";
+		                                 TASK_KEY_CATEGORY + " TEXT, " +
+		                                 TASK_KEY_COLLABORATORS + " TEXT)";
 
 		db.execSQL(CREATE_CAT_TABLE);
 		db.execSQL(CREATE_TASK_TABLE);
 	}
-
 
 	/**
 	 * Called when the database needs to be upgraded. The implementation

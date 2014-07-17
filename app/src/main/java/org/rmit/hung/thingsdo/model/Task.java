@@ -20,92 +20,103 @@ package org.rmit.hung.thingsdo.model;
  */
 public class Task {
 	private int    _id;
-	private String _googleID;
-	private String _tittle;
-	private String _updateDate;
-	private String _parent;
-	private String _notes;
-	private String _status;
-	private String _dueDate;
-	private String _completedDate;
-	private String _category;
+	private String googleID;
+	private String tittle;
+	private String updateDate;
+	private String parent;
+	private String notes;
+	private String status;
+	private String dueDate;
+	private String completedDate;
+	private String category;
+	private String collaborators;
 
-	public Task(int _id, String _googleID, String _tittle, String _updateDate, String _parent, String _notes, String _dueDate, String _completedDate, String _category) {
+	public Task(int _id, String googleID, String tittle, String updateDate, String parent, String notes, String dueDate, String completedDate, String category, String collaborators) {
 		this._id = _id;
-		this._googleID = _googleID;
-		this._tittle = _tittle;
-		this._updateDate = _updateDate;
-		this._parent = _parent;
-		this._notes = _notes;
-		this._dueDate = _dueDate;
-		this._completedDate = _completedDate;
-		this._category = _category;
+		this.googleID = googleID;
+		this.tittle = tittle;
+		this.updateDate = updateDate;
+		this.parent = parent;
+		this.notes = notes;
+		this.dueDate = dueDate;
+		this.completedDate = completedDate;
+		this.category = category;
+		this.collaborators = collaborators;
 	}
 
-	public Task(int _id, String _googleID, String _tittle, String _updateDate, String _parent, String _notes, String _status, String _dueDate, String _completedDate, String _category) {
+	public Task(int _id, String googleID, String tittle, String updateDate, String parent, String notes, String status, String dueDate, String completedDate, String category, String collaborators) {
 
 		this._id = _id;
-		this._googleID = _googleID;
-		this._tittle = _tittle;
-		this._updateDate = _updateDate;
-		this._parent = _parent;
-		this._notes = _notes;
-		this._status = _status;
-		this._dueDate = _dueDate;
-		this._completedDate = _completedDate;
-		this._category = _category;
+		this.googleID = googleID;
+		this.tittle = tittle;
+		this.updateDate = updateDate;
+		this.parent = parent;
+		this.notes = notes;
+		this.status = status;
+		this.dueDate = dueDate;
+		this.completedDate = completedDate;
+		this.category = category;
+		this.collaborators = collaborators;
 	}
 
 	public Task() {
-		this._status = "needsAction";
+		this.status = "needsAction";
+	}
+
+	public String getCollaborators() {
+		return collaborators;
+	}
+
+	public void setCollaborators(String collaborators) {
+		this.collaborators = collaborators;
 	}
 
 	public String getCategory() {
-		return _category;
+		return category;
 	}
 
 	public void setCategory(String _category) {
-		this._category = _category;
+		this.category = _category;
 	}
 
 	public String getStatus() {
-		return _status;
+		return status;
 	}
 
 	public void setStatus(String _status) {
-		this._status = _status;
+		this.status = _status;
 	}
 
 	public String getDueDate() {
-		return _dueDate;
+		return dueDate;
 	}
 
 	public void setDueDate(String _dueDate) {
-		this._dueDate = _dueDate;
+		this.dueDate = _dueDate;
 	}
 
 	public String getCompletedDate() {
-		return _completedDate;
+		return completedDate;
 	}
 
 	public void setCompletedDate(String _completedDate) {
-		this._completedDate = _completedDate;
+		this.completedDate = _completedDate;
 	}
 
 	public String getUpdateDate() {
-		return _updateDate;
+		return updateDate;
 	}
 
 	public void setUpdateDate(String _updateDate) {
-		this._updateDate = _updateDate;
+		this.updateDate = _updateDate;
 	}
 
 	public String getNotes() {
-		return _notes;
+		return notes;
 	}
 
 	public void setNotes(String _notes) {
-		this._notes = _notes;
+		this.notes = _notes;
 	}
 
 	public int getID() {
@@ -117,26 +128,26 @@ public class Task {
 	}
 
 	public String getGoogleID() {
-		return _googleID;
+		return googleID;
 	}
 
 	public void setGoogleID(String _googleID) {
-		this._googleID = _googleID;
+		this.googleID = _googleID;
 	}
 
 	public String getTittle() {
-		return _tittle;
+		return tittle;
 	}
 
 	public void setTittle(String _tittle) {
-		this._tittle = _tittle;
+		this.tittle = _tittle;
 	}
 
 	public String getParent() {
-		return _parent;
+		return parent;
 	}
 
 	public void setParent(String _parent) {
-		this._parent = _parent;
+		this.parent = _parent;
 	}
 }

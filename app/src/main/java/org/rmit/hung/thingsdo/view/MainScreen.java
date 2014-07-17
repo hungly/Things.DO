@@ -444,13 +444,16 @@ public class MainScreen extends Activity {
 			final String textDueDate = data.getStringExtra("Due Date");
 			final String textCompletedDate = data.getStringExtra("Completed Date");
 			final String textCategory = data.getStringExtra("Category");
+			final String textCollaborators = data.getStringExtra("Collaborators");
 
 			Task task = null;
 
 			if (requestCode == 0) {
 				Log.v("Things.DO", "Create new task");
 
-				task = new Task(taskID, googleID, textTaskTittle, textUpdateDate, textParent, textTaskNotes, textStatus, textDueDate, textCompletedDate, textCategory);
+				Log.v("Test", textCollaborators);
+
+				task = new Task(taskID, googleID, textTaskTittle, textUpdateDate, textParent, textTaskNotes, textStatus, textDueDate, textCompletedDate, textCategory, textCollaborators);
 
 				db.addTask(task);
 
@@ -462,7 +465,7 @@ public class MainScreen extends Activity {
 			if (requestCode == 1) {
 				Log.v("Things.DO", "Edit a task");
 
-				Log.v("Test", "Completed date: " + textCompletedDate);
+//				Log.v("Test", "Completed date: " + textCompletedDate);
 
 				task = db.getTask(taskID);
 
@@ -476,8 +479,8 @@ public class MainScreen extends Activity {
 				task.setCompletedDate(textCompletedDate);
 				task.setCategory(textCategory);
 
-				Log.v("Test", textCategory);
-				Log.v("Test", task.getCategory());
+//				Log.v("Test", textCategory);
+//				Log.v("Test", task.getCategory());
 
 				db.updateTask(task);
 

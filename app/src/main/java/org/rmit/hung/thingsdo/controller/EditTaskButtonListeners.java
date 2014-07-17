@@ -85,6 +85,16 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				resultTask.putExtra("Completed Date", "");
 				resultTask.putExtra("Category", taskBundle.getString("Category"));
 
+				String collaborators = "";
+
+				for (int i = 0; i < editTaskScreen.getCollaborators().size(); i++) {
+					collaborators += editTaskScreen.getCollaborators().get(i).exportForSQLite(i);
+				}
+
+				resultTask.putExtra("Collaborators", taskBundle.getString("Category"));
+
+				Log.v("Test", collaborators);
+
 				if (taskBundle.getString("Old Category") != null) {
 					resultTask.putExtra("Old Category", taskBundle.getString("Old Category"));
 					resultTask.putExtra("Old Task Position", taskBundle.getInt("Old Task Position"));
@@ -308,6 +318,12 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				       .create();
 
 				builder.show();
+				break;
+			case (R.id.button_task_add_collaborator):
+				Log.v("Test", "Add collaborators clicked, show contact chooser");
+
+				editTaskScreen.showContactPicker();
+
 				break;
 		}
 	}
