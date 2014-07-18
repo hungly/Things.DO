@@ -48,10 +48,12 @@ public class AddTaskButtonListener implements View.OnClickListener {
 	public void onClick(View v) {
 		Bundle taskBundle = new Bundle();
 
+		// default values for a task
 		taskBundle.putInt("Task ID", -1);
 		taskBundle.putString("Google ID", "0");
 		taskBundle.putString("Due Date", "None");
 		taskBundle.putString("Parent", "Medium");
+		taskBundle.putString("Collaborators", "");
 		taskBundle.putStringArray("Category List", ((MainScreen) activity).getCategoryList());
 
 		if (((MainScreen) activity).getGroupBy().equals("category")) {

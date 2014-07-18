@@ -18,7 +18,6 @@ package org.rmit.hung.thingsdo.controller;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -60,7 +59,7 @@ public class AddCategoryButtonListener implements View.OnClickListener {
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-						Log.v("Test", textNewCategoryName.getText().toString());
+//						Log.v("Test", textNewCategoryName.getText().toString());
 
 						if (activity instanceof MainScreen)
 							((MainScreen) activity).addCategory(textNewCategoryName.getText().toString());

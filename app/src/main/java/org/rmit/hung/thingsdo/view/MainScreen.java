@@ -451,7 +451,7 @@ public class MainScreen extends Activity {
 			if (requestCode == 0) {
 				Log.v("Things.DO", "Create new task");
 
-				Log.v("Test", textCollaborators);
+//				Log.v("Test", "Collaborators add: " + textCollaborators);
 
 				task = new Task(taskID, googleID, textTaskTittle, textUpdateDate, textParent, textTaskNotes, textStatus, textDueDate, textCompletedDate, textCategory, textCollaborators);
 
@@ -478,6 +478,7 @@ public class MainScreen extends Activity {
 				task.setDueDate(textDueDate);
 				task.setCompletedDate(textCompletedDate);
 				task.setCategory(textCategory);
+				task.setCollaborators(textCollaborators);
 
 //				Log.v("Test", textCategory);
 //				Log.v("Test", task.getCategory());

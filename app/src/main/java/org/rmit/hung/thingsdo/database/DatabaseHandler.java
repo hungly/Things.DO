@@ -104,6 +104,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(TASK_KEY_CATEGORY, task.getCategory());
 		values.put(TASK_KEY_COLLABORATORS, task.getCollaborators());
 
+//		Log.v("Test", "Task coll: " + task.getCollaborators());
+
 		db.insert(TABLE_TASKS, null, values);
 
 		db.close();

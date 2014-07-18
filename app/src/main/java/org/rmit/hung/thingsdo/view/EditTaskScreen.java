@@ -85,6 +85,7 @@ public class EditTaskScreen extends Activity {
 		setTaskPriority = (Button) findViewById(R.id.button_task_priority);
 		setDueDate = (Button) findViewById(R.id.button_task_due_date);
 		final Button addCollaborators = (Button) findViewById(R.id.button_task_add_collaborator);
+		final String collaboratorsString;
 
 		collaborators = new ArrayList<Collaborator>();
 		collaboratorListAdapter = new CollaboratorListAdapter(EditTaskScreen.this, collaborators);
@@ -96,17 +97,24 @@ public class EditTaskScreen extends Activity {
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
 
+		// get data parse to by main screen
 		final Intent values = getIntent();
 		final Bundle taskBundle = values.getExtras();
 
 		final int taskID = taskBundle.getInt("Task ID");
 
 		if (taskID != -1) {
+			// if this is an old task (ie: edit a task)
 			taskTittle.setText(taskBundle.getString("Tittle"));
 			taskNote.setText(taskBundle.getString("Notes"));
-		}
+			collaboratorsString = taskBundle.getString("Collaborators", "");
+		} else
+			// new task
+			collaboratorsString = "";
 
-		EditTaskButtonListeners buttonListeners = new EditTaskButtonListeners(EditTaskScreen.this, taskBundle);
+		populateCollaboratorsList(collaboratorsString);
+
+//		Log.v("Test", collaboratorsString);
 
 		String dueDate = taskBundle.getString("Due Date");
 
@@ -121,6 +129,8 @@ public class EditTaskScreen extends Activity {
 
 			dueDate = (new SimpleDateFormat(getString(R.string.date_format_display))).format(date);
 		}
+
+		EditTaskButtonListeners buttonListeners = new EditTaskButtonListeners(EditTaskScreen.this, taskBundle);
 
 		setTaskCategory.setText(taskBundle.getString("Category", "Personal"));
 		setTaskPriority.setText(taskBundle.getString("Parent", "Medium"));
@@ -162,7 +172,6 @@ public class EditTaskScreen extends Activity {
 //		});
 
 		setTaskCategory.setOnClickListener(buttonListeners);
-
 		setDueDate.setOnClickListener(buttonListeners);
 
 //		setDueDate.setOnClickListener(new View.OnClickListener() {
@@ -402,6 +411,47 @@ public class EditTaskScreen extends Activity {
 		} else {
 			Log.v("Things.DO", "Uhm!! Something just went wrong.");
 		}
+	}
+
+	public void populateCollaboratorsList(String collaboratorsString) {
+//		Log.v("Test", "Collaborators list received from data: " + collaboratorsString);
+
+		collaborators.clear();
+		// ony run if collaborators list is NOT empty
+		if (!collaboratorsString.equals("")) {
+			if (collaboratorsString.contains("|")) {
+				String[] collaboratorsStringArray = collaboratorsString.split("\\|");
+
+				for (String s : collaboratorsStringArray) {
+					collaborators.add(getCollaboratorObject(s));
+				}
+
+//				Log.v("Test", "Number of collaborator: " + collaboratorsStringArray.length);
+			} else {
+				collaborators.add(getCollaboratorObject(collaboratorsString));
+
+//				Log.v("Test", "Number of collaborator: 1");
+			}
+//			Log.v("Test", collaboratorsString);
+
+			collaboratorListAdapter.notifyDataSetChanged();
+		}
+	}
+
+	public Collaborator getCollaboratorObject(String collaboratorsString) {
+		String[] collaboratorsInfo = collaboratorsString.split(",");
+
+		Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, ContactsContract.Contacts._ID + "=?", new String[]{collaboratorsInfo[2]}, null);
+
+		String name = "";
+
+		if (cursor.moveToFirst()) {
+			name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+		}
+
+		String phoneNo = collaboratorsInfo.length < 4 ? "" : collaboratorsInfo[3];
+
+		return new Collaborator(collaboratorsInfo[2], name, phoneNo, collaboratorsInfo[0], collaboratorsInfo[1]);
 	}
 
 	public void showContactPicker() {

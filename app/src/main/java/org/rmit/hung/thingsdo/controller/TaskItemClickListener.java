@@ -64,6 +64,7 @@ public class TaskItemClickListener implements View.OnClickListener {
 		taskBundle.putString("Due Date", selectedTask.getDueDate());
 		taskBundle.putString("Completed Date", selectedTask.getCompletedDate());
 		taskBundle.putString("Category", selectedTask.getCategory());
+		taskBundle.putString("Collaborators", selectedTask.getCollaborators());
 		taskBundle.putStringArray("Category List", ((MainScreen) activity).getCategoryList());
 
 		taskBundle.putString("Old Category", selectedTask.getCategory());

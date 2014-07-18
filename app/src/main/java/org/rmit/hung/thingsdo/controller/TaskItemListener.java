@@ -122,7 +122,6 @@ public class TaskItemListener implements View.OnTouchListener {
 		}
 
 		public void onSwipeLeft() {
-			final DateFormat dateFormat = new SimpleDateFormat(activity.getString(R.string.date_format));
 			final Task task = categoryListItem.getTask().get(taskPosition);
 
 			Log.v("Things.DO", "Swipe left for task");
@@ -130,9 +129,7 @@ public class TaskItemListener implements View.OnTouchListener {
 			if (task.getStatus().equals("completed")) {
 				task.setStatus("needsAction");
 
-				Calendar c = Calendar.getInstance();
-
-				task.setCompletedDate(dateFormat.format(c.getTime()));
+				task.setCompletedDate("");
 
 				((MainScreen) activity).updateTask(categoryListItem, task);
 			}
