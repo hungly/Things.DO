@@ -50,12 +50,12 @@ public class CollaboratorListeners implements View.OnClickListener {
 					c.setChecked(false);
 
 					editTaskScreen.getCollaborators().get(position).setNotify("0");
-					Log.v("Test","OFF");
+					Log.v("Test", "OFF");
 				} else {
 					c.setChecked(true);
 
 					editTaskScreen.getCollaborators().get(position).setNotify("1");
-					Log.v("Test","ON");
+					Log.v("Test", "ON");
 				}
 
 				break;
