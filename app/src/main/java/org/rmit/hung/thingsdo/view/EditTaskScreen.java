@@ -93,6 +93,7 @@ public class EditTaskScreen extends Activity {
 		final ListView collaboratorsList = (ListView) findViewById(R.id.list_collaborators);
 
 		collaboratorsList.setAdapter(collaboratorListAdapter);
+		collaboratorsList.setItemsCanFocus(true);
 
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
@@ -337,6 +338,16 @@ public class EditTaskScreen extends Activity {
 		int id = item.getItemId();
 		Log.v("Things.DO", "Menu item selected");
 
+		if (id == R.id.action_settings) {
+			Log.v("Things.DO", "\"Settings\" selected, start settings screen");
+
+			Intent menuScreen = new Intent(EditTaskScreen.this, SettingsScreen.class);
+
+			startActivity(menuScreen);
+
+			return true;
+		}
+
 		if (id == R.id.action_clear) {
 			Log.v("Things.DO", "\"Clear\" selected, clear all input text boxes");
 
@@ -393,16 +404,18 @@ public class EditTaskScreen extends Activity {
 
 				String id = result.getLastPathSegment();
 
-				Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, ContactsContract.Contacts._ID + "=?", new String[]{id}, null);
+				Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{id}, null);
 
 				String name = "N/A";
+				String phoneID = "";
 				if (cursor.moveToFirst()) {
-					name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+					name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+					phoneID = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
 				}
 
 				Log.v("Things.DO", "Got a result: " + name + ", id: " + id);
 
-				Collaborator collaborator = new Collaborator(id, name, "", "1", "0");
+				Collaborator collaborator = new Collaborator(id, name, phoneID, "1", "0");
 
 				collaborators.add(collaborator);
 

@@ -20,16 +20,22 @@
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content">
 
-	<CheckedTextView
-		android:id="@+id/text_collaborator_list_item_name"
-		android:layout_width="match_parent"
-		android:layout_height="?android:attr/listPreferredItemHeightSmall"
+	<CheckBox
+		android:id="@+id/check_box_collaborator_list_item"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentLeft="true"
 		android:layout_centerVertical="true"
+		android:drawablePadding="@dimen/padding_drawable"/>
+
+	<TextView
+		android:id="@+id/text_collaborator_list_item_name"
+		android:layout_width="wrap_content"
+		android:layout_height="?android:attr/listPreferredItemHeightSmall"
+		android:layout_centerVertical="true"
+		android:layout_toRightOf="@+id/check_box_collaborator_list_item"
 		android:layout_toLeftOf="@+id/button_collaborator_list_item_remove_collaborator"
 		android:checked="true"
-		android:drawableLeft="?android:attr/listChoiceIndicatorMultiple"
-		android:drawablePadding="@dimen/padding_drawable"
 		android:gravity="center_vertical"
 		android:hint="@string/text_hint_task"
 		android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"

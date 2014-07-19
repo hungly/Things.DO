@@ -22,12 +22,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
@@ -444,7 +448,12 @@ public class MainScreen extends Activity {
 			final String textDueDate = data.getStringExtra("Due Date");
 			final String textCompletedDate = data.getStringExtra("Completed Date");
 			final String textCategory = data.getStringExtra("Category");
-			final String textCollaborators = data.getStringExtra("Collaborators");
+			String textCollaborators = data.getStringExtra("Collaborators");
+
+			// run only when preference option is enable
+			if (preferences.getBoolean("sms_send", false)) {
+				textCollaborators = sendSMS(textTaskTittle, textCategory, textParent, textDueDate, textCollaborators);
+			}
 
 			Task task = null;
 
@@ -506,6 +515,64 @@ public class MainScreen extends Activity {
 
 //			getTaskGroupBy();
 		}
+	}
+
+	public String sendSMS(String textTaskTittle, String textCategory, String textParent, String textDueDate,
+	                      String collaboratorsList) {
+		String newCollaboratorsList = "";
+
+		Log.v("Things.DO", "Collaborators list received from edit task: " + collaboratorsList);
+
+		SmsManager sms = SmsManager.getDefault();
+
+		String textSMS = "\"Things.DO\" This person had added you to his/her task with tittle: \"" + textTaskTittle +
+		                 "\" under category: \"" + textCategory + "\" at priority: \"" + textParent +
+		                 (textDueDate.equals("None") ? "\" and has no due date" :
+		                  "\" and due on: " + textDueDate.substring(0, 10)) + ".";
+
+		Log.v("Test", "Text size: " + textSMS.length());
+
+		// split to individual contact
+		String[] contacts = collaboratorsList.split("\\|");
+
+		for (String contact : contacts) {
+//			Log.v("Test", contact);
+			// split to sub contact's info
+			String[] info = contact.split(",");
+
+			String sent = "0";
+
+			if (info[0].equals("1") && info[1].equals("0")) {
+
+				Cursor cursor = getContentResolver().query(Phone.CONTENT_URI,
+				                                           new String[]{Phone._ID, Phone.CONTACT_ID, Phone.NUMBER},
+				                                           Phone.CONTACT_ID + "=? AND " + Phone._ID + "=?",
+				                                           new String[]{info[2], info[3]}, null);
+
+				if (cursor.moveToFirst()) {
+					String phone = cursor.getString(cursor.getColumnIndex(Phone.NUMBER));
+
+					try {
+//						Log.v("Test", textSMS);
+						sms.sendTextMessage(phone, null, textSMS, null, null);
+						Toast.makeText(getApplicationContext(), "Your sms has successfully sent!",
+						               Toast.LENGTH_LONG).show();
+						sent = "1";
+					} catch (Exception ex) {
+						Toast.makeText(getApplicationContext(), "Your sms has failed...", Toast.LENGTH_LONG).show();
+						ex.printStackTrace();
+					}
+				}
+			}
+
+			// rebuild collaborators list with new data
+			newCollaboratorsList += newCollaboratorsList.equals("") ? "" : "|";
+			newCollaboratorsList += info[0] + ",";
+			newCollaboratorsList += sent + ",";
+			newCollaboratorsList += info[2] + "," + info[3];
+		}
+
+		return newCollaboratorsList;
 	}
 
 	protected void setNotification() {

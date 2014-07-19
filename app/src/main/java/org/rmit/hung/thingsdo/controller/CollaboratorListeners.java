@@ -15,8 +15,9 @@
 
 package org.rmit.hung.thingsdo.controller;
 
+import android.util.Log;
 import android.view.View;
-import android.widget.CheckedTextView;
+import android.widget.CheckBox;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.view.EditTaskScreen;
@@ -42,15 +43,19 @@ public class CollaboratorListeners implements View.OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-			case (R.id.text_collaborator_list_item_name):
-				CheckedTextView c = (CheckedTextView) v;
+			case (R.id.check_box_collaborator_list_item):
+				CheckBox c = (CheckBox) v;
 
-				if (c.isChecked()) {
+				if (!c.isChecked()) {
 					c.setChecked(false);
+
 					editTaskScreen.getCollaborators().get(position).setNotify("0");
+					Log.v("Test","OFF");
 				} else {
 					c.setChecked(true);
+
 					editTaskScreen.getCollaborators().get(position).setNotify("1");
+					Log.v("Test","ON");
 				}
 
 				break;

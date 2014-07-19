@@ -88,7 +88,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				String collaborators = "";
 //				String collaborators = taskBundle.getString("Collaborators");
 
-				Log.v("Test", "Current collaborator size: " + editTaskScreen.getCollaborators().size());
+//				Log.v("Test", "Current collaborator size: " + editTaskScreen.getCollaborators().size());
 
 				for (int i = 0; i < editTaskScreen.getCollaborators().size(); i++) {
 					collaborators += editTaskScreen.getCollaborators().get(i).exportForSQLite(i);
@@ -254,6 +254,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 
 				builder.show();
 				break;
+
 			case (R.id.button_task_category):
 				// edit category
 				// get dialog builder
@@ -322,6 +323,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 
 				builder.show();
 				break;
+
 			case (R.id.button_task_add_collaborator):
 //				Log.v("Test", "Add collaborators clicked, show contact chooser");
 

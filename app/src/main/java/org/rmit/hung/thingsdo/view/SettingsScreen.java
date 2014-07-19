@@ -30,7 +30,6 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -146,6 +145,27 @@ public class SettingsScreen extends PreferenceActivity {
 		}
 	}
 
+	/**
+	 * Subclasses should override this method and verify that the given fragment is a valid type
+	 * to be attached to this activity. The default implementation returns <code>true</code> for
+	 * apps built for <code>android:targetSdkVersion</code> older than
+	 * {@link android.os.Build.VERSION_CODES#KITKAT}. For later versions, it will throw an exception.
+	 *
+	 * @param fragmentName
+	 * 		the class name of the Fragment about to be attached to this activity.
+	 *
+	 * @return true if the fragment class name is valid for this Activity and false otherwise.
+	 * <p/>
+	 * Reference:
+	 * - http://stackoverflow.com/questions/19973034/isvalidfragment-android-api-19
+	 */
+	@Override
+	protected boolean isValidFragment(String fragmentName) {
+		return GeneralPreferenceFragment.class.getName().equals(fragmentName) ||
+		       NotificationPreferenceFragment.class.getName().equals(fragmentName) ||
+		       DataSyncPreferenceFragment.class.getName().equals(fragmentName);
+	}
+
 	@Override
 	protected void onStop() {
 		Log.v("Activity", "Settings screen stopped");
@@ -247,7 +267,8 @@ public class SettingsScreen extends PreferenceActivity {
 			//
 			// TODO: If Settings has multiple levels, Up should navigate up
 			// that hierarchy.
-			NavUtils.navigateUpFromSameTask(this);
+//			NavUtils.navigateUpFromSameTask(this);
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -348,6 +369,7 @@ public class SettingsScreen extends PreferenceActivity {
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("notifications_due_ringtone"));
+			bindPreferenceSummaryToValue(findPreference("notifications_time"));
 		}
 	}
 
