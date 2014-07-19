@@ -16,6 +16,7 @@
 package org.rmit.hung.thingsdo.model;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.rmit.hung.thingsdo.R;
+import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.view.SplashScreen;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,7 +112,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 		if (currentTime.compareTo(time) == 0) {
 			Log.v("Things.DO", "It time to notify user");
 
-			int numDue = intent.getExtras().getInt("Number Due", -1);
+			DatabaseHandler db = new DatabaseHandler(context);
+			SimpleDateFormat format = new SimpleDateFormat(context.getString(R.string.date_format_trim_time));
+
+			int numDue = db.getTasksByDueDate(format.format(currentTime), "=", "ASC").size();
 
 //			Log.v("Test", "Broadcast received: " + numDue);
 
@@ -133,11 +139,15 @@ public class NotificationReceiver extends BroadcastReceiver {
 					notificationText = "You have " + numDue + " tasks for today";
 				}
 
+				Intent startThingsDO = new Intent(context, SplashScreen.class);
+				PendingIntent pending = PendingIntent.getActivity(context, 5, startThingsDO, 0);
+
 				NotificationCompat.Builder notificationBuilder =
-						new NotificationCompat.Builder(context.getApplicationContext())
+						new NotificationCompat.Builder(context)
 								.setSmallIcon(R.drawable.ic_launcher)
 								.setContentTitle(notificationTittle)
-								.setContentText(notificationText);
+								.setContentText(notificationText)
+								.setContentIntent(pending);
 
 				// Gets an instance of the NotificationManager service
 				NotificationManager notificationManager =
