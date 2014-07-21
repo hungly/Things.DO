@@ -15,8 +15,10 @@
 
 package org.rmit.hung.thingsdo.view;
 
+import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.Dialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -34,11 +36,24 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.AccountPicker;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.tasks.Tasks;
+import com.google.api.services.tasks.TasksScopes;
+
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.model.AsyncLoadTasks;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.ConnectionDetector;
 import org.rmit.hung.thingsdo.model.NotificationReceiver;
 import org.rmit.hung.thingsdo.model.SMSReceiver;
 import org.rmit.hung.thingsdo.model.Task;
@@ -47,6 +62,7 @@ import org.rmit.hung.thingsdo.model.TaskListAdapter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -57,12 +73,15 @@ import java.util.Date;
  *          <p/>
  *          References:
  *          Splash screen:
- *          -   http://www.androidhive.info/2013/07/how-to-implement-android-splash-screen-2/
- *          -   http://www.codeproject.com/Articles/113831/An-Advanced-Splash-Screen-for-Android-App
- *          -   http://idroidsoftwareinc.blogspot.com/2013/09/android-splash-screen-example-tutorial.html
+ *          - http://www.androidhive.info/2013/07/how-to-implement-android-splash-screen-2/
+ *          - http://www.codeproject.com/Articles/113831/An-Advanced-Splash-Screen-for-Android-App
+ *          - http://idroidsoftwareinc.blogspot.com/2013/09/android-splash-screen-example-tutorial.html
+ *          - http://gmariotti.blogspot.com.es/2013/03/snippet-google-picker-account.html
  */
 public class MainScreen extends Activity {
 	private final ArrayList<CategoryListItem> categoryListItems = new ArrayList<CategoryListItem>();
+	private final HttpTransport               httpTransport     = AndroidHttp.newCompatibleTransport();
+	private final JsonFactory                 jsonFactory       = GsonFactory.getDefaultInstance();
 	private TaskListAdapter          tasks;
 	private DatabaseHandler          db;
 	private SharedPreferences        preferences;
@@ -73,6 +92,25 @@ public class MainScreen extends Activity {
 	private AlarmManager             manager;
 	private Intent                   alarmIntent;
 	private SMSReceiver              smsReceiver;
+	private Tasks                    client;
+	private GoogleAccountCredential  credential;
+
+	public DatabaseHandler getDatabase() {
+		return db;
+	}
+
+	public void showGooglePlayServicesAvailabilityErrorDialog(final int connectionStatusCode) {
+		runOnUiThread(new Runnable() {
+			public void run() {
+				Dialog dialog = GooglePlayServicesUtil.getErrorDialog(connectionStatusCode, MainScreen.this, 3);
+				dialog.show();
+			}
+		});
+	}
+
+	public Tasks getClient() {
+		return client;
+	}
 
 	public String getGroupBy() {
 		return groupBy;
@@ -90,7 +128,7 @@ public class MainScreen extends Activity {
 		preferences = getSharedPreferences("org.rmit.hung.thingsdo_preferences", Context.MODE_PRIVATE);
 
 		// write notification time to preference
-//		editor= preferences.edit();
+		editor = preferences.edit();
 //		editor.putString("notifications_time","09:00");
 //		editor.apply();
 
@@ -126,6 +164,8 @@ public class MainScreen extends Activity {
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		setNotification();
+
+		credential = GoogleAccountCredential.usingOAuth2(MainScreen.this, Collections.singleton(TasksScopes.TASKS));
 
 //		PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this,4,alarmIntent,0);
 //
@@ -339,6 +379,8 @@ public class MainScreen extends Activity {
 			case R.id.action_sync:
 				Log.v("Things.DO", "\"Sync\" selected, start sync task process");
 
+				syncTasks();
+
 				return true;
 			case R.id.action_log_out:
 				Log.v("Things.DO", "\"Log out\" selected, logging out");
@@ -511,14 +553,27 @@ public class MainScreen extends Activity {
 				}
 			}
 
-			// add task to list view
-			for (CategoryListItem c : categoryListItems) {
-				if (c.getCategory().equals(textCategory)) {
-					c.getTask().add(task);
-					break;
-				}
+			if (requestCode == 2) {
+				String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+				Toast.makeText(this, "Account Name = " + accountName, Toast.LENGTH_SHORT).show();
+
+				editor.putString("google_account", accountName);
+
+				editor.apply();
+
+				syncTasks();
 			}
-			tasks.notifyDataSetChanged();
+
+			if (requestCode != 2) {
+				// add task to list view
+				for (CategoryListItem c : categoryListItems) {
+					if (c.getCategory().equals(textCategory)) {
+						c.getTask().add(task);
+						break;
+					}
+				}
+				tasks.notifyDataSetChanged();
+			}
 
 //			getTaskGroupBy();
 		}
@@ -580,6 +635,32 @@ public class MainScreen extends Activity {
 		}
 
 		return newCollaboratorsList;
+	}
+
+	public void syncTasks() {
+		String account = preferences.getString("google_account", "None");
+
+		if (account.equals("None")) {
+			displayAccountPicker();
+		}
+
+		Log.v("Things.DO", "Now sync task using account: " + account);
+
+		credential.setSelectedAccountName(preferences.getString("google_account", null));
+
+		client = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("Things.DO").build();
+
+		if (ConnectionDetector.isConnectingToInternet(MainScreen.this)) {
+			AsyncLoadTasks.run(MainScreen.this);
+		} else {
+			Toast.makeText(MainScreen.this, "No connection to the internet", Toast.LENGTH_SHORT).show();
+		}
+	}
+
+	public void displayAccountPicker() {
+		Intent accountPicker = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
+
+		startActivityForResult(accountPicker, 2);
 	}
 
 	public void registerReceiver() {

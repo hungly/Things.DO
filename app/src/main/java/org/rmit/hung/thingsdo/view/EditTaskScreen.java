@@ -282,6 +282,8 @@ public class EditTaskScreen extends Activity {
 	protected void onResume() {
 		Log.v("Activity", "Add task screen resumed");
 
+		collaboratorListAdapter.notifyDataSetChanged();
+
 		super.onResume();
 	}
 
