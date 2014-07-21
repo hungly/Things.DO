@@ -20,6 +20,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -39,6 +40,7 @@ import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.NotificationReceiver;
+import org.rmit.hung.thingsdo.model.SMSReceiver;
 import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.model.TaskListAdapter;
 
@@ -70,6 +72,7 @@ public class MainScreen extends Activity {
 	private PendingIntent            pendingIntent;
 	private AlarmManager             manager;
 	private Intent                   alarmIntent;
+	private SMSReceiver              smsReceiver;
 
 	public String getGroupBy() {
 		return groupBy;
@@ -178,6 +181,8 @@ public class MainScreen extends Activity {
 			Log.v("Things.DO", "Group task by due date order " + sortOrder);
 		}
 
+		registerReceiver();
+
 		getTaskGroupBy();
 
 		setNotification();
@@ -250,6 +255,8 @@ public class MainScreen extends Activity {
 	@Override
 	protected void onPause() {
 		Log.v("Activity", "Main screen paused");
+
+		unregisterReceiver(smsReceiver);
 
 		super.onPause();
 	}
@@ -451,13 +458,13 @@ public class MainScreen extends Activity {
 			String textCollaborators = data.getStringExtra("Collaborators");
 
 			// run only when preference option is enable
-			if (preferences.getBoolean("sms_send", false)) {
+			if (preferences.getBoolean("sms_send", false) && !textCollaborators.equals("") && !textTaskTittle.equals("")) {
 				textCollaborators = sendSMS(textTaskTittle, textCategory, textParent, textDueDate, textCollaborators);
 			}
 
 			Task task = null;
 
-			if (requestCode == 0) {
+			if (requestCode == 0 && !textTaskTittle.equals("")) {
 				Log.v("Things.DO", "Create new task");
 
 //				Log.v("Test", "Collaborators add: " + textCollaborators);
@@ -471,7 +478,7 @@ public class MainScreen extends Activity {
 				Log.v("Database", "Total task: " + db.getTasksCount());
 			}
 
-			if (requestCode == 1) {
+			if (requestCode == 1 && !textTaskTittle.equals("")) {
 				Log.v("Things.DO", "Edit a task");
 
 //				Log.v("Test", "Completed date: " + textCompletedDate);
@@ -575,6 +582,15 @@ public class MainScreen extends Activity {
 		return newCollaboratorsList;
 	}
 
+	public void registerReceiver() {
+		IntentFilter filter = new IntentFilter("SMS Read");
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+
+		smsReceiver = new SMSReceiver();
+
+		registerReceiver(smsReceiver, filter);
+	}
+
 	protected void setNotification() {
 		if (preferences.getBoolean("notifications_on_due", false)) {
 			Log.v("Things.DO", "Notification on task due is on");
@@ -630,6 +646,21 @@ public class MainScreen extends Activity {
 
 		db.updateTask(task);
 		tasks.notifyDataSetChanged();
+	}
+
+	public void refreshList(String category) {
+		for (CategoryListItem categoryListItem : categoryListItems) {
+			if (categoryListItem.getCategory().equals(category)) {
+				ArrayList<Task> taskArrayList = (ArrayList<Task>) categoryListItem.getTask();
+
+				taskArrayList.clear();
+
+				taskArrayList = db.getTasksByCategory(new Category(category), "ASC");
+
+				categoryListItem.setTask(taskArrayList);
+				tasks.notifyDataSetChanged();
+			}
+		}
 	}
 
 	public String[] getCategoryList() {

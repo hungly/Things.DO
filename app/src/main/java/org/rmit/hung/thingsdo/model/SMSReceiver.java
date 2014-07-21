@@ -20,6 +20,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+import android.util.Log;
+
+import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
  * Created by Hung on 19/07/14.
@@ -67,32 +70,42 @@ public class SMSReceiver extends BroadcastReceiver {
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Bundle bundle = intent.getExtras();
+		if (intent.getAction().equals("SMS Read")) {
+			Log.v("Test", "SMS read completed");
 
-		String receivedMessage = "";
-		String sender = "";
+			Log.v("Test", context.toString());
 
-		SmsMessage recMsg;
+			String category = intent.getStringExtra("Category");
 
-		if (bundle != null) {
-			//---retrieve the SMS message received---
-			Object[] messageObjects = (Object[]) bundle.get("pdus");
-			for (Object messageObject : messageObjects) {
-				recMsg = SmsMessage.createFromPdu((byte[]) messageObject);
+			((MainScreen) context).refreshList(category);
+		} else {
+			Bundle bundle = intent.getExtras();
 
-				try {
-					receivedMessage += recMsg.getMessageBody();
-				} catch (Exception ignored) {
+			String receivedMessage = "";
+			String sender = "";
+
+			SmsMessage recMsg;
+
+			if (bundle != null) {
+				//---retrieve the SMS message received---
+				Object[] messageObjects = (Object[]) bundle.get("pdus");
+				for (Object messageObject : messageObjects) {
+					recMsg = SmsMessage.createFromPdu((byte[]) messageObject);
+
+					try {
+						receivedMessage += recMsg.getMessageBody();
+					} catch (Exception ignored) {
+					}
+
+					sender = recMsg.getOriginatingAddress();
 				}
-
-				sender = recMsg.getOriginatingAddress();
 			}
+
+			Intent smsService = new Intent(context.getApplicationContext(), SMSService.class);
+			smsService.putExtra("Message", receivedMessage);
+			smsService.putExtra("Sender", sender);
+
+			context.getApplicationContext().startService(smsService);
 		}
-
-		Intent smsService = new Intent(context.getApplicationContext(), SMSService.class);
-		smsService.putExtra("Message", receivedMessage);
-		smsService.putExtra("Sender", sender);
-
-		context.getApplicationContext().startService(smsService);
 	}
 }

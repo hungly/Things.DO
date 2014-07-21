@@ -129,7 +129,7 @@ public class SMSService extends IntentService {
 						else
 							taskCollaborators = "";
 
-						Log.v("Test", taskCollaborators);
+//						Log.v("Test", taskCollaborators);
 					} else {
 						Log.v("Things.DO", "No contact found");
 					}
@@ -138,13 +138,19 @@ public class SMSService extends IntentService {
 				Category c = db.getCategory(taskCategory);
 
 				if (c == null) {
-					Log.v("Test", "No category found, create new category");
+//					Log.v("Test", "No category found, create new category");
 					db.addCategory(new Category(taskCategory));
 				}
 
 				Task newTask = new Task(0, "0", taskTittle, updateDate, taskPriority, "", "needAction", taskDueDate, "", taskCategory, taskCollaborators);
 
 				db.addTask(newTask);
+
+				Intent smsRead = new Intent("SMS Read").putExtra("Status", "Success");
+				smsRead.setAction("SMS Read");
+				smsRead.addCategory(Intent.CATEGORY_DEFAULT);
+				smsRead.putExtra("Category", taskCategory);
+				sendBroadcast(smsRead);
 
 //				Log.v("Test", "1: " + (message.indexOf("\" under category: \"") + ("\" under category: \"").length()));
 //				Log.v("Test", "2: " + message.indexOf("\"", message.indexOf("\" under category: \"") + ("\" under category: \"").length()));
