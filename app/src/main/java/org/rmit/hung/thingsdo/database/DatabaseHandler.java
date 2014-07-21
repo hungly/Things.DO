@@ -122,8 +122,35 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			c.moveToFirst();
 		}
 
+		Category category = null;
+
 		assert c != null;
-		Category category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+		if (c.getCount() != 0) {
+			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+		}
+
+		db.close();
+
+		return category;
+	}
+
+	/** Getting single category */
+	public Category getCategory(String tittle) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c = db.query(TABLE_CATEGORIES, null, CAT_KEY_CATEGORY + "=?",
+		                    new String[]{tittle}, null, null, CAT_KEY_CATEGORY + " ASC");
+
+		if (c != null) {
+			c.moveToFirst();
+		}
+
+		Category category = null;
+
+		assert c != null;
+		if (c.getCount() != 0) {
+			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+		}
 
 		db.close();
 
