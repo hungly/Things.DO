@@ -40,6 +40,6 @@
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
 		android:focusable="false"
-		android:text="@string/button_text_add_task"/>
+		android:background="@android:drawable/ic_menu_add"/>
 
 </RelativeLayout>

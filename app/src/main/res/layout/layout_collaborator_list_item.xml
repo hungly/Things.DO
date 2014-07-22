@@ -49,6 +49,6 @@
 		android:layout_height="@dimen/button_size_task"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:text="@string/button_text_remove_task"/>
+		android:background="@android:drawable/ic_menu_delete"/>
 
 </RelativeLayout>

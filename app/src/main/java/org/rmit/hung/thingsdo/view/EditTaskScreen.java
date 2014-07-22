@@ -16,6 +16,8 @@
 package org.rmit.hung.thingsdo.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -89,11 +91,6 @@ public class EditTaskScreen extends Activity {
 
 		collaborators = new ArrayList<Collaborator>();
 		collaboratorListAdapter = new CollaboratorListAdapter(EditTaskScreen.this, collaborators);
-
-		final ListView collaboratorsList = (ListView) findViewById(R.id.list_collaborators);
-
-		collaboratorsList.setAdapter(collaboratorListAdapter);
-		collaboratorsList.setItemsCanFocus(true);
 
 		taskTittle = (EditText) findViewById(R.id.text_task_tittle);
 		taskNote = (EditText) findViewById(R.id.text_task_notes);
@@ -282,7 +279,10 @@ public class EditTaskScreen extends Activity {
 	protected void onResume() {
 		Log.v("Activity", "Add task screen resumed");
 
-		collaboratorListAdapter.notifyDataSetChanged();
+		final ListView collaboratorsList = (ListView) findViewById(R.id.list_collaborators);
+
+		collaboratorsList.setAdapter(collaboratorListAdapter);
+		collaboratorsList.setItemsCanFocus(true);
 
 		super.onResume();
 	}
@@ -404,25 +404,77 @@ public class EditTaskScreen extends Activity {
 			if (requestCode == 2) {
 				Uri result = data.getData();
 
-				String id = result.getLastPathSegment();
+				final String id = result.getLastPathSegment();
 
 				Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{id}, null);
 
 				String name = "N/A";
 				String phoneID = "";
+
+				Log.v("Test", "Number of phone number for this contact: " + cursor.getCount());
+
 				if (cursor.moveToFirst()) {
 					name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-					phoneID = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
+
+					// try to query this contact default number
+					do {
+						phoneID = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
+					}
+					while (cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.IS_SUPER_PRIMARY)) == 0 && cursor.moveToNext());
 				}
 
-				Log.v("Things.DO", "Got a result: " + name + ", id: " + id);
+				cursor.close();
 
-				Collaborator collaborator = new Collaborator(id, name, phoneID, "1", "0");
+				Log.v("Things.DO", "Got a result: " + name + ", id: " + id + ", phone id: " + phoneID);
 
-				collaborators.add(collaborator);
+//				if (preferences.getBoolean("sms_send", true)) {
+				if (phoneID.equals("")) {
+					Log.v("Things.DO", "No phone number for this contact, gonna ask user");
 
-				collaboratorListAdapter.notifyDataSetChanged();
+					Cursor contactName = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, new String[]{ContactsContract.Contacts.DISPLAY_NAME}, ContactsContract.Contacts._ID + "=?", new String[]{id}, null);
+
+					if (contactName != null)
+						contactName.moveToFirst();
+
+					assert contactName != null;
+					final String tempName = contactName.getString(contactName.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+					final String tempPhoneID = phoneID;
+
+					contactName.close();
+
+					AlertDialog.Builder dialog = new AlertDialog.Builder(EditTaskScreen.this);
+
+					dialog.setTitle("No phone contact");
+					dialog.setMessage("This contact does not have any phone number. Things.DO will not send message to this contact.\nDo you want to continues?");
+					dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							Collaborator collaborator = new Collaborator(id, tempName, tempPhoneID, "1", "0");
+
+							collaborators.add(collaborator);
+
+							collaboratorListAdapter.notifyDataSetChanged();
+						}
+					});
+					dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+						}
+					});
+					dialog.setCancelable(true);
+
+					dialog.show();
+				} else {
+					Log.v("Things.DO", "Phone number found for this contact, gonna add to list");
+
+					Collaborator collaborator = new Collaborator(id, name, phoneID, "1", "0");
+
+					collaborators.add(collaborator);
+
+					collaboratorListAdapter.notifyDataSetChanged();
+				}
 			}
+//			}
 		} else {
 			Log.v("Things.DO", "Uhm!! Something just went wrong.");
 		}

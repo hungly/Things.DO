@@ -604,7 +604,7 @@ public class MainScreen extends Activity {
 
 			String sent = "0";
 
-			if (info[0].equals("1") && info[1].equals("0")) {
+			if (info.length == 4 && info[0].equals("1") && info[1].equals("0")) {
 
 				Cursor cursor = getContentResolver().query(Phone.CONTENT_URI,
 				                                           new String[]{Phone._ID, Phone.CONTACT_ID, Phone.NUMBER},
@@ -631,7 +631,7 @@ public class MainScreen extends Activity {
 			newCollaboratorsList += newCollaboratorsList.equals("") ? "" : "|";
 			newCollaboratorsList += info[0] + ",";
 			newCollaboratorsList += sent + ",";
-			newCollaboratorsList += info[2] + "," + info[3];
+			newCollaboratorsList += info[2] + "," + (info.length == 4 ? info[3] : "");
 		}
 
 		return newCollaboratorsList;

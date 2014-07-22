@@ -71,6 +71,7 @@
 		android:id="@+id/action_sync"
 		android:orderInCategory="100"
 		android:showAsAction="ifRoom"
+		android:icon="@android:drawable/ic_popup_sync"
 		android:title="@string/action_sync"/>
 
 	<item
