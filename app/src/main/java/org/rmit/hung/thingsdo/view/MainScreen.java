@@ -20,6 +20,8 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Dialog;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -58,6 +60,7 @@ import org.rmit.hung.thingsdo.model.NotificationReceiver;
 import org.rmit.hung.thingsdo.model.SMSReceiver;
 import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.model.TaskListAdapter;
+import org.rmit.hung.thingsdo.model.WidgetProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -571,6 +574,8 @@ public class MainScreen extends Activity {
 					}
 				}
 				tasks.notifyDataSetChanged();
+
+				updateWidget();
 			}
 
 //			getTaskGroupBy();
@@ -633,6 +638,15 @@ public class MainScreen extends Activity {
 		}
 
 		return newCollaboratorsList;
+	}
+
+	public void updateWidget() {
+		Intent intent = new Intent(MainScreen.this, WidgetProvider.class);
+		intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+		int[] ids = AppWidgetManager.getInstance(getApplication()).getAppWidgetIds(new ComponentName(getApplication(), WidgetProvider.class));
+
+		intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+		sendBroadcast(intent);
 	}
 
 	public void syncTasks() {
@@ -705,6 +719,8 @@ public class MainScreen extends Activity {
 
 		Log.v("Things.DO", "Remove finished, refresh list view");
 		tasks.notifyDataSetChanged();
+
+		updateWidget();
 	}
 
 	public void addCategory(String categoryName) {

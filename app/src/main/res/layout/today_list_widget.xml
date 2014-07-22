@@ -1,0 +1,42 @@
+<!--
+  ~ today_list_widget.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       22/07/2014
+  ~ Date last modified: 22/07/2014
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/widget_margin">
+
+	<TextView
+		android:id="@+id/widget_text"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:layout_alignParentTop="true"
+		android:background="#09C"
+		android:contentDescription="@string/widget_text"
+		android:gravity="center_vertical"
+		android:paddingLeft="@dimen/padding_due_date"
+		android:text="@string/widget_text"
+		android:textColor="#ffffff"
+		android:textSize="18sp"
+		android:textStyle="bold|italic"/>
+
+	<ListView
+		android:id="@+id/widget_list_view"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_below="@+id/widget_text"/>
+
+</RelativeLayout>

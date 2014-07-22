@@ -39,7 +39,7 @@
 		android:layout_height="@dimen/button_size_category"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:focusable="false"
-		android:background="@android:drawable/ic_menu_add"/>
+		android:background="@android:drawable/ic_menu_add"
+		android:focusable="false"/>
 
 </RelativeLayout>

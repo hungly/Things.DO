@@ -23,18 +23,18 @@
 		android:id="@+id/list_category"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:layout_above="@+id/button_category_manager_add_category"/>
+		android:layout_above="@+id/button_category_manager_add_category"
+		android:layout_alignParentTop="true"/>
 
 	<Button
-		android:background="@color/wallet_holo_blue_light"
-		android:textColor="@android:color/white"
 		android:id="@+id/button_category_manager_add_category"
 		style="@android:style/DeviceDefault.ButtonBar"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:textSize="@dimen/text_size_collaborator"
-		android:text="@string/button_add_category"/>
+		android:background="@color/wallet_holo_blue_light"
+		android:text="@string/button_add_category"
+		android:textColor="@android:color/white"
+		android:textSize="@dimen/text_size_collaborator"/>
 
 </RelativeLayout>

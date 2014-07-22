@@ -17,7 +17,6 @@ package org.rmit.hung.thingsdo.model;
 
 import android.util.Log;
 
-import com.google.api.services.tasks.model.Task;
 import com.google.api.services.tasks.model.TaskList;
 
 import org.rmit.hung.thingsdo.view.MainScreen;
@@ -44,7 +43,7 @@ public class AsyncLoadTasklist extends CommonAsyncTask {
 
 		if (client.tasklists().list().execute().isEmpty()) {
 			Log.v("Test", "Nothing in the list");
-		}else {
+		} else {
 			Log.v("Test", "There something on the server");
 			List<String> result = new ArrayList<String>();
 
@@ -52,7 +51,7 @@ public class AsyncLoadTasklist extends CommonAsyncTask {
 
 			Log.v("Test", "Got data from server");
 			if (taskList != null) {
-				for (TaskList list: taskList) {
+				for (TaskList list : taskList) {
 					result.add(list.getTitle());
 				}
 			} else {
