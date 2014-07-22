@@ -50,7 +50,7 @@ import com.google.api.services.tasks.TasksScopes;
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
-import org.rmit.hung.thingsdo.model.AsyncLoadTasks;
+import org.rmit.hung.thingsdo.model.AsyncLoadTasklist;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.ConnectionDetector;
@@ -164,8 +164,6 @@ public class MainScreen extends Activity {
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		setNotification();
-
-		credential = GoogleAccountCredential.usingOAuth2(MainScreen.this, Collections.singleton(TasksScopes.TASKS));
 
 //		PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this,4,alarmIntent,0);
 //
@@ -500,7 +498,7 @@ public class MainScreen extends Activity {
 			String textCollaborators = data.getStringExtra("Collaborators");
 
 			// run only when preference option is enable
-			if (preferences.getBoolean("sms_send", false) && !textCollaborators.equals("") && !textTaskTittle.equals("")) {
+			if (requestCode != 2 && preferences.getBoolean("sms_send", false) && !textCollaborators.equals("") && !textTaskTittle.equals("")) {
 				textCollaborators = sendSMS(textTaskTittle, textCategory, textParent, textDueDate, textCollaborators);
 			}
 
@@ -646,12 +644,13 @@ public class MainScreen extends Activity {
 
 		Log.v("Things.DO", "Now sync task using account: " + account);
 
+		credential = GoogleAccountCredential.usingOAuth2(MainScreen.this, Collections.singleton(TasksScopes.TASKS));
 		credential.setSelectedAccountName(preferences.getString("google_account", null));
 
 		client = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("Things.DO").build();
 
 		if (ConnectionDetector.isConnectingToInternet(MainScreen.this)) {
-			AsyncLoadTasks.run(MainScreen.this);
+			AsyncLoadTasklist.run(MainScreen.this);
 		} else {
 			Toast.makeText(MainScreen.this, "No connection to the internet", Toast.LENGTH_SHORT).show();
 		}

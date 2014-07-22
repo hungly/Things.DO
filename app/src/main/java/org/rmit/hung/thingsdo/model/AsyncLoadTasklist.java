@@ -18,6 +18,7 @@ package org.rmit.hung.thingsdo.model;
 import android.util.Log;
 
 import com.google.api.services.tasks.model.Task;
+import com.google.api.services.tasks.model.TaskList;
 
 import org.rmit.hung.thingsdo.view.MainScreen;
 
@@ -28,39 +29,41 @@ import java.util.List;
 /**
  * Created by Hung on 21/07/14.
  */
-public class AsyncLoadTasks extends CommonAsyncTask {
-	public AsyncLoadTasks(MainScreen mainScreen) {
+public class AsyncLoadTasklist extends CommonAsyncTask {
+	public AsyncLoadTasklist(MainScreen mainScreen) {
 		super(mainScreen);
 	}
 
 	public static void run(MainScreen mainScreen) {
-		new AsyncLoadTasks(mainScreen).execute();
+		new AsyncLoadTasklist(mainScreen).execute();
 	}
 
 	@Override
 	protected void doInBackground() throws IOException {
 		Log.v("Test", "Begin download task from server");
 
-		List<String> result = new ArrayList<String>();
-		if (client.tasks().list("@default").setFields("items/title").execute().isEmpty()) {
+		if (client.tasklists().list().execute().isEmpty()) {
 			Log.v("Test", "Nothing in the list");
-		}
+		}else {
+			Log.v("Test", "There something on the server");
+			List<String> result = new ArrayList<String>();
 
-		List<Task> tasks = client.tasks().list("@default").setFields("items/title").execute().getItems();
+			List<TaskList> taskList = client.tasklists().list().execute().getItems();
 
-		Log.v("Test", "Got data from server");
-		if (tasks != null) {
-			for (Task task : tasks) {
-				result.add(task.getTitle());
+			Log.v("Test", "Got data from server");
+			if (taskList != null) {
+				for (TaskList list: taskList) {
+					result.add(list.getTitle());
+				}
+			} else {
+				result.add("No tasks.");
 			}
-		} else {
-			result.add("No tasks.");
-		}
 
-		Log.v("Test", "Finished download task from server, now display list");
+			Log.v("Test", "Finished download task from server, now display list");
 
-		for (String s : result) {
-			Log.v("Test", s);
+			for (String s : result) {
+				Log.v("Test", s);
+			}
 		}
 	}
 }
