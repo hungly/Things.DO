@@ -18,6 +18,11 @@
 	<!-- Base application theme. -->
 	<style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
 		<!-- Customize your theme here. -->
+		<item name="android:actionBarStyle">@style/ThingsDOActionBar</item>
+	</style>
+
+	<style name="ThingsDOActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+		<item name="android:background">@color/action_bar_background</item>
 	</style>
 
 </resources>

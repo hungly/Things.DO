@@ -32,9 +32,9 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:background="@android:color/holo_blue_dark"
+		android:background="@color/button_add_category_background"
 		android:text="@string/button_add_category"
-		android:textColor="@android:color/white"
+		android:textColor="@color/text_color"
 		android:textSize="@dimen/button_text_size_add_category"
 		android:textStyle="bold"/>
 

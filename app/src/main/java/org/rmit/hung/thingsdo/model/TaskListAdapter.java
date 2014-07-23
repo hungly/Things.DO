@@ -239,6 +239,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 
 			TaskViewHolder tempTaskViewHolder = new TaskViewHolder();
 
+			tempTaskViewHolder.hasDueDate = (TextView) convertView.findViewById(R.id.text_has_due_date);
 			tempTaskViewHolder.textView = (TextView) convertView.findViewById(R.id.text_task_list_item_name);
 			tempTaskViewHolder.buttonEditTask = (Button) convertView.findViewById(R.id.button_task_list_item_edit_task);
 			tempTaskViewHolder.buttonRemoveTask = (Button) convertView.findViewById(R.id
@@ -252,6 +253,18 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		taskViewHolder.textView.clearComposingText();
 		taskViewHolder.textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
 		taskViewHolder.textView.setPaintFlags(Paint.HINTING_ON);
+
+		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getDueDate().equals("None")){
+			taskViewHolder.hasDueDate.setVisibility(View.INVISIBLE);
+		}else {
+			taskViewHolder.hasDueDate.setVisibility(View.VISIBLE);
+		}
+
+		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getParent().equals("Urgent")){
+			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_urgent));
+		}else {
+			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_normal_list_item));
+		}
 
 		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getStatus().equals("completed")) {
 			taskViewHolder.textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
@@ -287,6 +300,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 	}
 
 	private static class TaskViewHolder {
+		public TextView hasDueDate;
 		public TextView textView;
 		public Button   buttonEditTask;
 		public Button   buttonRemoveTask;

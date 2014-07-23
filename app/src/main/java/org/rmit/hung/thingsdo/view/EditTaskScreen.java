@@ -369,6 +369,8 @@ public class EditTaskScreen extends Activity {
 	public void clearAllInput() {
 		taskTittle.setText("");
 		taskNote.setText("");
+		collaborators.clear();
+		collaboratorListAdapter.notifyDataSetChanged();
 	}
 
 	/**

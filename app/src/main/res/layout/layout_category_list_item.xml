@@ -18,19 +18,21 @@
 	android:id="@+id/layout_category_list_item"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content">
-
+	android:layout_height="wrap_content"
+	android:paddingRight="@dimen/padding_right_category_list_item">
 
 	<CheckedTextView
 		android:id="@+id/text_category_list_item_name"
 		xmlns:android="http://schemas.android.com/apk/res/android"
 		android:layout_width="match_parent"
-		android:layout_height="?android:attr/listPreferredItemHeight"
+		android:layout_height="@dimen/category_list_item_height"
 		android:gravity="center_vertical"
 		android:hint="@string/text_hint_category"
 		android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
 		android:singleLine="true"
-		android:textSize="@dimen/text_size_category"/>
+		android:textColor="@color/text_list_item"
+		android:textSize="@dimen/text_size_category"
+		android:textStyle="bold"/>
 
 	<Button
 		android:id="@+id/button_category_list_item_add_task"

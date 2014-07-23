@@ -34,6 +34,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -367,6 +368,8 @@ public class MainScreen extends Activity {
 
 				item.setChecked(true);
 
+				findViewById(R.id.button_add_category).setVisibility(View.VISIBLE);
+
 				onResume();
 
 				return true;
@@ -381,6 +384,8 @@ public class MainScreen extends Activity {
 
 				item.setChecked(true);
 
+				findViewById(R.id.button_add_category).setVisibility(View.INVISIBLE);
+
 				onResume();
 
 				return true;
@@ -394,6 +399,8 @@ public class MainScreen extends Activity {
 				editor.apply();
 
 				item.setChecked(true);
+
+				findViewById(R.id.button_add_category).setVisibility(View.INVISIBLE);
 
 				onResume();
 
@@ -523,6 +530,7 @@ public class MainScreen extends Activity {
 				updateWidget();
 			}
 
+			tasks.notifyDataSetChanged();
 //			getTaskGroupBy();
 		}
 	}
@@ -597,7 +605,7 @@ public class MainScreen extends Activity {
 	public void syncTasks() {
 		String account = preferences.getString("google_account", "None");
 
-		if (account.equals("None")) {
+		if (account.equals("None") || account.equals("")) {
 			displayAccountPicker();
 		} else {
 			Log.v("Things.DO", "Now sync task using account: " + account);

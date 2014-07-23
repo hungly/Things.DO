@@ -18,7 +18,8 @@
 	android:id="@+id/layout_category_list_item"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="wrap_content"
-	android:layout_height="wrap_content">
+	android:layout_height="wrap_content"
+	android:paddingRight="@dimen/padding_right_category_list_item">
 
 
 	<CheckedTextView
