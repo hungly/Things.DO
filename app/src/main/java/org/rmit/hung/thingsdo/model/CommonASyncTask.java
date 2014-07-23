@@ -21,6 +21,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlaySe
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.services.tasks.Tasks;
 
+import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 import java.io.IOException;
@@ -29,12 +30,14 @@ import java.io.IOException;
  * Created by Hung on 21/07/14.
  */
 public abstract class CommonAsyncTask extends AsyncTask<Void, Void, Boolean> {
-	final MainScreen mainScreen;
-	final Tasks      client;
+	final MainScreen      mainScreen;
+	final Tasks           client;
+	final DatabaseHandler db;
 
 	public CommonAsyncTask(MainScreen mainScreen) {
 		this.mainScreen = mainScreen;
 		this.client = mainScreen.getClient();
+		db = new DatabaseHandler(mainScreen);
 	}
 
 	/**

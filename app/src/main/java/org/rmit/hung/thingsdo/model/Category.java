@@ -19,12 +19,13 @@ package org.rmit.hung.thingsdo.model;
  * Created by Hung on 03/07/14.
  */
 public class Category {
-	private int _id;
+	private int    _id;
 	private String googleID;
 	private String category;
 
 	public Category() {
 	}
+
 	public Category(String googleID, String category) {
 		this.googleID = googleID;
 		this.category = category;

@@ -159,6 +159,29 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return category;
 	}
 
+	/** Getting single category by its Google ID */
+	public Category getCategoryByGoogleID(String googleID) {
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor c = db.query(TABLE_CATEGORIES, null, CAT_KEY_GOOGLE_ID + "=?",
+		                    new String[]{googleID}, null, null, CAT_KEY_CATEGORY + " ASC");
+
+		if (c != null) {
+			c.moveToFirst();
+		}
+
+		Category category = null;
+
+		assert c != null;
+		if (c.getCount() != 0) {
+			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_GOOGLE_ID)), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+		}
+
+		db.close();
+
+		return category;
+	}
+
 	/** Getting single task */
 	public Task getTask(int id) {
 		SQLiteDatabase db = this.getReadableDatabase();

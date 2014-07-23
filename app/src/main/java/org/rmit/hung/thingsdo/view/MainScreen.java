@@ -52,7 +52,7 @@ import com.google.api.services.tasks.TasksScopes;
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
-import org.rmit.hung.thingsdo.model.AsyncLoadTasklist;
+import org.rmit.hung.thingsdo.model.AsyncTasks;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.model.ConnectionDetector;
@@ -96,7 +96,10 @@ public class MainScreen extends Activity {
 	private Intent                   alarmIntent;
 	private SMSReceiver              smsReceiver;
 	private Tasks                    client;
-	private GoogleAccountCredential  credential;
+
+	public ArrayList<CategoryListItem> getCategoryListItems() {
+		return categoryListItems;
+	}
 
 	public DatabaseHandler getDatabase() {
 		return db;
@@ -143,9 +146,9 @@ public class MainScreen extends Activity {
 		if (db.getCategoriesCount() == 0) {
 			Log.v("Things.DO", "Category list is empty, adding default items");
 
-			db.addCategory(new Category("0","Study"));
-			db.addCategory(new Category("0","Personal"));
-			db.addCategory(new Category("0","Work"));
+			db.addCategory(new Category("0", "Study"));
+			db.addCategory(new Category("0", "Personal"));
+			db.addCategory(new Category("0", "Work"));
 		} else
 			Log.v("Things.DO", "Loading category from database");
 
@@ -229,68 +232,6 @@ public class MainScreen extends Activity {
 		setNotification();
 
 		super.onResume();
-	}
-
-	protected void getTaskGroupBy() {
-		// get data
-		categoryListItems.clear();
-
-		if (groupBy.equals("category")) {
-			// group by category
-			ArrayList<Category> categories = db.getAllCategories();
-			for (Category c : categories) {
-				ArrayList<Task> tasks = db.getTasksByCategory(c, sortOrder);
-				categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
-			}
-		}
-		if (groupBy.equals("priority")) {
-			// group by priority
-			String[] priorities = {"Urgent", "High", "Medium", "Low"};
-			for (String p : priorities) {
-				ArrayList<Task> tasks = db.getTasksByPriority(p, sortOrder);
-				categoryListItems.add(new CategoryListItem(p, tasks));
-			}
-		}
-		if (groupBy.equals("due_date")) {
-			// group by due date
-
-			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
-
-			Calendar c = Calendar.getInstance();
-
-			Date date = c.getTime();
-			String currentDate = dateFormat.format(date);
-
-			Date tomorrow = new Date(date.getYear(), date.getMonth(), date.getDate() + 1);
-			String tomorrowDate = dateFormat.format(tomorrow);
-
-			String[] dates = {"Past", "Today", "Tomorrow", "Future", "Someday"};
-
-			for (String d : dates) {
-				if (d.equals("Past")) {
-					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "<", sortOrder);
-					categoryListItems.add(new CategoryListItem(d, tasks));
-				}
-				if (d.equals("Today")) {
-					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "=", sortOrder);
-					categoryListItems.add(new CategoryListItem(d, tasks));
-				}
-				if (d.equals("Tomorrow")) {
-					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, "=", sortOrder);
-					categoryListItems.add(new CategoryListItem(d, tasks));
-				}
-				if (d.equals("Future")) {
-					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, ">", sortOrder);
-					categoryListItems.add(new CategoryListItem(d, tasks));
-				}
-				if (d.equals("Someday")) {
-					ArrayList<Task> tasks = db.getTasksByDueDate("None", "=", sortOrder);
-					categoryListItems.add(new CategoryListItem(d, tasks));
-				}
-			}
-		}
-
-		tasks.notifyDataSetChanged();
 	}
 
 	@Override
@@ -658,20 +599,85 @@ public class MainScreen extends Activity {
 
 		if (account.equals("None")) {
 			displayAccountPicker();
-		}
-
-		Log.v("Things.DO", "Now sync task using account: " + account);
-
-		credential = GoogleAccountCredential.usingOAuth2(MainScreen.this, Collections.singleton(TasksScopes.TASKS));
-		credential.setSelectedAccountName(preferences.getString("google_account", null));
-
-		client = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("Things.DO").build();
-
-		if (ConnectionDetector.isConnectingToInternet(MainScreen.this)) {
-			AsyncLoadTasklist.run(MainScreen.this);
 		} else {
-			Toast.makeText(MainScreen.this, "No connection to the internet", Toast.LENGTH_SHORT).show();
+			Log.v("Things.DO", "Now sync task using account: " + account);
+
+			GoogleAccountCredential credential = GoogleAccountCredential.usingOAuth2(MainScreen.this, Collections.singleton(TasksScopes.TASKS));
+			credential.setSelectedAccountName(preferences.getString("google_account", null));
+
+			client = new Tasks.Builder(httpTransport, jsonFactory, credential).setApplicationName("Things.DO").build();
+
+			if (ConnectionDetector.isConnectingToInternet(MainScreen.this)) {
+				// sync tasks with server
+				AsyncTasks.run(MainScreen.this);
+			} else {
+				Toast.makeText(MainScreen.this, "No connection to the internet", Toast.LENGTH_SHORT).show();
+			}
 		}
+	}
+
+	protected void getTaskGroupBy() {
+		// get data
+		categoryListItems.clear();
+
+		if (groupBy.equals("category")) {
+			// group by category
+			ArrayList<Category> categories = db.getAllCategories();
+			for (Category c : categories) {
+				ArrayList<Task> tasks = db.getTasksByCategory(c, sortOrder);
+				categoryListItems.add(new CategoryListItem(c.getCategory(), tasks));
+			}
+		}
+		if (groupBy.equals("priority")) {
+			// group by priority
+			String[] priorities = {"Urgent", "High", "Medium", "Low"};
+			for (String p : priorities) {
+				ArrayList<Task> tasks = db.getTasksByPriority(p, sortOrder);
+				categoryListItems.add(new CategoryListItem(p, tasks));
+			}
+		}
+		if (groupBy.equals("due_date")) {
+			// group by due date
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
+
+			Calendar c = Calendar.getInstance();
+
+			Date date = c.getTime();
+			String currentDate = dateFormat.format(date);
+
+			Date tomorrow = new Date(date.getYear(), date.getMonth(), date.getDate() + 1);
+			String tomorrowDate = dateFormat.format(tomorrow);
+
+			String[] dates = {"Past", "Today", "Tomorrow", "Future", "Someday"};
+
+			for (String d : dates) {
+				if (d.equals("Past")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "<", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Today")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(currentDate, "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Tomorrow")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Future")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate(tomorrowDate, ">", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+				if (d.equals("Someday")) {
+					ArrayList<Task> tasks = db.getTasksByDueDate("None", "=", sortOrder);
+					categoryListItems.add(new CategoryListItem(d, tasks));
+				}
+			}
+		}
+
+		tasks.swapCategoryItemArrayList(categoryListItems);
+
+		tasks.notifyDataSetChanged();
 	}
 
 	public void displayAccountPicker() {
@@ -731,7 +737,7 @@ public class MainScreen extends Activity {
 		Log.v("Things.DO", "Category: \"" + categoryName + "\"");
 
 		Log.v("Things.DO", "Add category to database");
-		db.addCategory(new Category("0",categoryName));
+		db.addCategory(new Category("0", categoryName));
 
 		Log.v("Things.DO", "Add category to list view");
 		categoryListItems.add(new CategoryListItem(categoryName, new ArrayList<Task>()));
@@ -755,7 +761,7 @@ public class MainScreen extends Activity {
 
 				taskArrayList.clear();
 
-				taskArrayList = db.getTasksByCategory(new Category("0",category), "ASC");
+				taskArrayList = db.getTasksByCategory(new Category("0", category), "ASC");
 
 				categoryListItem.setTask(taskArrayList);
 				tasks.notifyDataSetChanged();

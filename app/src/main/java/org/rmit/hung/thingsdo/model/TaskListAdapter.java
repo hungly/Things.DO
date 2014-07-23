@@ -42,9 +42,9 @@ import java.util.ArrayList;
  *          -   http://www.vogella.com/tutorials/AndroidListView/article.html#listviewselection
  */
 public class TaskListAdapter extends BaseExpandableListAdapter {
-	private final ArrayList<CategoryListItem> categoryListItemArrayList;
 	private final Activity                    activity;
 	private final Intent                      addTask;
+	private       ArrayList<CategoryListItem> categoryListItemArrayList;
 	private       LayoutInflater              inflater;
 
 	public TaskListAdapter(Activity activity, Intent addTask, ArrayList<CategoryListItem> categoryListItemArrayList) {
@@ -52,6 +52,10 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		this.activity = activity;
 		this.addTask = addTask;
 		this.inflater = activity.getLayoutInflater();
+	}
+
+	public void swapCategoryItemArrayList(ArrayList<CategoryListItem> categoryListItemArrayList) {
+		this.categoryListItemArrayList = categoryListItemArrayList;
 	}
 
 	/**
