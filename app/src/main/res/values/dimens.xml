@@ -15,17 +15,21 @@
 -->
 <resources>
 
-	<!-- Default screen margins, per the Android Design guidelines. -->
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="text_size_splash_app_name">45sp</dimen>
 	<dimen name="text_size_splash_studio">20sp</dimen>
-	<dimen name="text_size_category">35sp</dimen>
+	<dimen name="text_size_category">30sp</dimen>
 	<dimen name="text_size_task">20sp</dimen>
+	<dimen name="text_size_edit_task">20sp</dimen>
 	<dimen name="text_size_collaborator">25sp</dimen>
 	<dimen name="text_size_due_date">25sp</dimen>
-	<dimen name="button_size_category">50dp</dimen>
-	<dimen name="button_size_task">40dp</dimen>
+	<dimen name="button_text_size_add_category">23sp</dimen>
+	<dimen name="button_text_size_button_bar">15sp</dimen>
+	<dimen name="button_size_big_horizontal">40dp</dimen>
+	<dimen name="button_size_big_vertical">40dp</dimen>
+	<dimen name="button_size_small_horizontal">35dp</dimen>
+	<dimen name="button_size_small_vertical">35dp</dimen>
 	<dimen name="padding_category_list_item_left">35dp</dimen>
 	<dimen name="padding_task_list_item_left">40dp</dimen>
 	<dimen name="padding_category_horizontal">5dp</dimen>

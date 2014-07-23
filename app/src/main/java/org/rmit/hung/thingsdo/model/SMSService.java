@@ -139,7 +139,7 @@ public class SMSService extends IntentService {
 
 				if (c == null) {
 //					Log.v("Test", "No category found, create new category");
-					db.addCategory(new Category(taskCategory));
+					db.addCategory(new Category("0", taskCategory));
 				}
 
 				Task newTask = new Task(0, "0", taskTittle, updateDate, taskPriority, "", "needAction", taskDueDate, "", taskCategory, taskCollaborators);

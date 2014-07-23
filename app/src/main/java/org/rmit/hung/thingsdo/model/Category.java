@@ -19,20 +19,29 @@ package org.rmit.hung.thingsdo.model;
  * Created by Hung on 03/07/14.
  */
 public class Category {
-	private int    _id;
-	private String _category;
+	private int _id;
+	private String googleID;
+	private String category;
 
 	public Category() {
 	}
-
-	public Category(String _category) {
-		this._category = _category;
+	public Category(String googleID, String category) {
+		this.googleID = googleID;
+		this.category = category;
 	}
 
-	public Category(int _id, String _category) {
-
+	public Category(int _id, String googleID, String category) {
 		this._id = _id;
-		this._category = _category;
+		this.googleID = googleID;
+		this.category = category;
+	}
+
+	public String getGoogleID() {
+		return googleID;
+	}
+
+	public void setGoogleID(String google_id) {
+		this.googleID = google_id;
 	}
 
 	public int getID() {
@@ -44,10 +53,10 @@ public class Category {
 	}
 
 	public String getCategory() {
-		return _category;
+		return category;
 	}
 
 	public void setCategory(String _category) {
-		this._category = _category;
+		this.category = _category;
 	}
 }

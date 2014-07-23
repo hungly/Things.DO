@@ -61,13 +61,12 @@ public class CategoryListAdapter extends ArrayAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.layout_category_list_item, null);
+			convertView = ((Activity) context).getLayoutInflater().inflate(R.layout.layout_category_list_item_category_manager, null);
 
 			ViewHolder tempHolder = new ViewHolder();
 
 			tempHolder.textCategoryName = (TextView) convertView.findViewById(R.id.text_category_list_item_name);
-			tempHolder.buttonRemoveCategory = (Button) convertView.findViewById(R.id.button_category_list_item_add_task);
-			tempHolder.buttonRemoveCategory.setText("X");
+			tempHolder.buttonRemoveCategory = (Button) convertView.findViewById(R.id.button_category_list_delete_category);
 
 			convertView.setTag(tempHolder);
 		}

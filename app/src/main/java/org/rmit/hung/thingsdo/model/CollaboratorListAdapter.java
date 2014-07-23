@@ -62,7 +62,7 @@ public class CollaboratorListAdapter extends ArrayAdapter {
 			tempHolder.collaboratorName = (TextView) convertView.findViewById(R.id.text_collaborator_list_item_name);
 			tempHolder.buttonRemoveCollaborator = (Button) convertView.findViewById(R.id.button_collaborator_list_item_remove_collaborator);
 
-			if (preferences.getBoolean("sms_send", false))
+			if (preferences.getBoolean("sms_send", true))
 				tempHolder.checkBox.setEnabled(true);
 			else
 				tempHolder.checkBox.setEnabled(false);

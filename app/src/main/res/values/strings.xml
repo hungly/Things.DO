@@ -27,17 +27,15 @@
 	<string name="text_date_picker_question">Please pick a due date for this task</string>
 	<string name="text_priority_tittle">Task priority</string>
 	<string name="text_priority_question">Please your task priority</string>
-	<string name="button_text_add_task">+</string>
-	<string name="button_text_remove_task">X</string>
-	<string name="button_text_edit_task">E</string>
-	<string name="button_text_category">Category</string>
-	<string name="button_text_due_date">Due date</string>
-	<string name="button_text_priority">Priority</string>
+	<string name="button_text_category">category</string>
+	<string name="button_text_due_date">due date</string>
+	<string name="button_text_priority">priority</string>
 	<string name="button_add_category">Add new category</string>
+	<string name="text_hint_collaborator">collaborator</string>
 	<string name="text_hint_category">category</string>
 	<string name="text_hint_task">task</string>
-	<string name="text_hint_add_task_tittle">task tittle</string>
-	<string name="text_hint_add_task_note">task note</string>
+	<string name="text_hint_add_task_tittle">task\'s tittle</string>
+	<string name="text_hint_add_task_note">task\'s note</string>
 	<string name="text_hint_task_due_date">due date</string>
 	<string name="action_category_manager">Category Manager</string>
 	<string name="action_group_by">Group by</string>
@@ -60,6 +58,5 @@
 	<string name="preference_time_picker_positive_button">Done</string>
 	<string name="widget_layout_tittle">Today tasks</string>
 	<string name="widget_text">TODAY TASKS</string>
-	<!--<string name="add_widget">Add widget</string>-->
 
 </resources>

@@ -36,19 +36,19 @@
 	<Button
 		android:id="@+id/button_task_list_item_edit_task"
 		style="@android:style/DeviceDefault.ButtonBar"
-		android:layout_width="@dimen/button_size_task"
-		android:layout_height="@dimen/button_size_task"
+		android:layout_width="@dimen/button_size_small_horizontal"
+		android:layout_height="@dimen/button_size_small_horizontal"
 		android:layout_centerVertical="true"
 		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"
-		android:background="@android:drawable/ic_menu_edit"/>
+		android:background="@drawable/ic_edit"/>
 
 	<Button
 		android:id="@+id/button_task_list_item_remove_task"
 		style="@android:style/DeviceDefault.ButtonBar"
-		android:layout_width="@dimen/button_size_task"
-		android:layout_height="@dimen/button_size_task"
+		android:layout_width="@dimen/button_size_small_horizontal"
+		android:layout_height="@dimen/button_size_small_horizontal"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:background="@android:drawable/ic_menu_delete"/>
+		android:background="@drawable/ic_delete"/>
 
 </RelativeLayout>

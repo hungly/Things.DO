@@ -143,9 +143,9 @@ public class MainScreen extends Activity {
 		if (db.getCategoriesCount() == 0) {
 			Log.v("Things.DO", "Category list is empty, adding default items");
 
-			db.addCategory(new Category("Study"));
-			db.addCategory(new Category("Personal"));
-			db.addCategory(new Category("Work"));
+			db.addCategory(new Category("0","Study"));
+			db.addCategory(new Category("0","Personal"));
+			db.addCategory(new Category("0","Work"));
 		} else
 			Log.v("Things.DO", "Loading category from database");
 
@@ -385,6 +385,10 @@ public class MainScreen extends Activity {
 				return true;
 			case R.id.action_log_out:
 				Log.v("Things.DO", "\"Log out\" selected, logging out");
+
+				editor.putString("google_account", "");
+
+				editor.apply();
 
 				return true;
 			case R.id.action_exit:
@@ -727,9 +731,9 @@ public class MainScreen extends Activity {
 		Log.v("Things.DO", "Category: \"" + categoryName + "\"");
 
 		Log.v("Things.DO", "Add category to database");
-		db.addCategory(new Category(categoryName));
+		db.addCategory(new Category("0",categoryName));
 
-		Log.v("Things.DO", "Add category to database");
+		Log.v("Things.DO", "Add category to list view");
 		categoryListItems.add(new CategoryListItem(categoryName, new ArrayList<Task>()));
 
 		Log.v("Things.DO", "Add finished, refresh list view");
@@ -751,7 +755,7 @@ public class MainScreen extends Activity {
 
 				taskArrayList.clear();
 
-				taskArrayList = db.getTasksByCategory(new Category(category), "ASC");
+				taskArrayList = db.getTasksByCategory(new Category("0",category), "ASC");
 
 				categoryListItem.setTask(taskArrayList);
 				tasks.notifyDataSetChanged();

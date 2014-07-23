@@ -30,7 +30,7 @@ import java.util.Calendar;
 
 /**
  * Created by Hung on 22/07/14.
- *
+ * <p/>
  * Reference:
  * - http://laaptu.wordpress.com/2013/07/19/android-app-widget-with-listview/
  */

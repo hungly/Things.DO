@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ layout_category_list_item.xml
+  ~ layout_category_list_item_category_manager.xml
   ~ Task Management Application
   ~ 1, COSC2543 - Mobile Application Development
   ~ RMIT International University Vietnam
@@ -10,8 +10,8 @@
   ~ Refer to the NOTICE file in the root of the source tree for
   ~ acknowledgements of third party works used in this software.
   ~
-  ~ Date created:       01/07/2014
-  ~ Date last modified: 01/07/2014
+  ~ Date created:       22/07/2014
+  ~ Date last modified: 22/07/2014
   -->
 
 <RelativeLayout
@@ -33,13 +33,13 @@
 		android:textSize="@dimen/text_size_category"/>
 
 	<Button
-		android:id="@+id/button_category_list_item_add_task"
+		android:id="@+id/button_category_list_delete_category"
 		style="@android:style/DeviceDefault.ButtonBar"
 		android:layout_width="@dimen/button_size_big_horizontal"
 		android:layout_height="@dimen/button_size_big_vertical"
 		android:layout_alignParentRight="true"
 		android:layout_centerVertical="true"
-		android:background="@drawable/ic_add"
+		android:background="@drawable/ic_delete"
 		android:focusable="false"/>
 
 </RelativeLayout>

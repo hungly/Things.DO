@@ -144,11 +144,13 @@ public class CategoryManagerScreen extends Activity {
 	public void addCategory(String categoryName) {
 		Log.v("Things.DO", "Category: \"" + categoryName + "\"");
 
-		Log.v("Things.DO", "Add category to database");
-		db.addCategory(new Category(categoryName));
+		Category c = new Category("0", categoryName);
 
 		Log.v("Things.DO", "Add category to database");
-		categories.add(new Category(categoryName));
+		db.addCategory(c);
+
+		Log.v("Things.DO", "Add category to list view");
+		categories.add(c);
 
 		Log.v("Things.DO", "Add finished, refresh list view");
 		categoryListAdapter.notifyDataSetChanged();

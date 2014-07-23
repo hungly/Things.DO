@@ -60,13 +60,11 @@ public abstract class CommonAsyncTask extends AsyncTask<Void, Void, Boolean> {
 			doInBackground();
 			return true;
 		} catch (final GooglePlayServicesAvailabilityIOException availabilityException) {
-			mainScreen.showGooglePlayServicesAvailabilityErrorDialog(
-					availabilityException.getConnectionStatusCode());
+			mainScreen.showGooglePlayServicesAvailabilityErrorDialog(availabilityException.getConnectionStatusCode());
 		} catch (UserRecoverableAuthIOException userRecoverableException) {
-			mainScreen.startActivityForResult(
-					userRecoverableException.getIntent(), 4);
+			mainScreen.startActivityForResult(userRecoverableException.getIntent(), 4);
 		} catch (IOException e) {
-			e.getStackTrace();
+			Utils.logAndShow(mainScreen, "Things.DO", e);
 		}
 		return false;
 	}

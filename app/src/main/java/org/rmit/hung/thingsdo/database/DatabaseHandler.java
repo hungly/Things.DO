@@ -32,7 +32,7 @@ import java.util.ArrayList;
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 	// database version
-	private static final int DATABASE_VERSION = 5;
+	private static final int DATABASE_VERSION = 6;
 
 	// database name
 	private static final String DATABASE_NAME = "Task";
@@ -42,8 +42,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String TABLE_TASKS      = "Tasks";
 
 	// "Categories" table column names
-	private static final String CAT_KEY_ID       = "id";
-	private static final String CAT_KEY_CATEGORY = "category";
+	private static final String CAT_KEY_ID        = "id";
+	private static final String CAT_KEY_GOOGLE_ID = "google_id";
+	private static final String CAT_KEY_CATEGORY  = "category";
 
 	// "Tasks" table column names
 	private static final String TASK_KEY_ID             = "id";
@@ -79,6 +80,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		ContentValues values = new ContentValues();
+		values.put(CAT_KEY_GOOGLE_ID, category.getGoogleID());
 		values.put(CAT_KEY_CATEGORY, category.getCategory());
 
 		db.insert(TABLE_CATEGORIES, null, values);
@@ -126,7 +128,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		assert c != null;
 		if (c.getCount() != 0) {
-			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_GOOGLE_ID)), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
 		}
 
 		db.close();
@@ -149,7 +151,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		assert c != null;
 		if (c.getCount() != 0) {
-			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
+			category = new Category(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))), c.getString(c.getColumnIndex(CAT_KEY_GOOGLE_ID)), c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
 		}
 
 		db.close();
@@ -229,6 +231,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				Category category = new Category();
 
 				category.setID(Integer.parseInt(c.getString(c.getColumnIndex(CAT_KEY_ID))));
+				category.setGoogleID(c.getString(c.getColumnIndex(CAT_KEY_GOOGLE_ID)));
 				category.setCategory(c.getString(c.getColumnIndex(CAT_KEY_CATEGORY)));
 
 				categories.add(category);
@@ -418,6 +421,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 
 		values.put(CAT_KEY_ID, category.getID());
+		values.put(CAT_KEY_GOOGLE_ID, category.getGoogleID());
 		values.put(CAT_KEY_CATEGORY, category.getCategory());
 
 		final int returnCode = db.update(TABLE_CATEGORIES, values, CAT_KEY_ID + "=?", new String[]{String.valueOf(category.getID())});
@@ -481,8 +485,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// create query
-		final String CREATE_CAT_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + "(" + CAT_KEY_ID +
-		                                " INTEGER PRIMARY KEY, " + CAT_KEY_CATEGORY + " TEXT)";
+		final String CREATE_CAT_TABLE = "CREATE TABLE " + TABLE_CATEGORIES + "(" +
+		                                CAT_KEY_ID + " INTEGER PRIMARY KEY, " +
+		                                CAT_KEY_GOOGLE_ID + " TEXT, " +
+		                                CAT_KEY_CATEGORY + " TEXT)";
 
 		final String CREATE_TASK_TABLE = "CREATE TABLE " + TABLE_TASKS + "(" +
 		                                 TASK_KEY_ID + " INTEGER PRIMARY KEY, " +

@@ -17,41 +17,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical">
-
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal">
-
-		<Button
-			android:id="@+id/button_task_category"
-			style="@android:style/DeviceDefault.ButtonBar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center"
-			android:text="@string/button_text_category"/>
-
-		<Button
-			android:id="@+id/button_task_priority"
-			style="@android:style/DeviceDefault.ButtonBar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center"
-			android:text="@string/button_text_priority"/>
-
-		<Button
-			android:id="@+id/button_task_due_date"
-			style="@android:style/DeviceDefault.ButtonBar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:gravity="center"
-			android:text="@string/button_text_due_date"/>
-
-	</LinearLayout>
+	android:orientation="vertical"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp"
+	android:paddingTop="10dp">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -62,19 +31,21 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
 			android:layout_toLeftOf="@+id/button_save_task"
 			android:hint="@string/text_hint_add_task_tittle"
-			android:singleLine="true"/>
-
+			android:singleLine="true"
+			android:textSize="@dimen/text_size_edit_task"/>
 
 		<Button
 			android:id="@+id/button_save_task"
 			style="@android:style/DeviceDefault.ButtonBar"
-			android:layout_width="@dimen/button_size_task"
-			android:layout_height="@dimen/button_size_task"
+			android:layout_width="@dimen/button_size_small_horizontal"
+			android:layout_height="@dimen/button_size_small_vertical"
 			android:layout_alignParentRight="true"
+			android:layout_centerHorizontal="true"
 			android:layout_centerVertical="true"
-			android:background="@android:drawable/ic_menu_save"/>
+			android:background="@drawable/ic_save"/>
 
 	</RelativeLayout>
 
@@ -82,16 +53,61 @@
 		android:id="@+id/text_task_notes"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:hint="@string/text_hint_add_task_note"/>
+		android:hint="@string/text_hint_add_task_note"
+		android:paddingTop="10dp"
+		android:textSize="@dimen/text_size_edit_task"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:paddingBottom="10dp"
+		android:paddingTop="10dp">
+
+		<Button
+			android:id="@+id/button_task_category"
+			style="@android:style/DeviceDefault.ButtonBar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/ic_category"
+			android:gravity="center"
+			android:text="@string/button_text_category"
+			android:textSize="@dimen/button_text_size_button_bar"/>
+
+		<Button
+			android:id="@+id/button_task_priority"
+			style="@android:style/DeviceDefault.ButtonBar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/ic_priority"
+			android:gravity="center"
+			android:text="@string/button_text_priority"
+			android:textSize="@dimen/button_text_size_button_bar"/>
+
+		<Button
+			android:id="@+id/button_task_due_date"
+			style="@android:style/DeviceDefault.ButtonBar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawableTop="@drawable/ic_due_date"
+			android:gravity="center"
+			android:text="@string/button_text_due_date"
+			android:textSize="@dimen/button_text_size_button_bar"/>
+
+	</LinearLayout>
 
 	<RelativeLayout
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content">
+		android:layout_height="wrap_content"
+		android:paddingTop="10dp">
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_alignBottom="@+id/button_task_add_collaborator"
+			android:layout_centerVertical="true"
 			android:paddingLeft="@dimen/padding_collaborator_list"
 			android:text="@string/text_edit_task_collaborator"
 			android:textSize="@dimen/text_size_collaborator"/>
@@ -99,17 +115,18 @@
 		<Button
 			android:id="@+id/button_task_add_collaborator"
 			style="@android:style/DeviceDefault.ButtonBar"
-			android:layout_width="@dimen/button_size_task"
-			android:layout_height="@dimen/button_size_task"
+			android:layout_width="@dimen/button_size_small_horizontal"
+			android:layout_height="@dimen/button_size_small_vertical"
 			android:layout_alignParentRight="true"
-			android:layout_alignParentTop="true"
-			android:background="@android:drawable/ic_menu_add"/>
+			android:layout_centerVertical="true"
+			android:background="@drawable/ic_add"/>
 
 	</RelativeLayout>
 
 	<ListView
 		android:id="@+id/list_collaborators"
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"/>
+		android:layout_height="wrap_content"
+		android:paddingTop="5dp"/>
 
 </LinearLayout>
