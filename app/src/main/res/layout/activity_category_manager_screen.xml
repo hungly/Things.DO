@@ -17,6 +17,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 tools:context="org.rmit.hung.thingsdo.view.CategoryManagerScreen">
 
 	<ListView
@@ -25,6 +26,7 @@
 		android:layout_height="wrap_content"
 		android:layout_above="@+id/button_category_manager_add_category"
 		android:layout_alignParentTop="true"
+		android:animateLayoutChanges="true"
 		android:divider="@null"/>
 
 	<Button

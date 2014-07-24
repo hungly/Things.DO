@@ -167,7 +167,6 @@ public class MainScreen extends Activity {
 
 		// testing for alarm
 		alarmIntent = new Intent(MainScreen.this, NotificationReceiver.class);
-		pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, 0);
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		setNotification();
@@ -624,6 +623,12 @@ public class MainScreen extends Activity {
 		}
 	}
 
+	public void displayAccountPicker() {
+		Intent accountPicker = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
+
+		startActivityForResult(accountPicker, 2);
+	}
+
 	protected void getTaskGroupBy() {
 		// get data
 		categoryListItems.clear();
@@ -688,12 +693,6 @@ public class MainScreen extends Activity {
 		tasks.notifyDataSetChanged();
 	}
 
-	public void displayAccountPicker() {
-		Intent accountPicker = AccountPicker.newChooseAccountIntent(null, null, new String[]{GoogleAuthUtil.GOOGLE_ACCOUNT_TYPE}, true, null, null, null, null);
-
-		startActivityForResult(accountPicker, 2);
-	}
-
 	public void registerReceiver() {
 		IntentFilter filter = new IntentFilter("SMS Read");
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
@@ -707,19 +706,18 @@ public class MainScreen extends Activity {
 		if (preferences.getBoolean("notifications_on_due", true)) {
 			Log.v("Things.DO", "Notification on task due is on");
 
+			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
 			// broadcast every 1 minute
 			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
 
 			// get current date
 			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
 			String currentDate = dateFormat.format(Calendar.getInstance().getTime());
-
-			// put number of due task for current date
-			alarmIntent.putExtra("Number Due", db.getTasksByDueDate(currentDate, "=", "ASC").size());
-//			alarmIntent.putExtra("Time", "08:00");
-			sendBroadcast(alarmIntent);
 		} else {
 			Log.v("Things.DO", "Notification on task due is off");
+
+			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			manager.cancel(pendingIntent);
 		}

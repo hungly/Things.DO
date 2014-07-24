@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -35,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Hung on 16/07/14.
@@ -116,7 +118,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 			DatabaseHandler db = new DatabaseHandler(context);
 			SimpleDateFormat format = new SimpleDateFormat(context.getString(R.string.date_format_trim_time));
 
-			int numDue = db.getTasksByDueDate(format.format(currentTime), "=", "ASC").size();
+			List<Task> tasks = db.getTasksByDueDate(format.format(currentTime), "=", "ASC");
+			int numDue = tasks.size();
 
 //			Log.v("Test", "Broadcast received: " + numDue);
 
@@ -143,23 +146,41 @@ public class NotificationReceiver extends BroadcastReceiver {
 				Intent startThingsDO = new Intent(context, SplashScreen.class);
 				PendingIntent pending = PendingIntent.getActivity(context, 5, startThingsDO, 0);
 
-				NotificationCompat.Builder notificationBuilder =
+				NotificationCompat.Builder builder =
 						new NotificationCompat.Builder(context)
-								.setSmallIcon(R.drawable.ic_launcher)
 								.setContentTitle(notificationTittle)
 								.setContentText(notificationText)
-								.setContentIntent(pending);
+								.setContentInfo("" + db.getTasksCount())
+								.setSmallIcon(R.drawable.ic_notification)
+								.setContentIntent(pending)
+								.setSound(Uri.parse(preferences.getString("notifications_due_ringtone", "content://settings/system/notification_sound")));
+
+				if (numDue > 0) {
+					NotificationCompat.InboxStyle taskList = new NotificationCompat.InboxStyle();
+
+					if (numDue == 1)
+						taskList.setBigContentTitle("Task dues today:");
+					else
+						taskList.setBigContentTitle("Tasks due today:");
+
+					for (Task task : tasks) {
+						taskList.addLine(task.getTittle());
+					}
+					builder.setStyle(taskList);
+				}
 
 				// Gets an instance of the NotificationManager service
 				NotificationManager notificationManager =
 						(NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 				// Builds the notification and issues it.
-				notificationManager.notify(1, notificationBuilder.build());
+				notificationManager.notify(1, builder.build());
 
-				Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+				if (preferences.getBoolean("notifications_vibrate_on_due", true)) {
+					Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
-				if (v.hasVibrator()) {
-					v.vibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500}, -1);
+					if (v.hasVibrator()) {
+						v.vibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500}, -1);
+					}
 				}
 			}
 		}

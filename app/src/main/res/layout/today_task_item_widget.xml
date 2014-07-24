@@ -23,5 +23,5 @@
 	android:background="@color/widget_background"
 	android:gravity="center_vertical"
 	android:hint="@string/text_hint_task"
-	android:paddingLeft="@dimen/padding_right_category_list_item"
+	android:paddingLeft="@dimen/padding_left_widget_item"
 	android:textSize="@dimen/widget_task_text_size"/>

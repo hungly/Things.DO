@@ -43,10 +43,11 @@
 	<dimen name="padding_drawable">10dp</dimen>
 	<dimen name="padding_right_category_list_item">15dp</dimen>
 	<dimen name="padding_left_category_list_item">15dp</dimen>
-	<dimen name="padding_right_edit_task_item">10dp</dimen>
+	<dimen name="padding_right_edit_task_item">15dp</dimen>
 	<dimen name="padding_left_task_list_item">15dp</dimen>
 	<dimen name="padding_right_task_list_item">15dp</dimen>
 	<dimen name="padding_left_expandable_list_item">25dp</dimen>
+	<dimen name="padding_left_widget_item">10dp</dimen>
 	<!---->
 	<dimen name="widget_margin">8dp</dimen>
 	<dimen name="widget_task_item_height">30dp</dimen>

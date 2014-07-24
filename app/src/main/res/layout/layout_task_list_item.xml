@@ -19,6 +19,7 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="wrap_content"
+	android:animateLayoutChanges="true"
 	android:paddingLeft="@dimen/padding_left_task_list_item"
 	android:paddingRight="@dimen/padding_right_task_list_item">
 
@@ -27,7 +28,7 @@
 		android:layout_width="@dimen/button_size_big_horizontal"
 		android:layout_height="@dimen/button_size_big_vertical"
 		android:layout_centerVertical="true"
-		android:background="@drawable/ic_due_date"/>
+		android:background="@drawable/ic_due_date_list_view"/>
 
 	<TextView
 		android:id="@+id/text_task_list_item_name"

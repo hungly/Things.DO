@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 
 import org.rmit.hung.thingsdo.R;
@@ -57,6 +58,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 	public void onClick(View v) {
 		final DateFormat dateFormat = new SimpleDateFormat(editTaskScreen.getString(R.string.date_format));
 		final DateFormat dateFormatInput = new SimpleDateFormat(editTaskScreen.getString(R.string.date_format_input));
+		final View view = v;
 
 		Calendar c;
 
@@ -225,6 +227,12 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 						                             taskBundle.putString("Parent", choice[whichButton]);
 
 						                             editTaskScreen.getSetTaskPriority().setText(choice[whichButton]);
+
+						                             if (choice[whichButton].equals("Urgent")) {
+							                             ((Button) view).setCompoundDrawablesWithIntrinsicBounds(null, editTaskScreen.getResources().getDrawable(R.drawable.ic_priority_urgent), null, null);
+						                             } else {
+							                             ((Button) view).setCompoundDrawablesWithIntrinsicBounds(null, editTaskScreen.getResources().getDrawable(R.drawable.ic_priority), null, null);
+						                             }
 					                             }
 				                             }
 				                            )

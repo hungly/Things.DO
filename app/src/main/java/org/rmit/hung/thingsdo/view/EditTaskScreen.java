@@ -132,6 +132,13 @@ public class EditTaskScreen extends Activity {
 
 		setTaskCategory.setText(taskBundle.getString("Category", "Personal"));
 		setTaskPriority.setText(taskBundle.getString("Parent", "Medium"));
+
+		if (taskBundle.getString("Parent", "Medium").equals("Urgent")) {
+			((Button) findViewById(R.id.button_task_priority)).setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_priority_urgent), null, null);
+		} else {
+			((Button) findViewById(R.id.button_task_priority)).setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.ic_priority), null, null);
+		}
+
 		setDueDate.setText(dueDate);
 
 		addTaskConfirm.setOnClickListener(buttonListeners);
