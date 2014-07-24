@@ -35,8 +35,8 @@ import java.util.Calendar;
  * - http://laaptu.wordpress.com/2013/07/19/android-app-widget-with-listview/
  */
 public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
-	private ArrayList<String> listItemList = new ArrayList<String>();
-	private Context           context      = null;
+	private ArrayList<Task> tasks   = new ArrayList<Task>();
+	private Context         context = null;
 	private int appWidgetId;
 
 	public ListProvider(Context context, Intent intent) {
@@ -52,12 +52,9 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 
 		String today = (new SimpleDateFormat(context.getString(R.string.date_format_trim_time))).format(Calendar.getInstance().getTime());
 
-		ArrayList<Task> taskArrayList = db.getTasksByDueDate(today, "=", "ASC");
+		tasks.clear();
 
-		listItemList.clear();
-
-		for (Task t : taskArrayList)
-			listItemList.add(t.getTittle());
+		tasks = db.getTasksByDueDate(today, "=", "ASC");
 	}
 
 	/**
@@ -99,7 +96,7 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 	 */
 	@Override
 	public int getCount() {
-		return listItemList.size();
+		return tasks.size();
 	}
 
 	/**
@@ -116,11 +113,18 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 	 */
 	@Override
 	public RemoteViews getViewAt(int position) {
-		final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), android.R.layout.simple_list_item_1);
+		final RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.today_task_item_widget);
 
-		String task = listItemList.get(position);
+		Task task = tasks.get(position);
 
-		remoteViews.setTextViewText(android.R.id.text1, task);
+		remoteViews.setTextViewText(R.id.widget_text_task_item, task.getTittle());
+
+		if (task.getParent().equals("Urgent")) {
+			remoteViews.setTextColor(R.id.widget_text_task_item, context.getResources().getColor(R.color.text_urgent));
+		} else {
+			remoteViews.setTextColor(R.id.widget_text_task_item, context.getResources().getColor(R.color.text_list_item));
+		}
+
 		return remoteViews;
 	}
 
@@ -143,7 +147,7 @@ public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 	 */
 	@Override
 	public int getViewTypeCount() {
-		return 0;
+		return 1;
 	}
 
 	/**

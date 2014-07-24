@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ today_task_item_widget.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       24/07/2014
+  ~ Date last modified: 24/07/2014
+  -->
+
+<TextView
+	android:id="@+id/widget_text_task_item"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="@dimen/widget_task_item_height"
+	android:background="@color/widget_background"
+	android:gravity="center_vertical"
+	android:hint="@string/text_hint_task"
+	android:paddingLeft="@dimen/padding_right_category_list_item"
+	android:textSize="@dimen/widget_task_text_size"/>

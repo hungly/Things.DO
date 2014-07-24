@@ -48,8 +48,15 @@
 		android:layout_width="@dimen/button_size_small_horizontal"
 		android:layout_height="@dimen/button_size_small_horizontal"
 		android:layout_centerVertical="true"
-		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"
+		android:layout_toLeftOf="@+id/button_divider"
 		android:background="@drawable/ic_edit"/>
+
+	<View
+		android:id="@+id/button_divider"
+		android:layout_width="10dp"
+		android:layout_height="10dp"
+		android:layout_centerVertical="true"
+		android:layout_toLeftOf="@+id/button_task_list_item_remove_task"/>
 
 	<Button
 		android:id="@+id/button_task_list_item_remove_task"

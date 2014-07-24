@@ -175,7 +175,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 						Log.v("Things.DO", "Date picker cancel");
 						taskBundle.putString("Due Date", oldDueDate);
 
-						String date = "";
+						String date = "None";
 						if (!oldDueDate.equals("None")) {
 							try {
 								date = (new SimpleDateFormat(editTaskScreen.getString(R.string.date_format_display))).format((new SimpleDateFormat(editTaskScreen.getString(R.string.date_format))).parse(oldDueDate));

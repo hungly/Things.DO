@@ -22,5 +22,6 @@
 	<color name="text_color">#FFFFFF</color>
 	<color name="text_urgent">#CC0000</color>
 	<color name="text_normal_list_item">#000000</color>
+	<color name="widget_background">#FFFFFF</color>
 
 </resources>

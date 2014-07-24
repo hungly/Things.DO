@@ -254,15 +254,15 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		taskViewHolder.textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
 		taskViewHolder.textView.setPaintFlags(Paint.HINTING_ON);
 
-		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getDueDate().equals("None")){
+		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getDueDate().equals("None")) {
 			taskViewHolder.hasDueDate.setVisibility(View.INVISIBLE);
-		}else {
+		} else {
 			taskViewHolder.hasDueDate.setVisibility(View.VISIBLE);
 		}
 
-		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getParent().equals("Urgent")){
+		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getParent().equals("Urgent")) {
 			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_urgent));
-		}else {
+		} else {
 			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_normal_list_item));
 		}
 

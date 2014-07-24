@@ -21,6 +21,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -154,6 +155,12 @@ public class NotificationReceiver extends BroadcastReceiver {
 						(NotificationManager) context.getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 				// Builds the notification and issues it.
 				notificationManager.notify(1, notificationBuilder.build());
+
+				Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+
+				if (v.hasVibrator()) {
+					v.vibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500}, -1);
+				}
 			}
 		}
 	}

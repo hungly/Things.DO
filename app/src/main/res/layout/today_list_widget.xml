@@ -21,22 +21,23 @@
 	<TextView
 		android:id="@+id/widget_text"
 		android:layout_width="match_parent"
-		android:layout_height="40dp"
+		android:layout_height="@dimen/widget_category_height"
 		android:layout_alignParentTop="true"
-		android:background="#09C"
+		android:background="@color/action_bar_background"
 		android:contentDescription="@string/widget_text"
 		android:gravity="center_vertical"
 		android:paddingLeft="@dimen/padding_due_date"
 		android:text="@string/widget_text"
-		android:textColor="#ffffff"
-		android:textSize="18sp"
-		android:textStyle="bold|italic"/>
+		android:textColor="@color/text_color"
+		android:textSize="@dimen/widget_category_text_size"
+		android:textStyle="bold"/>
 
 	<ListView
 		android:id="@+id/widget_list_view"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
-		android:layout_below="@+id/widget_text"/>
+		android:layout_below="@+id/widget_text"
+		android:dividerHeight="3dp"/>
 
 </RelativeLayout>

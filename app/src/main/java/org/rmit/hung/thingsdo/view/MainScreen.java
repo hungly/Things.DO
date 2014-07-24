@@ -704,7 +704,7 @@ public class MainScreen extends Activity {
 	}
 
 	protected void setNotification() {
-		if (preferences.getBoolean("notifications_on_due", false)) {
+		if (preferences.getBoolean("notifications_on_due", true)) {
 			Log.v("Things.DO", "Notification on task due is on");
 
 			// broadcast every 1 minute
