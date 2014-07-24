@@ -29,10 +29,10 @@
 	<!---->
 	<dimen name="button_text_size_add_category">20sp</dimen>
 	<dimen name="button_text_size_button_bar">15sp</dimen>
-	<dimen name="button_size_big_horizontal">40dp</dimen>
-	<dimen name="button_size_big_vertical">40dp</dimen>
-	<dimen name="button_size_small_horizontal">35dp</dimen>
-	<dimen name="button_size_small_vertical">35dp</dimen>
+	<dimen name="button_size_big_horizontal">35dp</dimen>
+	<dimen name="button_size_big_vertical">35dp</dimen>
+	<dimen name="button_size_small_horizontal">30dp</dimen>
+	<dimen name="button_size_small_vertical">30dp</dimen>
 	<!---->
 	<dimen name="padding_category_list_item_left">35dp</dimen>
 	<dimen name="padding_task_list_item_left">40dp</dimen>
@@ -42,7 +42,11 @@
 	<dimen name="padding_due_date">5dp</dimen>
 	<dimen name="padding_drawable">10dp</dimen>
 	<dimen name="padding_right_category_list_item">15dp</dimen>
+	<dimen name="padding_left_category_list_item">15dp</dimen>
 	<dimen name="padding_right_edit_task_item">10dp</dimen>
+	<dimen name="padding_left_task_list_item">15dp</dimen>
+	<dimen name="padding_right_task_list_item">15dp</dimen>
+	<dimen name="padding_left_expandable_list_item">25dp</dimen>
 	<!---->
 	<dimen name="widget_margin">8dp</dimen>
 	<dimen name="widget_task_item_height">30dp</dimen>
@@ -50,6 +54,8 @@
 	<dimen name="widget_task_text_size">15sp</dimen>
 	<dimen name="widget_category_height">35dp</dimen>
 	<!---->
-	<dimen name="category_list_item_height">55dp</dimen>
+	<dimen name="category_list_item_height">60dp</dimen>
+	<dimen name="category_list_item_padding">10dp</dimen>
+	<dimen name="task_list_item_height">55dp</dimen>
 
 </resources>

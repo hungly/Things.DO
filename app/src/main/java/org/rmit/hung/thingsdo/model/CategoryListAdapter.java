@@ -73,7 +73,7 @@ public class CategoryListAdapter extends ArrayAdapter {
 
 		ViewHolder holder = (ViewHolder) convertView.getTag();
 
-		holder.textCategoryName.setText(categories.get(position).getCategory());
+		holder.textCategoryName.setText(categories.get(position).getCategory().toUpperCase());
 		holder.buttonRemoveCategory.setOnClickListener(new RemoveCategoryButtonListener((Activity) context, categories, position));
 
 		return convertView;

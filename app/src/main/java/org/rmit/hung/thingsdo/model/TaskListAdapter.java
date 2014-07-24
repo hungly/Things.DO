@@ -198,7 +198,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 		CategoryViewHolder categoryViewHolder = (CategoryViewHolder) convertView.getTag();
 		CategoryListItem categoryListItem = (CategoryListItem) getGroup(groupPosition);
 
-		categoryViewHolder.textCategory.setText(categoryListItem.getCategory());
+		categoryViewHolder.textCategory.setText(categoryListItem.getCategory().toUpperCase());
 		categoryViewHolder.textCategory.setChecked(isExpanded);
 
 		categoryViewHolder.buttonAddTask.setOnClickListener(new AddTaskButtonListener(activity, addTask, categoryListItem));
