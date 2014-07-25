@@ -1,5 +1,5 @@
 /*
- * SMSReceiver.java
+ * ThingsDOReceiver.java
  * Task Management Application
  * 1, COSC2543 - Mobile Application Development
  * RMIT International University Vietnam
@@ -9,25 +9,24 @@
  * Refer to the NOTICE file in the root of the source tree for
  * acknowledgements of third party works used in this software.
  *
- * Date created:       19/07/2014
- * Date last modified: 19/07/2014
+ * Date created:       25/07/2014
+ * Date last modified: 25/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.receiver;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.telephony.SmsMessage;
+import android.content.SharedPreferences;
 import android.util.Log;
 
-import org.rmit.hung.thingsdo.view.MainScreen;
-
 /**
- * Created by Hung on 19/07/14.
+ * Created by Hung on 25/07/14.
  */
-public class SMSReceiver extends BroadcastReceiver {
+public class BootReceiver extends BroadcastReceiver {
 	/**
 	 * This method is called when the BroadcastReceiver is receiving an Intent
 	 * broadcast.  During this time you can use the other methods on
@@ -48,8 +47,7 @@ public class SMSReceiver extends BroadcastReceiver {
 	 * return a result to you asynchronously -- in particular, for interacting
 	 * with services, you should use
 	 * {@link android.content.Context#startService(android.content.Intent)} instead of
-	 * {@link android.content.Context#bindService(android.content.Intent, android.content.ServiceConnection, int)}.  If
-	 * you wish
+	 * {@link android.content.Context#bindService(android.content.Intent, android.content.ServiceConnection, int)}.  If you wish
 	 * to interact with a service that is already running, you can use
 	 * {@link #peekService}.
 	 * <p/>
@@ -65,47 +63,34 @@ public class SMSReceiver extends BroadcastReceiver {
 	 * 		The Context in which the receiver is running.
 	 * @param intent
 	 * 		The Intent being received.
-	 * 		References:
-	 * 		- http://blogmobile.itude.com/2012/12/03/sending-and-receiving-data-sms-messages-with-android/
 	 */
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if (intent.getAction().equals("SMS Read")) {
-			Log.v("Test", "SMS read completed");
+		Log.v("Things.DO", "Start broadcast on boot");
 
-			Log.v("Test", context.toString());
+		Intent alarmIntent = new Intent(context.getApplicationContext(), NotificationReceiver.class);
+		AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-			String category = intent.getStringExtra("Category");
+		SharedPreferences preferences = context.getSharedPreferences("org.rmit.hung.thingsdo_preferences", Context.MODE_PRIVATE);
 
-			((MainScreen) context).refreshList(category);
+		PendingIntent pendingIntent;
+
+		if (preferences.getBoolean("notifications_on_due", true)) {
+			Log.v("Things.DO", "Notification on task due is on");
+
+			pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 50, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+			// broadcast every 1 minute
+			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
 		} else {
-			Bundle bundle = intent.getExtras();
+			Log.v("Things.DO", "Notification on task due is off");
 
-			String receivedMessage = "";
-			String sender = "";
+			pendingIntent = PendingIntent.getBroadcast(context.getApplicationContext(), 50, alarmIntent,
+			                                           PendingIntent.FLAG_UPDATE_CURRENT);
 
-			SmsMessage recMsg;
-
-			if (bundle != null) {
-				//---retrieve the SMS message received---
-				Object[] messageObjects = (Object[]) bundle.get("pdus");
-				for (Object messageObject : messageObjects) {
-					recMsg = SmsMessage.createFromPdu((byte[]) messageObject);
-
-					try {
-						receivedMessage += recMsg.getMessageBody();
-					} catch (Exception ignored) {
-					}
-
-					sender = recMsg.getOriginatingAddress();
-				}
-			}
-
-			Intent smsService = new Intent(context.getApplicationContext(), SMSService.class);
-			smsService.putExtra("Message", receivedMessage);
-			smsService.putExtra("Sender", sender);
-
-			context.getApplicationContext().startService(smsService);
+			manager.cancel(pendingIntent);
 		}
+
+
 	}
 }

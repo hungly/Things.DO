@@ -13,7 +13,7 @@
  * Date last modified: 17/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -26,7 +26,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.rmit.hung.thingsdo.R;
-import org.rmit.hung.thingsdo.controller.CollaboratorListeners;
+import org.rmit.hung.thingsdo.controller.CollaboratorListItemButtonListeners;
+import org.rmit.hung.thingsdo.model.Collaborator;
 import org.rmit.hung.thingsdo.view.EditTaskScreen;
 
 import java.util.ArrayList;
@@ -53,15 +54,19 @@ public class CollaboratorListAdapter extends ArrayAdapter {
 	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		// load a view holder, reduce usage
 		if (convertView == null) {
 			LayoutInflater inflater = editTaskScreen.getLayoutInflater();
 			convertView = inflater.inflate(R.layout.layout_collaborator_list_item, null);
 
 			ViewHolder tempHolder = new ViewHolder();
+
+			// get view and stored in holder
 			tempHolder.checkBox = (CheckBox) convertView.findViewById(R.id.check_box_collaborator_list_item);
 			tempHolder.collaboratorName = (TextView) convertView.findViewById(R.id.text_collaborator_list_item_name);
 			tempHolder.buttonRemoveCollaborator = (Button) convertView.findViewById(R.id.button_collaborator_list_item_remove_collaborator);
 
+			// enable or disable check box according to preference
 			if (preferences.getBoolean("sms_send", true))
 				tempHolder.checkBox.setEnabled(true);
 			else
@@ -70,14 +75,17 @@ public class CollaboratorListAdapter extends ArrayAdapter {
 			convertView.setTag(tempHolder);
 		}
 
+		// get the view holder
 		ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+
+		// create listener for collaborator buttons
+		CollaboratorListItemButtonListeners collaboratorListItemButtonListeners = new CollaboratorListItemButtonListeners(editTaskScreen, position);
+
 		viewHolder.collaboratorName.setText(editTaskScreen.getCollaborators().get(position).getName());
+		viewHolder.checkBox.setOnClickListener(collaboratorListItemButtonListeners);
+		viewHolder.buttonRemoveCollaborator.setOnClickListener(collaboratorListItemButtonListeners);
 
-		CollaboratorListeners collaboratorListeners = new CollaboratorListeners(editTaskScreen, position);
-
-		viewHolder.checkBox.setOnClickListener(collaboratorListeners);
-		viewHolder.buttonRemoveCollaborator.setOnClickListener(collaboratorListeners);
-
+		// default check box state according to whether this contact had been notify before or not
 		if (preferences.getBoolean("sms_send", false)) {
 			if (editTaskScreen.getCollaborators().get(position).getNotify().equals("1")) {
 				viewHolder.checkBox.setChecked(true);

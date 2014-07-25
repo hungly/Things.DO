@@ -13,7 +13,7 @@
  * Date last modified: 21/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.googletaskpapi;
 
 import android.os.AsyncTask;
 
@@ -28,6 +28,9 @@ import java.io.IOException;
 
 /**
  * Created by Hung on 21/07/14.
+ * <p/>
+ * Reference:
+ * - https://code.google.com/p/google-api-java-client/source/browse/?repo=samples#hg%2Ftasks-android-sample%2Fsrc%2Fmain%2Fjava%2Fcom%2Fgoogle%2Fapi%2Fservices%2Fsamples%2Ftasks%2Fandroid
  */
 public abstract class CommonAsyncTask extends AsyncTask<Void, Void, Boolean> {
 	final MainScreen      mainScreen;

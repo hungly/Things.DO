@@ -67,12 +67,11 @@ public class SettingsScreen extends PreferenceActivity {
 			String stringValue = value.toString();
 
 			if (preference instanceof ListPreference) {
-				// For list preferences, look up the correct display value in
-				// the preference's 'entries' list.
+				// For list preferences, look up the correct display value in the preference's 'entries' list
 				ListPreference listPreference = (ListPreference) preference;
 				int index = listPreference.findIndexOfValue(stringValue);
 
-				// Set the summary to reflect the new value.
+				// Set the summary to reflect the new value
 				preference.setSummary(
 						index >= 0
 						? listPreference.getEntries()[index]
@@ -80,10 +79,9 @@ public class SettingsScreen extends PreferenceActivity {
 				                     );
 
 			} else if (preference instanceof RingtonePreference) {
-				// For ringtone preferences, look up the correct display value
-				// using RingtoneManager.
+				// For ringtone preferences, look up the correct display value using RingtoneManager
 				if (TextUtils.isEmpty(stringValue)) {
-					// Empty values correspond to 'silent' (no ringtone).
+					// Empty values correspond to 'silent' (no ringtone)
 					preference.setSummary(R.string.pref_ringtone_silent);
 
 				} else {
@@ -91,11 +89,10 @@ public class SettingsScreen extends PreferenceActivity {
 							preference.getContext(), Uri.parse(stringValue));
 
 					if (ringtone == null) {
-						// Clear the summary if there was a lookup error.
+						// Clear the summary if there was a lookup error
 						preference.setSummary(null);
 					} else {
-						// Set the summary to reflect the new ringtone display
-						// name.
+						// Set the summary to reflect the new ringtone display name
 						String name = ringtone.getTitle(preference.getContext());
 						preference.setSummary(name);
 					}
@@ -105,7 +102,6 @@ public class SettingsScreen extends PreferenceActivity {
 				// For all other preferences, set the summary to the value's
 				// simple string representation.
 				preference.setSummary(stringValue);
-//				Log.v("Test", "New value: " + stringValue);
 			}
 			return true;
 		}
@@ -188,8 +184,7 @@ public class SettingsScreen extends PreferenceActivity {
 	 * "simplified" settings UI should be shown.
 	 */
 	private static boolean isSimplePreferences(Context context) {
-		return ALWAYS_SIMPLE_PREFS
-		       || Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
+		return Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB
 		       || !isXLargeTablet(context);
 	}
 

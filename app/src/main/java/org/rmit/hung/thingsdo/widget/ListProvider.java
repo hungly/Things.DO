@@ -13,7 +13,7 @@
  * Date last modified: 22/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -23,6 +23,7 @@ import android.widget.RemoteViewsService;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.model.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -37,12 +38,11 @@ import java.util.Calendar;
 public class ListProvider implements RemoteViewsService.RemoteViewsFactory {
 	private ArrayList<Task> tasks   = new ArrayList<Task>();
 	private Context         context = null;
-	private int appWidgetId;
 
 	public ListProvider(Context context, Intent intent) {
 		this.context = context;
-		appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
-		                                 AppWidgetManager.INVALID_APPWIDGET_ID);
+		int appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+		                                     AppWidgetManager.INVALID_APPWIDGET_ID);
 
 		populateListItem();
 	}

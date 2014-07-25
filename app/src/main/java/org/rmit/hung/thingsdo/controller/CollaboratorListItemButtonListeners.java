@@ -15,7 +15,6 @@
 
 package org.rmit.hung.thingsdo.controller;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -25,11 +24,11 @@ import org.rmit.hung.thingsdo.view.EditTaskScreen;
 /**
  * Created by Hung on 17/07/14.
  */
-public class CollaboratorListeners implements View.OnClickListener {
+public class CollaboratorListItemButtonListeners implements View.OnClickListener {
 	private EditTaskScreen editTaskScreen;
 	private int            position;
 
-	public CollaboratorListeners(EditTaskScreen editTaskScreen, int position) {
+	public CollaboratorListItemButtonListeners(EditTaskScreen editTaskScreen, int position) {
 		this.editTaskScreen = editTaskScreen;
 		this.position = position;
 	}
@@ -50,15 +49,14 @@ public class CollaboratorListeners implements View.OnClickListener {
 					c.setChecked(false);
 
 					editTaskScreen.getCollaborators().get(position).setNotify("0");
-					Log.v("Test", "OFF");
 				} else {
 					c.setChecked(true);
 
 					editTaskScreen.getCollaborators().get(position).setNotify("1");
-					Log.v("Test", "ON");
 				}
 
 				break;
+
 			case (R.id.button_collaborator_list_item_remove_collaborator):
 				editTaskScreen.removeCollaborator(position);
 

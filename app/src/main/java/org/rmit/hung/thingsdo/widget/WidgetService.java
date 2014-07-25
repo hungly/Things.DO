@@ -13,7 +13,7 @@
  * Date last modified: 22/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;

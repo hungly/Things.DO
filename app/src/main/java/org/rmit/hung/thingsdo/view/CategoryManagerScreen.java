@@ -25,10 +25,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import org.rmit.hung.thingsdo.R;
+import org.rmit.hung.thingsdo.adapter.CategoryListAdapter;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
 import org.rmit.hung.thingsdo.model.Category;
-import org.rmit.hung.thingsdo.model.CategoryListAdapter;
 import org.rmit.hung.thingsdo.model.Task;
 
 import java.util.ArrayList;
@@ -45,17 +45,21 @@ public class CategoryManagerScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category_manager_screen);
 
+		// get the database
 		db = new DatabaseHandler(CategoryManagerScreen.this);
 		categories = db.getAllCategories();
 
+		// load category list
 		categoryListAdapter = new CategoryListAdapter(CategoryManagerScreen.this, categories);
 
+		// set list view
 		ListView categoryList = (ListView) findViewById(R.id.list_category);
 
 		categoryList.setAdapter(categoryListAdapter);
 
 		final Button buttonAddCategory = (Button) findViewById(R.id.button_category_manager_add_category);
 
+		// set listener
 		buttonAddCategory.setOnClickListener(new AddCategoryButtonListener(CategoryManagerScreen.this));
 	}
 

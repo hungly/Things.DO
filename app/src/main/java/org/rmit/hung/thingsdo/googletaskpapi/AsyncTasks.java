@@ -13,7 +13,7 @@
  * Date last modified: 21/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.googletaskpapi;
 
 import android.util.Log;
 
@@ -21,6 +21,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.tasks.model.TaskList;
 
 import org.rmit.hung.thingsdo.R;
+import org.rmit.hung.thingsdo.model.Category;
+import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 import java.io.IOException;
@@ -32,6 +34,9 @@ import java.util.List;
 
 /**
  * Created by Hung on 21/07/14.
+ * <p/>
+ * Reference:
+ * - https://code.google.com/p/google-api-java-client/source/browse/?repo=samples#hg%2Ftasks-android-sample%2Fsrc%2Fmain%2Fjava%2Fcom%2Fgoogle%2Fapi%2Fservices%2Fsamples%2Ftasks%2Fandroid
  */
 public class AsyncTasks extends CommonAsyncTask {
 	public AsyncTasks(MainScreen mainScreen) {

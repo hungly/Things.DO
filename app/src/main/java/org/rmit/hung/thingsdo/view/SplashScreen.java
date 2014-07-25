@@ -38,16 +38,7 @@ import org.rmit.hung.thingsdo.R;
  *          -   http://idroidsoftwareinc.blogspot.com/2013/09/android-splash-screen-example-tutorial.html
  */
 public class SplashScreen extends Activity implements Animation.AnimationListener {
-
-	// set how long the splash screen will wait to start fade out
-	// will be replaced by actual operation instead of timer
-	private final int SPLASH_SCREEN_DELAY = 3 * 1000;
 	private Animation dotAppear;
-	private Animation thingsAppear;
-	private Animation doAppear;
-	private TextView  splashTextThings;
-	private TextView  splashTextDot;
-	private TextView  splashTextDo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +48,13 @@ public class SplashScreen extends Activity implements Animation.AnimationListene
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash_screen);
 
-		splashTextThings = (TextView) findViewById(R.id.text_view_splash_things);
-		splashTextDot = (TextView) findViewById(R.id.text_view_splash_dot);
-		splashTextDo = (TextView) findViewById(R.id.text_view_splash_do);
+		final TextView splashTextThings = (TextView) findViewById(R.id.text_view_splash_things);
+		final TextView splashTextDot = (TextView) findViewById(R.id.text_view_splash_dot);
+		final TextView splashTextDo = (TextView) findViewById(R.id.text_view_splash_do);
 
-		thingsAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_things);
+		final Animation thingsAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_things);
+		final Animation doAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_do);
 		dotAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_dot);
-		doAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_do);
 
 		dotAppear.setAnimationListener(SplashScreen.this);
 

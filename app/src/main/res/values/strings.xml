@@ -23,7 +23,7 @@
 	<string name="text_edit_task_collaborator">Collaborators</string>
 	<string name="text_edit_task_due_date">Due date: </string>
 	<string name="text_new_category_tittle">New category</string>
-	<string name="text_new_category_question">What is the new category name?</string>
+	<string name="text_new_category_question">Please enter the new category name</string>
 	<string name="text_category_manager">Category manager</string>
 	<string name="text_date_picker_tittle">Due date</string>
 	<string name="text_date_picker_question">Please pick a due date for this task</string>

@@ -13,24 +13,33 @@
  * Date last modified: 19/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.service;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.model.Category;
+import org.rmit.hung.thingsdo.model.Task;
+import org.rmit.hung.thingsdo.view.SplashScreen;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Created by Hung on 19/07/14.
+ * Reference:
+ * - http://androidexample.com/Incomming_SMS_Broadcast_Receiver_-_Android_Example/index.php?view=article_discription&aid=62&aaid=87
  */
 public class SMSService extends IntentService {
 	/**
@@ -115,8 +124,6 @@ public class SMSService extends IntentService {
 
 						String contactID = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 
-//						Log.v("Test", contactID);
-
 						// try to query contact's info
 						Cursor phoneCursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, new String[]{ContactsContract.CommonDataKinds.Phone._ID}, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", new String[]{contactID}, null);
 
@@ -129,7 +136,6 @@ public class SMSService extends IntentService {
 						else
 							taskCollaborators = "";
 
-//						Log.v("Test", taskCollaborators);
 					} else {
 						Log.v("Things.DO", "No contact found");
 					}
@@ -138,11 +144,26 @@ public class SMSService extends IntentService {
 				Category c = db.getCategory(taskCategory);
 
 				if (c == null) {
-//					Log.v("Test", "No category found, create new category");
 					db.addCategory(new Category("0", taskCategory));
 				}
 
 				Task newTask = new Task(0, "0", taskTittle, updateDate, taskPriority, "", "needAction", taskDueDate, "", taskCategory, taskCollaborators);
+
+				Intent startThingsDO = new Intent(getApplicationContext(), SplashScreen.class);
+				PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 5, startThingsDO, 0);
+
+				NotificationCompat.Builder builder =
+						new NotificationCompat.Builder(getApplicationContext())
+								.setContentTitle("Things.DO")
+								.setContentText("Task \"" + newTask.getTittle() + "\" has been added to your task list")
+								.setSmallIcon(R.drawable.ic_notification)
+								.setContentIntent(pending);
+
+				// Gets an instance of the NotificationManager service
+				NotificationManager notificationManager =
+						(NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+				// Builds the notification and issues it.
+				notificationManager.notify(2, builder.build());
 
 				db.addTask(newTask);
 
@@ -151,18 +172,6 @@ public class SMSService extends IntentService {
 				smsRead.addCategory(Intent.CATEGORY_DEFAULT);
 				smsRead.putExtra("Category", taskCategory);
 				sendBroadcast(smsRead);
-
-//				Log.v("Test", "1: " + (message.indexOf("\" under category: \"") + ("\" under category: \"").length()));
-//				Log.v("Test", "2: " + message.indexOf("\"", message.indexOf("\" under category: \"") + ("\" under category: \"").length()));
-
-//				Log.v("Test", "Tittle: " + taskTittle);
-//				Log.v("Test", "Category: " + taskCategory);
-//				Log.v("Test", "Priority: " + taskPriority);
-//				Log.v("Test", "Due date: " + taskDueDate);
-//				Log.v("Test", "update date: " + updateDate);
-
-//				Log.v("Test", "Message: " + message);
-//				Log.v("Test", "Sender: " + sender);
 			}
 		}
 	}

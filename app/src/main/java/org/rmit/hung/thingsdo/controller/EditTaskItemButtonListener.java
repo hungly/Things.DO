@@ -28,13 +28,13 @@ import org.rmit.hung.thingsdo.view.MainScreen;
 /**
  * Created by Hung on 03/07/14.
  */
-public class TaskItemClickListener implements View.OnClickListener {
+public class EditTaskItemButtonListener implements View.OnClickListener {
 	private final Activity         activity;
 	private final Intent           editTask;
 	private final CategoryListItem categoryListItem;
 	private final int              taskPosition;
 
-	public TaskItemClickListener(Activity activity, Intent editTask, CategoryListItem categoryListItem, int taskPosition) {
+	public EditTaskItemButtonListener(Activity activity, Intent editTask, CategoryListItem categoryListItem, int taskPosition) {
 		this.activity = activity;
 		this.editTask = editTask;
 		this.categoryListItem = categoryListItem;
@@ -53,6 +53,7 @@ public class TaskItemClickListener implements View.OnClickListener {
 
 		Log.v("Things.DO", "Task \"" + selectedTask.getTittle() + "\" clicked, now opening edit screen for this task");
 
+		// push selected task information to intent
 		Bundle taskBundle = new Bundle();
 		taskBundle.putInt("Task ID", selectedTask.getID());
 		taskBundle.putString("Google ID", selectedTask.getGoogleID());

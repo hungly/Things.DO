@@ -51,17 +51,17 @@ import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.TasksScopes;
 
 import org.rmit.hung.thingsdo.R;
+import org.rmit.hung.thingsdo.adapter.TaskListAdapter;
 import org.rmit.hung.thingsdo.controller.AddCategoryButtonListener;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
-import org.rmit.hung.thingsdo.model.AsyncTasks;
+import org.rmit.hung.thingsdo.googletaskpapi.AsyncTasks;
+import org.rmit.hung.thingsdo.misc.ConnectionDetector;
 import org.rmit.hung.thingsdo.model.Category;
 import org.rmit.hung.thingsdo.model.CategoryListItem;
-import org.rmit.hung.thingsdo.model.ConnectionDetector;
-import org.rmit.hung.thingsdo.model.NotificationReceiver;
-import org.rmit.hung.thingsdo.model.SMSReceiver;
 import org.rmit.hung.thingsdo.model.Task;
-import org.rmit.hung.thingsdo.model.TaskListAdapter;
-import org.rmit.hung.thingsdo.model.WidgetProvider;
+import org.rmit.hung.thingsdo.receiver.NotificationReceiver;
+import org.rmit.hung.thingsdo.receiver.SMSReceiver;
+import org.rmit.hung.thingsdo.widget.WidgetProvider;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -92,7 +92,6 @@ public class MainScreen extends Activity {
 	private SharedPreferences.Editor editor;
 	private String                   groupBy;
 	private String                   sortOrder;
-	private PendingIntent            pendingIntent;
 	private AlarmManager             manager;
 	private Intent                   alarmIntent;
 	private SMSReceiver              smsReceiver;
@@ -136,8 +135,6 @@ public class MainScreen extends Activity {
 
 		// write notification time to preference
 		editor = preferences.edit();
-//		editor.putString("notifications_time","09:00");
-//		editor.apply();
 
 		db = new DatabaseHandler(MainScreen.this);
 
@@ -169,14 +166,6 @@ public class MainScreen extends Activity {
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
 		setNotification();
-
-//		PendingIntent pendingIntent = PendingIntent.getBroadcast(MainScreen.this,4,alarmIntent,0);
-//
-//		AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-//		manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 10000,pendingIntent);
-//		Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
-//
-//		manager.cancel(pendingIntent);
 	}
 
 	@Override
@@ -702,6 +691,7 @@ public class MainScreen extends Activity {
 	}
 
 	protected void setNotification() {
+		PendingIntent pendingIntent;
 		if (preferences.getBoolean("notifications_on_due", true)) {
 			Log.v("Things.DO", "Notification on task due is on");
 

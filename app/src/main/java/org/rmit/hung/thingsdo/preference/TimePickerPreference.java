@@ -13,7 +13,7 @@
  * Date last modified: 17/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.preference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -34,8 +34,6 @@ import java.util.Date;
  * Created by Hung on 17/07/14.
  */
 public class TimePickerPreference extends DialogPreference {
-	private static final int     TIME_PICKER_INTERVAL = 15;
-	private              boolean mIgnoreEvent         = false;
 	private TimePicker timePicker;
 
 	public TimePickerPreference(Context context, AttributeSet attrs, int defStyle) {

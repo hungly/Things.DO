@@ -13,7 +13,7 @@
  * Date last modified: 16/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.receiver;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.database.DatabaseHandler;
+import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.view.SplashScreen;
 
 import java.text.ParseException;
@@ -121,14 +122,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 			List<Task> tasks = db.getTasksByDueDate(format.format(currentTime), "=", "ASC");
 			int numDue = tasks.size();
 
-//			Log.v("Test", "Broadcast received: " + numDue);
-
-			Toast.makeText(context.getApplicationContext(), "Running", Toast.LENGTH_SHORT).show();
-
 			// DO NOT run if numDue <= -1
 			if (numDue >= 0) {
-//		        Log.v("Test", "" + intent.getStringExtra("Time"));
-
 				Log.v("Things.DO", "Notification start");
 
 				String notificationTittle = "Things.DO";
@@ -179,6 +174,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 					Vibrator v = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
 					if (v.hasVibrator()) {
+						// Star War theme vibrate pattern :)
 						v.vibrate(new long[]{0, 500, 110, 500, 110, 450, 110, 200, 110, 170, 40, 450, 110, 200, 110, 170, 40, 500}, -1);
 					}
 				}

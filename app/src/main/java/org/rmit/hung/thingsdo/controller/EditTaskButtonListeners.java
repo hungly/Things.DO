@@ -59,8 +59,7 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 		final DateFormat dateFormat = new SimpleDateFormat(editTaskScreen.getString(R.string.date_format));
 		final DateFormat dateFormatInput = new SimpleDateFormat(editTaskScreen.getString(R.string.date_format_input));
 		final View view = v;
-
-		Calendar c;
+		final Calendar c;
 
 		switch (v.getId()) {
 			case (R.id.button_save_task):
@@ -74,6 +73,8 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				final String textPriority = taskBundle.getString("Parent");
 
 				Log.v("Things.DO", "Confirm add task \"" + textTaskTittle + "\"");
+
+				// load selected task information
 				Intent resultTask = new Intent(editTaskScreen, MainScreen.class);
 
 				resultTask.putExtra("Task ID", taskBundle.getInt("Task ID"));
@@ -88,17 +89,10 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				resultTask.putExtra("Category", taskBundle.getString("Category"));
 
 				String collaborators = "";
-//				String collaborators = taskBundle.getString("Collaborators");
-
-//				Log.v("Test", "Current collaborator size: " + editTaskScreen.getCollaborators().size());
-
 				for (int i = 0; i < editTaskScreen.getCollaborators().size(); i++) {
 					collaborators += editTaskScreen.getCollaborators().get(i).exportForSQLite(i);
 				}
-
 				resultTask.putExtra("Collaborators", collaborators);
-
-//				Log.v("Test", collaborators);
 
 				if (taskBundle.getString("Old Category") != null) {
 					resultTask.putExtra("Old Category", taskBundle.getString("Old Category"));
@@ -131,7 +125,6 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 						mMonth = oldCalendar.get(Calendar.MONTH);
 						mDay = oldCalendar.get(Calendar.DAY_OF_MONTH);
 
-//						Log.v("Test", mYear + "/" + mMonth + "/" + mDay);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
@@ -342,8 +335,6 @@ public class EditTaskButtonListeners implements View.OnClickListener {
 				break;
 
 			case (R.id.button_task_add_collaborator):
-//				Log.v("Test", "Add collaborators clicked, show contact chooser");
-
 				editTaskScreen.showContactPicker();
 
 				break;

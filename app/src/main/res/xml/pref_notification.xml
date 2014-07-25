@@ -22,7 +22,7 @@
 		android:key="notifications_on_due"
 		android:title="@string/pref_title_due_task_notifications"/>
 
-	<org.rmit.hung.thingsdo.model.TimePickerPreference
+	<org.rmit.hung.thingsdo.preference.TimePickerPreference
 		android:dependency="notifications_on_due"
 		android:key="notifications_time"
 		android:title="Notification time"/>

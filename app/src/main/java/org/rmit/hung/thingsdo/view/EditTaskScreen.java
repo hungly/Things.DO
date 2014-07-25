@@ -32,9 +32,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import org.rmit.hung.thingsdo.R;
+import org.rmit.hung.thingsdo.adapter.CollaboratorListAdapter;
 import org.rmit.hung.thingsdo.controller.EditTaskButtonListeners;
 import org.rmit.hung.thingsdo.model.Collaborator;
-import org.rmit.hung.thingsdo.model.CollaboratorListAdapter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -142,129 +142,9 @@ public class EditTaskScreen extends Activity {
 		setDueDate.setText(dueDate);
 
 		addTaskConfirm.setOnClickListener(buttonListeners);
-
-//		addTaskConfirm.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				final Calendar c = Calendar.getInstance();
-//				final DateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format));
-//				final String textTaskTittle = taskTittle.getText().toString();
-//				final String textTaskNotes = taskNote.getText().toString();
-//
-//				Log.v("Things.DO", "Confirm add task \"" + textTaskTittle + "\"");
-//				Intent resultTask = new Intent(EditTaskScreen.this, MainScreen.class);
-//
-//				resultTask.putExtra("Task ID", taskBundle.getInt("Task ID"));
-//				resultTask.putExtra("Google ID", taskBundle.getString("Google ID"));
-//				resultTask.putExtra("Tittle", textTaskTittle);
-//				resultTask.putExtra("Update Date", dateFormat.format(c.getTime()));
-//				resultTask.putExtra("Parent", "Medium");
-//				resultTask.putExtra("Notes", textTaskNotes);
-//				resultTask.putExtra("Status", "needsAction");
-//				resultTask.putExtra("Due Date", "");
-//				resultTask.putExtra("Completed Date", "");
-//				resultTask.putExtra("Category", taskBundle.getString("Category"));
-//
-//				if (taskBundle.getString("Old Category") != null) {
-//					resultTask.putExtra("Old Category", taskBundle.getString("Old Category"));
-//					resultTask.putExtra("Old Task Position", taskBundle.getInt("Old Task Position"));
-//				}
-//
-//				setResult(RESULT_OK, resultTask);
-//
-//				finish();
-//			}
-//		});
-
 		setTaskCategory.setOnClickListener(buttonListeners);
 		setDueDate.setOnClickListener(buttonListeners);
-
-//		setDueDate.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				final Calendar c = Calendar.getInstance();
-//				int mYear = c.get(Calendar.YEAR);
-//				int mMonth = c.get(Calendar.MONTH);
-//				int mDay = c.get(Calendar.DAY_OF_MONTH);
-//
-//				DatePickerDialog datePickerDialog = new DatePickerDialog(EditTaskScreen.this, new DatePickerDialog.OnDateSetListener
-//						() {
-//
-//					@Override
-//					public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-//						Date pickedDate = Calendar.getInstance().getTime();
-//
-//						try {
-//							pickedDate = dateFormatInput.parse(year + "/" + monthOfYear + "/" + dayOfMonth +
-//							                                   " 00:00:00.000");
-//						} catch (ParseException e) {
-//							e.printStackTrace();
-//						}
-//
-//						Log.v("Test", "Date chosen: " + dateFormat.format(pickedDate));
-//					}
-//				}, mYear, mMonth, mDay);
-//
-//				datePickerDialog.setTitle(getString(R.string.text_date_picker_tittle));
-//				datePickerDialog.setMessage(getString(R.string.text_date_picker_question));
-//
-//				datePickerDialog.show();
-//			}
-//		});
-
 		setTaskPriority.setOnClickListener(buttonListeners);
-
-//		setTaskPriority.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				AlertDialog.Builder builder = new AlertDialog.Builder(EditTaskScreen.this);
-//
-//				final String[] choice = {"Urgent", "High", "Medium", "Low"};
-//
-//				builder.setIconAttribute(android.R.attr.alertDialogIcon)
-//				       .setTitle(getString(R.string.text_priority_tittle))
-//				       .setSingleChoiceItems(choice, 0, new DialogInterface.OnClickListener() {
-//					                             public void onClick(DialogInterface dialog, int whichButton) {
-//						                             Log.v("Test", "Choice: " + choice[whichButton]);
-//					                             }
-//				                             }
-//				                            )
-//				       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//					       /**
-//					        * This method will be invoked when a button in the dialog is clicked.
-//					        *
-//					        * @param dialog
-//					        * 		The dialog that received the click.
-//					        * @param which
-//					        * 		The button that was clicked (e.g.
-//					        * 		{@link android.content.DialogInterface#BUTTON1}) or the position
-//					        */
-//					       @Override
-//					       public void onClick(DialogInterface dialog, int which) {
-//
-//					       }
-//				       })
-//				       .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//					       /**
-//					        * This method will be invoked when a button in the dialog is clicked.
-//					        *
-//					        * @param dialog
-//					        * 		The dialog that received the click.
-//					        * @param which
-//					        * 		The button that was clicked (e.g.
-//					        * 		{@link android.content.DialogInterface#BUTTON1}) or the position
-//					        */
-//					       @Override
-//					       public void onClick(DialogInterface dialog, int which) {
-//
-//					       }
-//				       })
-//				       .create();
-//
-//				builder.show();
-//			}
-//		});
-
 		addCollaborators.setOnClickListener(buttonListeners);
 	}
 

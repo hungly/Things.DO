@@ -17,7 +17,6 @@ package org.rmit.hung.thingsdo.controller;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -34,18 +33,19 @@ import java.util.Calendar;
 
 /**
  * Created by Hung on 10/07/14.
+ * <p/>
+ * Reference:
+ * - http://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures
  */
-public class TaskItemListener implements View.OnTouchListener {
+public class TaskItemGestureListener implements View.OnTouchListener {
 	private final Activity         activity;
-	private final Intent           editTask;
 	private final GestureDetector  gestureDetector;
 	private final CategoryListItem categoryListItem;
 	private final int              taskPosition;
 
-	public TaskItemListener(Context context, Intent editTask, CategoryListItem categoryListItem, int taskPosition) {
+	public TaskItemGestureListener(Context context, CategoryListItem categoryListItem, int taskPosition) {
 		gestureDetector = new GestureDetector(context, new GestureListener());
 		this.activity = (Activity) context;
-		this.editTask = editTask;
 		this.categoryListItem = categoryListItem;
 		this.taskPosition = taskPosition;
 	}

@@ -13,7 +13,7 @@
  * Date last modified: 21/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.misc;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -21,7 +21,11 @@ import android.net.NetworkInfo;
 
 
 /**
+ * Check for valid internet connection
  * Created by Hung on 21/07/14.
+ *
+ * Reference:
+ * - http://www.androidhive.info/2012/07/android-detect-internet-connection-status/
  */
 public class ConnectionDetector {
 	public static boolean isConnectingToInternet(Context context) {

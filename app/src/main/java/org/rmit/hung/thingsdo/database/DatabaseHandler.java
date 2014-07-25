@@ -29,6 +29,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Hung on 03/07/14.
+ *
+ * Reference:
+ * - http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
+ * - http://www.vogella.com/tutorials/AndroidSQLite/article.html
  */
 public class DatabaseHandler extends SQLiteOpenHelper {
 	// database version

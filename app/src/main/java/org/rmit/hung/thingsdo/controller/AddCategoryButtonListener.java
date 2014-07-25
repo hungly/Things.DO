@@ -44,23 +44,19 @@ public class AddCategoryButtonListener implements View.OnClickListener {
 	 */
 	@Override
 	public void onClick(View v) {
-		LayoutInflater inflater = activity.getLayoutInflater();
-		View viewNewCategory = inflater.inflate(R.layout.layout_dialog_new_category, null);
-
-		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-
-		builder.setView(viewNewCategory);
-		builder.setTitle(R.string.text_new_category_tittle);
-		builder.setMessage(R.string.text_new_category_question);
-
+		// load the view
+		final LayoutInflater inflater = activity.getLayoutInflater();
+		final View viewNewCategory = inflater.inflate(R.layout.layout_dialog_new_category, null);
 		final EditText textNewCategoryName = (EditText) viewNewCategory.findViewById(R.id.text_new_category_name);
 
-		builder
+		// create dialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity)
+				.setView(viewNewCategory)
+				.setTitle(R.string.text_new_category_tittle)
+				.setMessage(R.string.text_new_category_question)
 				.setCancelable(false)
 				.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
-//						Log.v("Test", textNewCategoryName.getText().toString());
-
 						if (activity instanceof MainScreen)
 							((MainScreen) activity).addCategory(textNewCategoryName.getText().toString());
 						if (activity instanceof CategoryManagerScreen) {

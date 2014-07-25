@@ -13,7 +13,7 @@
  * Date last modified: 01/07/2014
  */
 
-package org.rmit.hung.thingsdo.model;
+package org.rmit.hung.thingsdo.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,9 +28,11 @@ import android.widget.TextView;
 
 import org.rmit.hung.thingsdo.R;
 import org.rmit.hung.thingsdo.controller.AddTaskButtonListener;
+import org.rmit.hung.thingsdo.controller.EditTaskItemButtonListener;
 import org.rmit.hung.thingsdo.controller.RemoveTaskButtonListener;
-import org.rmit.hung.thingsdo.controller.TaskItemClickListener;
-import org.rmit.hung.thingsdo.controller.TaskItemListener;
+import org.rmit.hung.thingsdo.controller.TaskItemGestureListener;
+import org.rmit.hung.thingsdo.model.CategoryListItem;
+import org.rmit.hung.thingsdo.model.Task;
 
 import java.util.ArrayList;
 
@@ -184,23 +186,30 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 	 */
 	@Override
 	public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+		// load a view holder, reduce usage
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_category_list_item, null);
 
 			CategoryViewHolder tempCategoryViewHolder = new CategoryViewHolder();
 
+			// get view and stored in holder
 			tempCategoryViewHolder.textCategory = (CheckedTextView) convertView.findViewById(R.id.text_category_list_item_name);
 			tempCategoryViewHolder.buttonAddTask = (Button) convertView.findViewById(R.id.button_category_list_item_add_task);
 
 			convertView.setTag(tempCategoryViewHolder);
 		}
 
+		// get the view holder
 		CategoryViewHolder categoryViewHolder = (CategoryViewHolder) convertView.getTag();
+
+		// get the category group
 		CategoryListItem categoryListItem = (CategoryListItem) getGroup(groupPosition);
 
+		// fill information to views
 		categoryViewHolder.textCategory.setText(categoryListItem.getCategory().toUpperCase());
 		categoryViewHolder.textCategory.setChecked(isExpanded);
 
+		// set listener
 		categoryViewHolder.buttonAddTask.setOnClickListener(new AddTaskButtonListener(activity, addTask, categoryListItem));
 
 		return convertView;
@@ -234,11 +243,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 		final String taskItem = ((Task) getChild(groupPosition, childPosition)).getTittle();
 
+		// load a view holder, reduce usage
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.layout_task_list_item, null);
 
 			TaskViewHolder tempTaskViewHolder = new TaskViewHolder();
 
+			// get view and stored in holder
 			tempTaskViewHolder.hasDueDate = (TextView) convertView.findViewById(R.id.text_has_due_date);
 			tempTaskViewHolder.textView = (TextView) convertView.findViewById(R.id.text_task_list_item_name);
 			tempTaskViewHolder.buttonEditTask = (Button) convertView.findViewById(R.id.button_task_list_item_edit_task);
@@ -248,32 +259,38 @@ public class TaskListAdapter extends BaseExpandableListAdapter {
 			convertView.setTag(tempTaskViewHolder);
 		}
 
+		// get the view holder
 		TaskViewHolder taskViewHolder = (TaskViewHolder) convertView.getTag();
 
+		// fill information to views
 		taskViewHolder.textView.clearComposingText();
 		taskViewHolder.textView.setPaintFlags(Paint.ANTI_ALIAS_FLAG);
 		taskViewHolder.textView.setPaintFlags(Paint.HINTING_ON);
 
+		// display clock icon if task had due date
 		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getDueDate().equals("None")) {
 			taskViewHolder.hasDueDate.setVisibility(View.INVISIBLE);
 		} else {
 			taskViewHolder.hasDueDate.setVisibility(View.VISIBLE);
 		}
 
+		// change task color according to its priority
 		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getParent().equals("Urgent")) {
 			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_urgent));
 		} else {
 			taskViewHolder.textView.setTextColor(convertView.getResources().getColor(R.color.text_normal_list_item));
 		}
 
+		// set strike through state
 		if (categoryListItemArrayList.get(groupPosition).getTask().get(childPosition).getStatus().equals("completed")) {
 			taskViewHolder.textView.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
 		}
 
 		taskViewHolder.textView.setText(taskItem);
-		taskViewHolder.textView.setOnTouchListener(new TaskItemListener(activity, addTask,
-		                                                                categoryListItemArrayList.get(groupPosition), childPosition));
-		taskViewHolder.buttonEditTask.setOnClickListener(new TaskItemClickListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
+
+		// set listener
+		taskViewHolder.textView.setOnTouchListener(new TaskItemGestureListener(activity, categoryListItemArrayList.get(groupPosition), childPosition));
+		taskViewHolder.buttonEditTask.setOnClickListener(new EditTaskItemButtonListener(activity, addTask, categoryListItemArrayList.get(groupPosition), childPosition));
 		taskViewHolder.buttonRemoveTask.setOnClickListener(new RemoveTaskButtonListener(activity, categoryListItemArrayList.get(groupPosition), childPosition));
 
 		return convertView;

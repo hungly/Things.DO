@@ -35,19 +35,19 @@
 		android:icon="@drawable/ic_launcher"
 		android:label="@string/app_name"
 		android:theme="@style/AppTheme">
-		<receiver android:name=".model.NotificationReceiver"/>
-		<receiver android:name=".model.SMSReceiver">
+		<receiver android:name=".receiver.NotificationReceiver"/>
+		<receiver android:name=".receiver.SMSReceiver">
 			<intent-filter>
 				<action android:name="android.provider.Telephony.SMS_RECEIVED"/>
 			</intent-filter>
 		</receiver>
-		<receiver android:name=".model.BootReceiver">
+		<receiver android:name=".receiver.BootReceiver">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>
 		</receiver>
 		<receiver
-			android:name=".model.WidgetProvider"
+			android:name=".widget.WidgetProvider"
 			android:icon="@drawable/ic_launcher"
 			android:label="Things.DO">
 			<intent-filter>
@@ -64,11 +64,11 @@
 			android:value="@integer/google_play_services_version"/>
 
 		<service
-			android:name=".model.SMSService"
+			android:name=".service.SMSService"
 			android:enabled="true"
 			android:exported="false"/>
 		<service
-			android:name=".model.WidgetService"
+			android:name=".widget.WidgetService"
 			android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
 		<activity
