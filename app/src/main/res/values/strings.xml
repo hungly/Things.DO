@@ -56,7 +56,7 @@
 	<string name="date_format">yyyy-MM-dd HH:mm:ss.sss</string>
 	<string name="date_format_trim_time">yyyy-MM-dd 00:00:00.000</string>
 	<string name="date_format_input">yyyy/M/d HH:mm:ss.sss</string>
-	<string name="date_format_display">dd MMMM, yyyy</string>
+	<string name="date_format_display">dd MMM, yyyy</string>
 	<string name="preference_time_picker_positive_button">Done</string>
 	<string name="widget_layout_tittle">Today tasks</string>
 	<string name="widget_text">TODAY TASKS</string>

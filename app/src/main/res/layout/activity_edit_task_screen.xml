@@ -78,6 +78,11 @@
 			android:text="@string/button_text_category"
 			android:textSize="@dimen/button_text_size_button_bar"/>
 
+		<View
+			android:layout_width="1dp"
+			android:layout_height="match_parent"
+			android:background="@color/action_bar_background"/>
+
 		<Button
 			android:id="@+id/button_task_priority"
 			style="@android:style/DeviceDefault.ButtonBar"
@@ -88,6 +93,11 @@
 			android:gravity="center"
 			android:text="@string/button_text_priority"
 			android:textSize="@dimen/button_text_size_button_bar"/>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="match_parent"
+			android:background="@color/action_bar_background"/>
 
 		<Button
 			android:id="@+id/button_task_due_date"
