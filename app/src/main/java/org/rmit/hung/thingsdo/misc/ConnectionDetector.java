@@ -22,8 +22,8 @@ import android.net.NetworkInfo;
 
 /**
  * Check for valid internet connection
- * Created by Hung on 21/07/14.
- *
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * Reference:
  * - http://www.androidhive.info/2012/07/android-detect-internet-connection-status/
  */

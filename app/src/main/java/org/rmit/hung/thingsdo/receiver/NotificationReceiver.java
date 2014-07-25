@@ -40,7 +40,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Hung on 16/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class NotificationReceiver extends BroadcastReceiver {
 	/**

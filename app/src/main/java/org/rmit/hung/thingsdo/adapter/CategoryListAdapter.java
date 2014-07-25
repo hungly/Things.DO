@@ -31,7 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Hung on 07/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class CategoryListAdapter extends ArrayAdapter {
 	final Context             context;

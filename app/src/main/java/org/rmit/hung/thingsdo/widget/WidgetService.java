@@ -20,7 +20,8 @@ import android.content.Intent;
 import android.widget.RemoteViewsService;
 
 /**
- * Created by Hung on 22/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * <p/>
  * Reference:
  * - http://laaptu.wordpress.com/2013/07/19/android-app-widget-with-listview/

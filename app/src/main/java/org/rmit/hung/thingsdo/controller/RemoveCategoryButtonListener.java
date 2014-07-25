@@ -27,7 +27,8 @@ import org.rmit.hung.thingsdo.view.CategoryManagerScreen;
 import java.util.ArrayList;
 
 /**
- * Created by Hung on 07/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class RemoveCategoryButtonListener implements View.OnClickListener {
 	private final Activity            activity;

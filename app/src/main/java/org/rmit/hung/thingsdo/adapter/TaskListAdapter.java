@@ -41,7 +41,7 @@ import java.util.ArrayList;
  * @version %I%
  *          <p/>
  *          Reference:
- *          -   http://www.vogella.com/tutorials/AndroidListView/article.html#listviewselection
+ *          - http://www.vogella.com/tutorials/AndroidListView/article.html#listviewselection
  */
 public class TaskListAdapter extends BaseExpandableListAdapter {
 	private final Activity                    activity;

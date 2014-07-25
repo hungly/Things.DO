@@ -24,7 +24,8 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 /**
- * Created by Hung on 25/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class BootReceiver extends BroadcastReceiver {
 	/**

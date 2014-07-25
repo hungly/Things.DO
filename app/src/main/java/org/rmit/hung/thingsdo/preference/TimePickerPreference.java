@@ -31,7 +31,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by Hung on 17/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class TimePickerPreference extends DialogPreference {
 	private TimePicker timePicker;

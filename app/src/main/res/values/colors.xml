@@ -18,12 +18,12 @@
 
 	<color name="action_bar_background">#0099CC</color>
 	<color name="button_add_category_background">#0099CC</color>
-	<color name="text_list_item">#33B5E5</color>
-	<color name="text_color">#FFFFFF</color>
-	<color name="text_urgent">#CC0000</color>
-	<color name="text_normal_list_item">#000000</color>
-	<color name="widget_background">#FFFFFF</color>
-	<color name="task_item_divider">#999999</color>
 	<color name="splash_do">#99CC00</color>
+	<color name="task_item_divider">#999999</color>
+	<color name="text_color">#FFFFFF</color>
+	<color name="text_list_item">#33B5E5</color>
+	<color name="text_normal_list_item">#000000</color>
+	<color name="text_urgent">#CC0000</color>
+	<color name="widget_background">#FFFFFF</color>
 
 </resources>

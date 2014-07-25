@@ -26,7 +26,8 @@ import org.rmit.hung.thingsdo.model.Task;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
- * Created by Hung on 03/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class EditTaskItemButtonListener implements View.OnClickListener {
 	private final Activity         activity;

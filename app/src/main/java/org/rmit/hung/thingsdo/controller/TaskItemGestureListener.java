@@ -32,7 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
- * Created by Hung on 10/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * <p/>
  * Reference:
  * - http://stackoverflow.com/questions/4139288/android-how-to-handle-right-to-left-swipe-gestures

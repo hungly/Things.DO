@@ -15,30 +15,40 @@
 -->
 <resources>
 
+	<!-- App name -->
 	<string name="app_name">Things.DO</string>
+	<!-- Splash screen text -->
 	<string name="text_splash_things">Things</string>
 	<string name="text_splash_dot">.</string>
 	<string name="text_splash_do">DO</string>
 	<string name="text_splash_studio">What? Studio</string>
+	<!-- Edit task tittle -->
 	<string name="text_edit_task_collaborator">Collaborators</string>
 	<string name="text_edit_task_due_date">Due date: </string>
+	<!-- New category dialog -->
 	<string name="text_new_category_tittle">New category</string>
 	<string name="text_new_category_question">Please enter the new category name</string>
+	<!-- Category manager -->
 	<string name="text_category_manager">Category manager</string>
+	<!-- Date picker dialog -->
 	<string name="text_date_picker_tittle">Due date</string>
 	<string name="text_date_picker_question">Please pick a due date for this task</string>
+	<!-- Priority picker dialog -->
 	<string name="text_priority_tittle">Task priority</string>
 	<string name="text_priority_question">Please your task priority</string>
+	<!-- Button text -->
 	<string name="button_text_category">category</string>
 	<string name="button_text_due_date">due date</string>
 	<string name="button_text_priority">priority</string>
 	<string name="button_add_category">Add new category</string>
+	<!-- Text field hints -->
 	<string name="text_hint_collaborator">collaborator</string>
 	<string name="text_hint_category">category</string>
 	<string name="text_hint_task">task</string>
 	<string name="text_hint_add_task_tittle">task\'s tittle</string>
 	<string name="text_hint_add_task_note">task\'s note</string>
 	<string name="text_hint_task_due_date">due date</string>
+	<!-- Action labels -->
 	<string name="action_category_manager">Category Manager</string>
 	<string name="action_group_by">Group by</string>
 	<string name="action_group_order">Reverse order</string>
@@ -50,14 +60,17 @@
 	<string name="action_log_out">Log out</string>
 	<string name="action_clear">Clear</string>
 	<string name="action_exit">Exit</string>
+	<!-- Activities' tittle -->
 	<string name="title_activity_add_task_screen">Add Task</string>
-	<string name="hello_world">Hello world!</string>
 	<string name="title_activity_category_manager_screen">Category Manager</string>
+	<!-- Format for formatter -->
 	<string name="date_format">yyyy-MM-dd HH:mm:ss.sss</string>
 	<string name="date_format_trim_time">yyyy-MM-dd 00:00:00.000</string>
 	<string name="date_format_input">yyyy/M/d HH:mm:ss.sss</string>
 	<string name="date_format_display">dd MMM, yyyy</string>
+	<!-- Preference -->
 	<string name="preference_time_picker_positive_button">Done</string>
+	<!-- Widget text -->
 	<string name="widget_layout_tittle">Today tasks</string>
 	<string name="widget_text">TODAY TASKS</string>
 

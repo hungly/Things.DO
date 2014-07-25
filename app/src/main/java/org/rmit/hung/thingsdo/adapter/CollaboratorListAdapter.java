@@ -33,7 +33,8 @@ import org.rmit.hung.thingsdo.view.EditTaskScreen;
 import java.util.ArrayList;
 
 /**
- * Created by Hung on 17/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class CollaboratorListAdapter extends ArrayAdapter {
 	private EditTaskScreen editTaskScreen;

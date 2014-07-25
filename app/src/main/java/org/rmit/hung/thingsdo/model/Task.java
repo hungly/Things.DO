@@ -16,7 +16,8 @@
 package org.rmit.hung.thingsdo.model;
 
 /**
- * Created by Hung on 03/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class Task {
 	private int    _id;

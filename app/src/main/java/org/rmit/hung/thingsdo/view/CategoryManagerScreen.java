@@ -33,6 +33,10 @@ import org.rmit.hung.thingsdo.model.Task;
 
 import java.util.ArrayList;
 
+/**
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
+ */
 public class CategoryManagerScreen extends Activity {
 	private DatabaseHandler     db;
 	private ArrayList<Category> categories;

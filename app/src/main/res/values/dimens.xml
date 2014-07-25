@@ -15,10 +15,10 @@
 -->
 <resources>
 
-	<!---->
+	<!-- Activities' values -->
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
-	<!---->
+	<!-- Text size values -->
 	<dimen name="text_size_splash_things">90sp</dimen>
 	<dimen name="text_size_splash_do">120sp</dimen>
 	<dimen name="text_size_splash_studio">20sp</dimen>
@@ -27,14 +27,14 @@
 	<dimen name="text_size_edit_task">20sp</dimen>
 	<dimen name="text_size_collaborator">25sp</dimen>
 	<dimen name="text_size_due_date">25sp</dimen>
-	<!---->
+	<!-- Button size values -->
 	<dimen name="button_text_size_add_category">20sp</dimen>
 	<dimen name="button_text_size_button_bar">15sp</dimen>
 	<dimen name="button_size_big_horizontal">35dp</dimen>
 	<dimen name="button_size_big_vertical">35dp</dimen>
 	<dimen name="button_size_small_horizontal">30dp</dimen>
 	<dimen name="button_size_small_vertical">30dp</dimen>
-	<!---->
+	<!-- Padding values -->
 	<dimen name="padding_category_list_item_left">35dp</dimen>
 	<dimen name="padding_task_list_item_left">40dp</dimen>
 	<dimen name="padding_category_horizontal">5dp</dimen>
@@ -49,13 +49,13 @@
 	<dimen name="padding_right_task_list_item">15dp</dimen>
 	<dimen name="padding_left_expandable_list_item">25dp</dimen>
 	<dimen name="padding_left_widget_item">10dp</dimen>
-	<!---->
+	<!-- Widget values -->
 	<dimen name="widget_margin">8dp</dimen>
 	<dimen name="widget_task_item_height">30dp</dimen>
 	<dimen name="widget_category_text_size">20sp</dimen>
 	<dimen name="widget_task_text_size">15sp</dimen>
 	<dimen name="widget_category_height">35dp</dimen>
-	<!---->
+	<!-- List view values -->
 	<dimen name="category_list_item_height">60dp</dimen>
 	<dimen name="category_list_item_padding">10dp</dimen>
 	<dimen name="task_list_item_height">55dp</dimen>

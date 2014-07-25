@@ -25,6 +25,11 @@ import org.rmit.hung.thingsdo.R;
 
 /**
  * Implementation of App Widget functionality.
+ *
+ * This class is generate by Android Studio
+ *
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class TodayListWidget extends AppWidgetProvider {
 

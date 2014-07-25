@@ -42,6 +42,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
+ */
 public class EditTaskScreen extends Activity {
 	private EditText                taskTittle;
 	private EditText                taskNote;

@@ -25,7 +25,8 @@ import org.rmit.hung.thingsdo.model.CategoryListItem;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
- * Created by Hung on 02/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  */
 public class AddTaskButtonListener implements View.OnClickListener {
 	private final Activity         activity;

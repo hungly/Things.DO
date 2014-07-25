@@ -25,7 +25,8 @@ import org.rmit.hung.thingsdo.service.SMSService;
 import org.rmit.hung.thingsdo.view.MainScreen;
 
 /**
- * Created by Hung on 19/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * Reference:
  * - http://androidexample.com/Incomming_SMS_Broadcast_Receiver_-_Android_Example/index.php?view=article_discription&aid=62&aaid=87
  */

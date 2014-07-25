@@ -27,7 +27,8 @@ import org.rmit.hung.thingsdo.view.MainScreen;
 import java.io.IOException;
 
 /**
- * Created by Hung on 21/07/14.
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * <p/>
  * Reference:
  * - https://code.google.com/p/google-api-java-client/source/browse/?repo=samples#hg%2Ftasks-android-sample%2Fsrc%2Fmain%2Fjava%2Fcom%2Fgoogle%2Fapi%2Fservices%2Fsamples%2Ftasks%2Fandroid

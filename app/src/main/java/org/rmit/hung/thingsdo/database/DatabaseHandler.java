@@ -28,8 +28,8 @@ import org.rmit.hung.thingsdo.model.Task;
 import java.util.ArrayList;
 
 /**
- * Created by Hung on 03/07/14.
- *
+ * @author Ly Quoc Hung <s3426511@rmit.edu.vn>
+ * @version %I%
  * Reference:
  * - http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
  * - http://www.vogella.com/tutorials/AndroidSQLite/article.html

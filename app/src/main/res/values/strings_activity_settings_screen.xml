@@ -17,7 +17,6 @@
 	<string name="title_activity_settings_screen">Settings</string>
 
 	<!-- Strings related to Settings -->
-
 	<!-- Example General settings -->
 	<string name="pref_header_sms">SMS</string>
 
