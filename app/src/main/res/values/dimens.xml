@@ -19,7 +19,8 @@
 	<dimen name="activity_horizontal_margin">16dp</dimen>
 	<dimen name="activity_vertical_margin">16dp</dimen>
 	<!---->
-	<dimen name="text_size_splash_app_name">45sp</dimen>
+	<dimen name="text_size_splash_things">90sp</dimen>
+	<dimen name="text_size_splash_do">120sp</dimen>
 	<dimen name="text_size_splash_studio">20sp</dimen>
 	<dimen name="text_size_category">30sp</dimen>
 	<dimen name="text_size_task">20sp</dimen>

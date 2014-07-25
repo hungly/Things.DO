@@ -19,8 +19,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import org.rmit.hung.thingsdo.R;
 
@@ -35,11 +37,17 @@ import org.rmit.hung.thingsdo.R;
  *          -   http://www.codeproject.com/Articles/113831/An-Advanced-Splash-Screen-for-Android-App
  *          -   http://idroidsoftwareinc.blogspot.com/2013/09/android-splash-screen-example-tutorial.html
  */
-public class SplashScreen extends Activity {
+public class SplashScreen extends Activity implements Animation.AnimationListener {
 
 	// set how long the splash screen will wait to start fade out
 	// will be replaced by actual operation instead of timer
-	private final int SPLASH_SCREEM_DELAY = 3 * 1000;
+	private final int SPLASH_SCREEN_DELAY = 3 * 1000;
+	private Animation dotAppear;
+	private Animation thingsAppear;
+	private Animation doAppear;
+	private TextView  splashTextThings;
+	private TextView  splashTextDot;
+	private TextView  splashTextDo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +57,19 @@ public class SplashScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash_screen);
 
-		// put code to perform desire tasks here replacing the following codes
-		// begin replaceable codes
-		// create a runnable object
-		new Handler().postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				// make an intent to start main screen
-				Intent startMainScreen = new Intent(SplashScreen.this, MainScreen.class);
+		splashTextThings = (TextView) findViewById(R.id.text_view_splash_things);
+		splashTextDot = (TextView) findViewById(R.id.text_view_splash_dot);
+		splashTextDo = (TextView) findViewById(R.id.text_view_splash_do);
 
-				// start main screen
-				startActivity(startMainScreen);
+		thingsAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_things);
+		dotAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_dot);
+		doAppear = AnimationUtils.loadAnimation(SplashScreen.this, R.anim.splash_screen_do);
 
-				// close splash screen
-				SplashScreen.this.finish();
+		dotAppear.setAnimationListener(SplashScreen.this);
 
-				// overridden transition animations with custom fade out animation
-				SplashScreen.this.overridePendingTransition(android.R.anim.fade_in, R.anim.fade_out);
-			}
-		}, SPLASH_SCREEM_DELAY);
-		// end replaceable codes
+		splashTextThings.startAnimation(thingsAppear);
+		splashTextDot.startAnimation(dotAppear);
+		splashTextDo.startAnimation(doAppear);
 	}
 
 	@Override
@@ -128,5 +129,47 @@ public class SplashScreen extends Activity {
 
 		if (newConfig.keyboard == Configuration.KEYBOARDHIDDEN_NO)
 			Log.v("Device", "Virtual keyboard showed");
+	}
+
+	/**
+	 * <p>Notifies the start of the animation.</p>
+	 *
+	 * @param animation
+	 * 		The started animation.
+	 */
+	@Override
+	public void onAnimationStart(Animation animation) {
+
+	}
+
+	/**
+	 * <p>Notifies the end of the animation. This callback is not invoked
+	 * for animations with repeat count set to INFINITE.</p>
+	 *
+	 * @param animation
+	 * 		The animation which reached its end.
+	 */
+	@Override
+	public void onAnimationEnd(Animation animation) {
+		if (animation == dotAppear) {
+			Intent startMainScreen = new Intent(SplashScreen.this, MainScreen.class);
+
+			// start main screen
+			startActivity(startMainScreen);
+
+			// close splash screen
+			SplashScreen.this.finish();
+		}
+	}
+
+	/**
+	 * <p>Notifies the repetition of the animation.</p>
+	 *
+	 * @param animation
+	 * 		The animation which was repeated.
+	 */
+	@Override
+	public void onAnimationRepeat(Animation animation) {
+
 	}
 }

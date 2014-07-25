@@ -16,7 +16,9 @@
 <resources>
 
 	<string name="app_name">Things.DO</string>
-	<string name="text_splash_app_name">Thing.DO</string>
+	<string name="text_splash_things">Things</string>
+	<string name="text_splash_dot">.</string>
+	<string name="text_splash_do">DO</string>
 	<string name="text_splash_studio">What? Studio</string>
 	<string name="text_edit_task_collaborator">Collaborators</string>
 	<string name="text_edit_task_due_date">Due date: </string>

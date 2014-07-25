@@ -18,17 +18,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:animateLayoutChanges="true"
-                android:background="@android:color/holo_blue_light"
+                android:background="@color/action_bar_background"
                 tools:context="org.rmit.hung.thingsdo.view.SplashScreen">
 
 	<TextView
-		android:id="@+id/text_view_splash_app_name"
+		android:id="@+id/text_view_splash_things"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="180dp"
+		android:text="@string/text_splash_things"
+		android:textColor="@color/text_color"
+		android:textSize="@dimen/text_size_splash_things"/>
+
+	<TextView
+		android:id="@+id/text_view_splash_dot"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignBottom="@+id/text_view_splash_do"
 		android:layout_centerInParent="true"
-		android:text="@string/app_name"
+		android:layout_toLeftOf="@+id/text_view_splash_do"
+		android:text="@string/text_splash_dot"
 		android:textColor="@android:color/white"
-		android:textSize="@dimen/text_size_splash_app_name"
+		android:textSize="@dimen/text_size_splash_do"
+		android:textStyle="bold"/>
+
+	<TextView
+		android:id="@+id/text_view_splash_do"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_alignRight="@+id/text_view_splash_things"
+		android:layout_below="@+id/text_view_splash_things"
+		android:text="@string/text_splash_do"
+		android:textColor="@color/splash_do"
+		android:textSize="@dimen/text_size_splash_do"
 		android:textStyle="bold"/>
 
 	<TextView
@@ -38,7 +61,7 @@
 		android:layout_alignParentBottom="true"
 		android:layout_centerHorizontal="true"
 		android:text="@string/text_splash_studio"
-		android:textColor="@android:color/white"
+		android:textColor="@color/text_color"
 		android:textSize="@dimen/text_size_splash_studio"/>
 
 </RelativeLayout>

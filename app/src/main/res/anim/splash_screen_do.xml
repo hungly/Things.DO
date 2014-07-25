@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ splash_screen_do.xml
+  ~ Task Management Application
+  ~ 1, COSC2543 - Mobile Application Development
+  ~ RMIT International University Vietnam
+  ~
+  ~ Copyright 2014 Ly Quoc Hung (s3426511)
+  ~
+  ~ Refer to the NOTICE file in the root of the source tree for
+  ~ acknowledgements of third party works used in this software.
+  ~
+  ~ Date created:       25/07/2014
+  ~ Date last modified: 25/07/2014
+  -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+	android:fillAfter="true"
+	android:startOffset="1000">
+
+	<alpha
+		android:duration="1500"
+		android:interpolator="@android:anim/decelerate_interpolator"
+	    android:fromAlpha="0.0"
+	    android:toAlpha="1.0"/>
+
+	<translate
+		android:duration="1500"
+		android:interpolator="@android:anim/decelerate_interpolator"
+	    android:fromXDelta="20%p"
+	    android:toXDelta="0%p"/>
+
+</set>

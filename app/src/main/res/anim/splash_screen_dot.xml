@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <!--
-  ~ splash_screen_animation.xml
-  ~ Task Management Application
+  ~ splash_screen_things.xml~ Task Management Application
   ~ 1, COSC2543 - Mobile Application Development
   ~ RMIT International University Vietnam
   ~
@@ -15,5 +14,14 @@
   ~ Date last modified: 24/07/2014
   -->
 
-<set xmlns:android="http://schemas.android.com/apk/res/android">
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+	android:fillAfter="true"
+	android:startOffset="2000">
+
+	<alpha
+		android:duration="1500"
+		android:interpolator="@android:anim/decelerate_interpolator"
+	    android:fromAlpha="0.0"
+	    android:toAlpha="1.0"/>
+
 </set>
