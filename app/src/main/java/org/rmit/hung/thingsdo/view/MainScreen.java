@@ -165,7 +165,6 @@ public class MainScreen extends Activity {
 		final Button buttonNewCategory = (Button) findViewById(R.id.button_add_category);
 		buttonNewCategory.setOnClickListener(new AddCategoryButtonListener(MainScreen.this));
 
-		// testing for alarm
 		alarmIntent = new Intent(MainScreen.this, NotificationReceiver.class);
 		manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
@@ -706,18 +705,14 @@ public class MainScreen extends Activity {
 		if (preferences.getBoolean("notifications_on_due", true)) {
 			Log.v("Things.DO", "Notification on task due is on");
 
-			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 50, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			// broadcast every 1 minute
 			manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 60000, pendingIntent);
-
-			// get current date
-			SimpleDateFormat dateFormat = new SimpleDateFormat(getString(R.string.date_format_trim_time));
-			String currentDate = dateFormat.format(Calendar.getInstance().getTime());
 		} else {
 			Log.v("Things.DO", "Notification on task due is off");
 
-			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			pendingIntent = PendingIntent.getBroadcast(MainScreen.this, 50, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			manager.cancel(pendingIntent);
 		}
