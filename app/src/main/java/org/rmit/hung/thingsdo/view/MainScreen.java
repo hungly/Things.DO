@@ -315,6 +315,8 @@ public class MainScreen extends Activity {
 			case R.id.action_log_out:
 				Log.v("Things.DO", "\"Log out\" selected, logging out");
 
+				Toast.makeText(MainScreen.this, "You are logged out", Toast.LENGTH_SHORT).show();
+
 				editor.putString("google_account", "");
 
 				editor.apply();
@@ -495,7 +497,7 @@ public class MainScreen extends Activity {
 
 			if (requestCode == 2) {
 				String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-				Toast.makeText(this, "Account Name = " + accountName, Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "You are now logged in as " + accountName, Toast.LENGTH_SHORT).show();
 
 				editor.putString("google_account", accountName);
 
@@ -518,7 +520,6 @@ public class MainScreen extends Activity {
 			}
 
 			tasks.notifyDataSetChanged();
-//			getTaskGroupBy();
 		}
 	}
 
